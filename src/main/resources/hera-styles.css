@@ -1,0 +1,216 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto Bold';
+        src: url('/fonts/Roboto-Bold.ttf');
+}
+
+.root {
+	-fx-font-smoothing-type: gray;	
+    -fx-font-family: Roboto;
+
+    -dark-primary-color: #E64A19;
+    -default-primary-color: #FF5722;
+    -light-primary-color: #FFCCBC;
+    -accent-color: background: #536DFE;
+   /* .divider-color         { border-color: #BDBDBD; }*/
+}
+
+.navbar {
+	-fx-background-color: #464646;
+	-fx-pref-width: 40.0;
+
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.navbar-brand {
+	-fx-font-size: 30.0px;
+	-fx-text-fill: -default-primary-color;
+	-fx-pref-width: 40.0;
+}
+
+.navbar-button {
+	-fx-background-color: #5A5A5A;
+	-fx-background-radius: 5.0;
+	-fx-text-fill: #FFFFFF;
+	
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 0.0, 0.0;
+	
+	-fx-min-width: 30.0;
+	-fx-min-height: 30.0;
+	-fx-pref-height: 30.0;
+	
+	-fx-border-color: #5A5A5A;
+	-fx-border-width: 2.0;
+	-fx-border-radius: 5.0;
+}
+
+.navbar-button:hover {
+	-fx-background-color: #6E6E6E;
+	-fx-border-color: #6E6E6E;
+}
+
+.icon-button {
+	-fx-background-color: transparent;
+	-fx-background-radius: 5.0;
+	-fx-text-fill: #5A5A5A;
+	
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+	
+	-fx-min-width: 30.0;
+	-fx-min-height: 30.0;
+	-fx-pref-height: 30.0;
+	
+	-fx-border-color: transparent;
+	-fx-border-width: 1.0;
+	-fx-border-radius: 5.0;
+}
+
+.icon-button:hover {
+	-fx-border-color: #5A5A5A;
+}
+
+.module-title {
+	-fx-font-size: 24.0px;
+	-fx-font-weight: bold;
+	-fx-font-familly: Roboto;
+}
+
+.module-button {
+	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 0.0, 0.0;
+	-fx-padding: 10.0;
+	-fx-background-color: #FFF;
+	-fx-background-radius: 10.0;
+	
+	-fx-content-display: top;
+	
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);
+	
+	-fx-pref-width: 120.0;
+	-fx-pref-height: 120.0;
+}
+.module-button:hover {
+	-fx-background-color: #EEE;
+}
+.module-button:pressed {
+	-fx-background-color: #DDD;
+}
+
+
+/******/
+.hbtn {
+	-fx-background-color: #FFF;
+	-fx-background-radius: 5.0;
+	-fx-border-color: #cccccc;
+	-fx-border-width: 1.0 1.0 1.0 1.0;
+	-fx-border-radius: 5.0;
+}
+
+.hbtn:hover {
+	-fx-background-color: #e6e6e6;
+	-fx-border-color: #adadad;
+}
+
+.hbtn:default {
+	-fx-text-fill: #FFF;
+	-fx-background-color: #0275d8;
+	-fx-border-color: #0275d8;
+}
+
+.hbtn:default:hover {
+	-fx-text-fill: #FFF;
+	-fx-background-color: #025aa5;
+	-fx-border-color: #01549b;
+}
+
+
+
+
+.card {
+	
+	-fx-collapsible: false;
+}
+
+.card > .title {
+	-fx-background-color: #FFFFFF;
+	
+	-fx-border-radius: 10 10 0 0;
+  	-fx-background-radius: 10 10 0 0;
+
+  	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 0.0, 0.0;
+  	
+  	-fx-font-size: 16.0px;
+}
+
+.card > .content {
+	-fx-background-color: #FFFFFF;
+	
+	-fx-border-radius: 0 0 10 10;
+  	-fx-background-radius: 0 0 10 10;
+  	
+  	-fx-border-width: 0;
+  	
+  	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 0.0, 0.0;
+}
+
+
+
+/*****************************************/
+.monthreport-grid {
+    -fx-background-color: #FFFFFF;
+
+	-fx-border-radius: 10 10 10 10;
+  	-fx-background-radius: 10 10 10 10;
+}
+
+.monthreport-grid-cell {
+    -fx-border-color: #000000;
+    -fx-border-width: 1 0 0 1;
+}
+
+.monthreport-grid-cell.first-row {
+    -fx-font-weight: bold;
+    -fx-border-width: 0 0 0 1;
+}
+
+.monthreport-grid-cell.first-column {
+    -fx-border-width: 1 0 0 0;
+}
+
+.monthreport-grid-cell.first-row.first-column {
+    -fx-background-radius: 10 0 0 0;
+    -fx-border-width: 0 0 0 0;
+}
+.monthreport-grid-cell.first-row.last-column {
+    -fx-background-radius: 0 10 0 0;
+}
+
+.monthreport-grid-cell.last-row.first-column {
+    -fx-background-radius: 0 0 0 10;
+}
+.monthreport-grid-cell.last-row.last-column {
+    -fx-background-radius: 0 0 10 0;
+}
+
+.monthreport-grid-cell.week-column {
+    -fx-background-color: -light-primary-color;
+}
+
+.monthreport-grid-cell.othermonth-cell {
+    -fx-background-color: #C0C0C0;
+}
+
+.month-report-cell.hours {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.month-report-cell.other-hours {
+    -fx-font-weight: bold;
+}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ysaak.hera.nexus.gui.fiche.attendance.list.AttendanceListView">
+   <top>
+      <Label styleClass="module-title" text="Liste des présences" BorderPane.alignment="TOP_LEFT" />
+   </top>
+   <center>
+      <TableView fx:id="attendanceTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="dateColumn" maxWidth="80.0" minWidth="80.0" resizable="false" text="Date" />
+          <TableColumn prefWidth="64.0" text="Période 1">
+               <columns>
+                  <TableColumn fx:id="period1StartColumn" prefWidth="75.0" text="Début" />
+                  <TableColumn fx:id="period1EndColumn" prefWidth="75.0" text="Fin" />
+               </columns>
+            </TableColumn>
+            <TableColumn prefWidth="64.0" text="Période 2">
+               <columns>
+                  <TableColumn fx:id="period2StartColumn" prefWidth="75.0" text="Début" />
+                  <TableColumn fx:id="period2EndColumn" prefWidth="75.0" text="Fin" />
+               </columns>
+            </TableColumn>
+            <TableColumn prefWidth="64.0" text="Période 3">
+               <columns>
+                  <TableColumn fx:id="period3StartColumn" prefWidth="75.0" text="Début" />
+                  <TableColumn fx:id="period3EndColumn" prefWidth="75.0" text="Fin" />
+               </columns>
+            </TableColumn>
+            <TableColumn fx:id="durationColumn" prefWidth="75.0" text="Durée présence" />
+            <TableColumn prefWidth="84.0" text="Frais">
+               <columns>
+                  <TableColumn fx:id="mealFeeColumn" prefWidth="75.0" text="Repas" />
+                  <TableColumn fx:id="maintenanceFeeColumn" prefWidth="75.0" text="Entretient" />
+               </columns>
+            </TableColumn>
+        </columns>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Nombre d'heures : ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalHoursLabel" text="XXX" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
+</BorderPane>

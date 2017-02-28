@@ -1,0 +1,18 @@
+package ysaak.hera.nexus.gui.common.view;
+
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.scene.Node;
+
+public interface View<DATA> {
+  Node getView();
+  
+  void setData(DATA data);
+  
+  DATA getData();
+  
+  ReadOnlyBooleanProperty isValidProperty();
+  
+  ReadOnlyBooleanProperty hasChangedProperty();
+  
+  void setListener(ViewListener listener);
+}
