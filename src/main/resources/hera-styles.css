@@ -129,6 +129,10 @@
 	-fx-border-color: #01549b;
 }
 
+.hbtn-flat {
+    -fx-border-width: 0;
+}
+
 
 
 
