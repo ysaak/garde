@@ -32,4 +32,9 @@ public class TranslationFacadeImpl implements TranslationFacade {
     final String text = this.get(key);
     return MessageFormat.format(text, (Object[]) args);
   }
+
+  @Override
+  public ResourceBundle getBundle() {
+    return bundle;
+  }
 }

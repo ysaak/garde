@@ -3,6 +3,7 @@ package ysaak.hera.nexus.gui.common.presenter;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import ysaak.hera.nexus.gui.common.Context;
+import ysaak.hera.nexus.gui.common.ViewLoader;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarAction;
 import ysaak.hera.nexus.gui.common.view.View;
@@ -52,6 +53,11 @@ public abstract class AbstractFichePresenter<DATA, VIEW extends View<DATA>> exte
       @Override
       public void openForm(String viewCode, Context context) {
         fireOpenFormRequest(viewCode, context);
+      }
+
+      @Override
+      public ViewLoader getViewLoader() {
+        return viewLoader;
       }
     });
   }

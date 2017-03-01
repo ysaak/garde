@@ -69,6 +69,11 @@ public class MainViewController {
       public void openForm(String viewCode, Context context) {
         onOpenFormEvent(new OpenFormEvent(viewCode, context));
       }
+
+      @Override
+      public ViewLoader getViewLoader() {
+        return viewLoader;
+      }
     });
 
     eventFacade.register(this);

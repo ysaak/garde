@@ -1,6 +1,8 @@
 package ysaak.hera.nexus.service.translation;
 
 
+import java.util.ResourceBundle;
+
 public interface TranslationFacade {
 
   /**
@@ -17,4 +19,10 @@ public interface TranslationFacade {
    * @return Translated text
    */
   String get(String key, Object ...args);
+
+  /**
+   * Returns the resource bundle used by the facade
+   * @return A resource bundle
+   */
+  ResourceBundle getBundle();
 }
