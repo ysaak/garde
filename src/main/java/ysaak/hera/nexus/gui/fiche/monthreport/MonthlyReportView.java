@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import ysaak.hera.nexus.data.Period;
 import ysaak.hera.nexus.data.attendance.Attendance;
 import ysaak.hera.nexus.data.monthreport.MonthReport;
-import ysaak.hera.nexus.gui.common.view.AbstractView;
+import ysaak.hera.nexus.gui.common.view.AbstractFormView;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.AttendanceCell;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.MonthReportCell;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.WeekSummaryCell;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class MonthlyReportView extends AbstractView<MonthReport> {
+public class MonthlyReportView extends AbstractFormView<MonthReport> {
 
   private static final int COLUMNS = 7;
   private static final int WEEK_COLUMN = COLUMNS -1;
@@ -59,6 +59,12 @@ public class MonthlyReportView extends AbstractView<MonthReport> {
   private final Map<Integer, WeekSummaryCell> weekSummaryCells = new HashMap<>();
 
   private MonthChangeEvent monthChangeEvent = null;
+
+  @Override
+  public String getTitle() {
+    // FIXME use translations
+    return "Rapport mensuel";
+  }
 
   public void initialize() {
 

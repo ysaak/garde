@@ -1,4 +1,4 @@
-package ysaak.hera.nexus.gui.fiche.child.list;
+package ysaak.hera.nexus.gui.fiche.root;
 
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import javafx.geometry.Insets;

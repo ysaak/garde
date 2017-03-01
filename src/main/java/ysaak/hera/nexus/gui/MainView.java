@@ -4,11 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import org.springframework.stereotype.Component;
-import ysaak.hera.nexus.gui.common.view.AbstractFxmlView;
+import ysaak.hera.nexus.gui.common.view.AbstractView;
 
 @Component
-public class MainView extends AbstractFxmlView<Void> {
+public class MainView extends AbstractView<Void> {
+  @FXML
+  protected StackPane rootPane;
 
   @FXML
   private AnchorPane centerPane;
@@ -35,4 +38,9 @@ public class MainView extends AbstractFxmlView<Void> {
 
   @Override
   public Void getData() { return null; }
+
+  @Override
+  public Node getView() {
+    return rootPane;
+  }
 }

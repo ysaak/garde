@@ -41,9 +41,15 @@ public final class ViewLoader {
   }
 
   //public <DATA, T extends View<DATA>> T loadView(String fxml) throws IOException {
-  public <T> T loadView(String fxml) throws IOException {
+  public <T> T loadView(String fxml) throws RuntimeException {
     final FXMLLoader loader = getLoader(fxml);
-    loader.load();
+    try {
+      loader.load();
+    }
+    catch (IOException e) {
+      LOGGER.error("Error while loading FXML " + fxml, e);
+      throw new RuntimeException("Error while loading FXML " + fxml, e);
+    }
     return loader.getController();
   }
 

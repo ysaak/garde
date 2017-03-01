@@ -14,8 +14,6 @@ import ysaak.hera.nexus.gui.MainView;
 import ysaak.hera.nexus.gui.MainViewController;
 import ysaak.hera.nexus.gui.common.ViewLoader;
 
-import java.io.IOException;
-
 @Lazy
 @SpringBootApplication
 public class GardeApp extends Application {
@@ -56,28 +54,23 @@ public class GardeApp extends Application {
   public void start(Stage primaryStage) throws Exception {
     primaryStage.setTitle("Garde!");
 
-    try {
-      final MainView mainView = viewLoader.loadView("mainLayout");
-      final MainViewController controller = new MainViewController(mainView);
-      applicationContext.getAutowireCapableBeanFactory().autowireBean(controller);
-      
-      final Scene scene = new Scene((Parent) mainView.getView());
+    final MainView mainView = viewLoader.loadView("mainLayout");
+    final MainViewController controller = new MainViewController(mainView);
+    applicationContext.getAutowireCapableBeanFactory().autowireBean(controller);
 
-      String css = getClass().getResource("/hera-styles.css").toExternalForm();
-      scene.getStylesheets().add(css);
-      
-      
-      controller.init();
+    final Scene scene = new Scene((Parent) mainView.getView());
 
-      primaryStage.setScene(scene);
-      primaryStage.centerOnScreen();
-      primaryStage.setFullScreen(true);
-      //primaryStage.sizeToScene();
-      primaryStage.show();
-    }
-    catch (final IOException e) {
-      e.printStackTrace();
-    }
+    String css = getClass().getResource("/hera-styles.css").toExternalForm();
+    scene.getStylesheets().add(css);
+
+
+    controller.init();
+
+    primaryStage.setScene(scene);
+    primaryStage.centerOnScreen();
+    primaryStage.setFullScreen(true);
+    //primaryStage.sizeToScene();
+    primaryStage.show();
   }
 
   @Override

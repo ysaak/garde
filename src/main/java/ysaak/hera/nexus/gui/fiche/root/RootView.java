@@ -1,4 +1,4 @@
-package ysaak.hera.nexus.gui.fiche.child.list;
+package ysaak.hera.nexus.gui.fiche.root;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,17 +15,22 @@ import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.gui.common.ContextBuilder;
 import ysaak.hera.nexus.gui.common.Contexts;
 import ysaak.hera.nexus.gui.common.components.grid.SelectableGridView;
-import ysaak.hera.nexus.gui.common.view.AbstractView;
+import ysaak.hera.nexus.gui.common.view.AbstractFormView;
 
 import java.util.List;
 
-public class ChildListView extends AbstractView<List<Child>> {
+public class RootView extends AbstractFormView<List<Child>> {
   private BorderPane pane;
 
   private TextField filter = new TextField();
 
   private final ObservableList<Child> list = FXCollections.observableArrayList();
   private FilteredList<Child> filteredData = null;
+
+  @Override
+  public String getTitle() {
+    return translationFacade.get("root.title");
+  }
 
   @Override
   public void initialize() {
@@ -48,14 +53,16 @@ public class ChildListView extends AbstractView<List<Child>> {
         fireOpenFormRequest("MONTHLY-VIEW", ContextBuilder.get().withId(child.getId()).build());
       }
     });
+
+    //////
     
-    HBox toolbar = new HBox(5.0, filter);
-    toolbar.setAlignment(Pos.CENTER_LEFT);
+    final HBox filterBar = new HBox(5.0, filter);
+    filterBar.setAlignment(Pos.CENTER_LEFT);
     
-    toolbar.setPadding(new Insets(0, 0, 10.0, 0));
-    
+    filterBar.setPadding(new Insets(0, 0, 10.0, 0));
+
     pane = new BorderPane(menuItems.getView());
-    pane.setTop(toolbar);
+    pane.setTop(filterBar);
     
     filter.textProperty().addListener((observable, oldValue, newValue) -> filter());
   }
