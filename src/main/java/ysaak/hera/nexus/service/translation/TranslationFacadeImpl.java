@@ -13,7 +13,7 @@ public class TranslationFacadeImpl implements TranslationFacade {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(TranslationFacade.class);
 
-  private final ResourceBundle bundle = ResourceBundle.getBundle("lang/messages");
+  private final ResourceBundle bundle = ResourceBundle.getBundle("lang/messages", new UTF8Control());
 
   @Override
   public String get(String key) {
