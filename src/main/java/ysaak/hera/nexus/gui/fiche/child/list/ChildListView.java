@@ -26,10 +26,10 @@ public class ChildListView extends AbstractView<List<Child>> {
 
   private final ObservableList<Child> list = FXCollections.observableArrayList();
   private FilteredList<Child> filteredData = null;
-  
 
-  public ChildListView() {
-    filter.setPromptText("Filter");
+  @Override
+  public void initialize() {
+    filter.setPromptText(translationFacade.get("common.filter"));
     
     filteredData = new FilteredList<>(list, p -> true);
 
@@ -39,7 +39,8 @@ public class ChildListView extends AbstractView<List<Child>> {
 
       return card;
     });
-    
+
+    menuItems.setCellSize(ChildCard.CARD_WIDTH, ChildCard.CARD_HEIGHT);
     
     menuItems.setOnMouseReleased(e -> {
       if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() > 1) {
@@ -72,8 +73,7 @@ public class ChildListView extends AbstractView<List<Child>> {
     String genericText = filter.getText();
     
     filteredData.setPredicate(app -> {
-      boolean match = false;
-      match |= StringUtils.containsIgnoreCase(app.getFirstName(), genericText);
+      boolean match = StringUtils.containsIgnoreCase(app.getFirstName(), genericText);
       match |= StringUtils.containsIgnoreCase(app.getLastName(), genericText);
       return match;
     });

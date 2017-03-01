@@ -38,21 +38,22 @@ public class SelectableGridView<T> {
     gridview.setCellHeight(250.);
     gridview.setCellFactory(p -> new SelectableGridCell());
     
-    localMouseEventHandler = new EventHandler<MouseEvent>() {
-      
-      @Override
-      public void handle(MouseEvent event) {
-        if (mouseReleasedEventHandler != null) {
-          MouseEvent evt2 = MouseEvent.copyForMouseDragEvent(event, (Object) getSelectedItem(), event.getTarget(), null, event.getSource(), event.getPickResult());
-          mouseReleasedEventHandler.handle(evt2);
-        }
+    localMouseEventHandler = event -> {
+      if (mouseReleasedEventHandler != null) {
+        MouseEvent evt2 = MouseEvent.copyForMouseDragEvent(event, getSelectedItem(), event.getTarget(), null, event.getSource(), event.getPickResult());
+        mouseReleasedEventHandler.handle(evt2);
       }
     };
     
     group.selectedToggleProperty().addListener((o, oldV, newV) -> selectedProperty.set(getSelectedItem()));
   }
+
+  public void setCellSize(double width, double height) {
+    gridview.setCellWidth(width);
+    gridview.setCellHeight(height);
+  }
   
-  public final void setOnMouseReleased(EventHandler<MouseEvent> mouseReleasedEventHandler) {
+  public void setOnMouseReleased(EventHandler<MouseEvent> mouseReleasedEventHandler) {
     this.mouseReleasedEventHandler = mouseReleasedEventHandler;
   }
 
@@ -80,9 +81,11 @@ public class SelectableGridView<T> {
     return null;
   }
   
+  /*
   public final ReadOnlyObjectProperty<T> selectedProperty() {
     return selectedProperty;
   }
+  */
   
   private class SelectableGridCell extends GridCell<T> {
     @Override
@@ -94,12 +97,7 @@ public class SelectableGridView<T> {
         setGraphic(null);
       }
       else {
-        ToggleableView<T> view = viewMap.get(item);
-        
-        if (view == null) {
-          view = createView(item);
-          viewMap.put(item, view);
-        }
+        ToggleableView<T> view = viewMap.computeIfAbsent(item, k -> createView(item));
 
         setGraphic(view.getView());
       }

@@ -23,7 +23,7 @@ public class MonthlyReportPresenter extends AbstractFichePresenter<MonthReport, 
 
   @Override
   protected MonthlyReportView initView() {
-    final MonthlyReportView view = new MonthlyReportView(translationFacade);
+    final MonthlyReportView view = viewLoader.loadView(MonthlyReportView.class);
     view.setMonthChangeEvent(month -> startLoadData(
             ContextBuilder.get().withId(currentContext.getLongId()).withDate(month).build()));
     return view;

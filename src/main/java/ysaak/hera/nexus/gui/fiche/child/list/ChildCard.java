@@ -16,6 +16,10 @@ import ysaak.hera.nexus.gui.common.components.button.IconButton;
 import ysaak.hera.nexus.gui.common.components.grid.ToggleableView;
 
 public class ChildCard extends ToggleableView<Child> {
+
+  public static final double CARD_WIDTH = 160.;
+  public static final double CARD_HEIGHT = 250.;
+
   private final VBox mainBox = new VBox(10.0);
   private final VBox box = new VBox(4.0);
   private final HBox buttonBox = new HBox(5.);

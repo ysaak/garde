@@ -28,25 +28,23 @@ public class AttendanceCell extends AbstractView<Attendance> implements MonthRep
   private static final int PERIODS_LAYER = 0;
   private static final int SUMMARY_LAYER = 1;
 
-  private final BorderPane mainPane;
+  private BorderPane mainPane;
 
-  private final StackPane centerPane;
+  private GridPane periodsPane;
+  private VBox summaryPane;
 
-  private final GridPane periodsPane;
-  private final VBox summaryPane;
-  private final HBox feePane;
+  private Label dayLabel;
 
-  private final Label dayLabel;
+  private Label[] periodsLabel = new Label[3];
 
-  private final Label[] periodsLabel = new Label[3];
+  private Label summaryLabel;
 
-  private final Label summaryLabel;
+  private Label mealFeeLabel;
+  private Text mealFeeIconLabel;
+  private Text maintenanceFeeLabel;
 
-  private final Label mealFeeLabel;
-  private final Text mealFeeIconLabel;
-  private final Text maintenanceFeeLabel;
-
-  public AttendanceCell() {
+  @Override
+  public void initialize() {
     // Period label
     periodsLabel[0] = new Label(" ");
     periodsLabel[1] = new Label(" ");
@@ -66,21 +64,21 @@ public class AttendanceCell extends AbstractView<Attendance> implements MonthRep
     // Fee pane
     mealFeeLabel = new Label(" ");
     mealFeeIconLabel = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.FOOD);
-    Tooltip.install(mealFeeIconLabel, new Tooltip("Frais de repas"));
+    Tooltip.install(mealFeeIconLabel, new Tooltip(translationFacade.get("attendance.fee.meal")));
     HBox.setMargin(mealFeeLabel, new Insets(0,0,0,10));
     HBox.setMargin(mealFeeIconLabel, new Insets(0,5,0,0));
     mealFeeIconLabel.setVisible(false);
 
     maintenanceFeeLabel = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.WRENCH);
-    Tooltip.install(maintenanceFeeLabel, new Tooltip("Frais d'entretient"));
+    Tooltip.install(maintenanceFeeLabel, new Tooltip(translationFacade.get("attendance.fee.maintenance")));
     HBox.setMargin(maintenanceFeeLabel, new Insets(0,0,0,10));
     maintenanceFeeLabel.setVisible(false);
 
-    feePane = new HBox(mealFeeLabel, mealFeeIconLabel, maintenanceFeeLabel);
+    HBox feePane = new HBox(mealFeeLabel, mealFeeIconLabel, maintenanceFeeLabel);
     feePane.setAlignment(Pos.CENTER_LEFT);
 
     // Center pane
-    centerPane = new StackPane();
+    StackPane centerPane = new StackPane();
     centerPane.getChildren().add(PERIODS_LAYER, periodsPane);
     centerPane.getChildren().add(SUMMARY_LAYER, summaryPane);
 

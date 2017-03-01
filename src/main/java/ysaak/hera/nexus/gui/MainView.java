@@ -16,6 +16,11 @@ public class MainView extends AbstractFxmlView<Void> {
   @FXML
   private Pane navbarButtonsPane;
 
+  @Override
+  public void initialize() {
+
+  }
+
   public void addNavbarElement(Node node) {
     navbarButtonsPane.getChildren().add(node);
   }

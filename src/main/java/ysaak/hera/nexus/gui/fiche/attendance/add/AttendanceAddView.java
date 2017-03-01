@@ -24,16 +24,17 @@ import java.util.List;
 
 public class AttendanceAddView extends AbstractView<Attendance> {
   
-  private final BorderPane pane;
+  private BorderPane pane;
   
-  private final IterativeList<AttendancePeriod> periodList;
+  private IterativeList<AttendancePeriod> periodList;
   
-  private final RadioButtonGroup<MaintenanceFee> maintenanceFeeGroup;
+  private RadioButtonGroup<MaintenanceFee> maintenanceFeeGroup;
   
-  private final RadioButtonGroup<MealFee> mealFeeGroup;
+  private RadioButtonGroup<MealFee> mealFeeGroup;
 
-  public AttendanceAddView() {
-    
+  @Override
+  public void initialize() {
+
     periodList = new IterativeList<>();
     periodList.setMaxLinesCount(3);
     periodList.setLineFactory(p -> new PeriodLineView());

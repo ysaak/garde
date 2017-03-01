@@ -18,7 +18,6 @@ import ysaak.hera.nexus.gui.common.view.AbstractView;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.AttendanceCell;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.MonthReportCell;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.WeekSummaryCell;
-import ysaak.hera.nexus.service.translation.TranslationFacade;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,14 +34,16 @@ public class MonthlyReportView extends AbstractView<MonthReport> {
   private static final int COLUMNS = 7;
   private static final int WEEK_COLUMN = COLUMNS -1;
 
-  private final VBox pane;
+  private static final DateTimeFormatter CURRENT_MONTH_LABEL_FORMATTER = DateTimeFormatter.ofPattern("MMMM yyyy");
 
-  private final GridPane grid;
-  private final RowConstraints firstRowConstraints;
+  private VBox pane;
+
+  private GridPane grid;
+  private RowConstraints firstRowConstraints;
 
   private LocalDate currentMonth;
-  private final Label currentMonthLabel;
-  private final DateTimeFormatter currentMonthLabelFormatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+  private Label currentMonthLabel;
+
 
   private static final String[] COLUMN_NAMES = new String[] {
     "common.monday",
@@ -54,14 +55,12 @@ public class MonthlyReportView extends AbstractView<MonthReport> {
     "common.week"
   };
 
-  private final Map<LocalDate, AttendanceCell> attendanceCells;
-  private final Map<Integer, WeekSummaryCell> weekSummaryCells;
+  private final Map<LocalDate, AttendanceCell> attendanceCells = new HashMap<>();
+  private final Map<Integer, WeekSummaryCell> weekSummaryCells = new HashMap<>();
 
   private MonthChangeEvent monthChangeEvent = null;
 
-  public MonthlyReportView(TranslationFacade translationFacade) {
-    attendanceCells = new HashMap<>();
-    weekSummaryCells = new HashMap<>();
+  public void initialize() {
 
     currentMonth = LocalDate.now().withDayOfMonth(1);
 
@@ -109,7 +108,7 @@ public class MonthlyReportView extends AbstractView<MonthReport> {
     Button nextBtn = new Button(">");
     nextBtn.setOnAction(evt -> changeCurrentMonth(currentMonth.plusMonths(1)));
 
-    currentMonthLabel = new Label(currentMonth.format(currentMonthLabelFormatter));
+    currentMonthLabel = new Label(currentMonth.format(CURRENT_MONTH_LABEL_FORMATTER));
 
     HBox controlBox = new HBox(prevBtn, currentMonthLabel, nextBtn);
     controlBox.setSpacing(10.);
@@ -117,7 +116,6 @@ public class MonthlyReportView extends AbstractView<MonthReport> {
 
     ScrollPane scp = new ScrollPane(grid);
     scp.setStyle("-fx-background-color: transparent");
-    //scp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
     scp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
     pane = new VBox(controlBox, scp);
@@ -171,11 +169,11 @@ public class MonthlyReportView extends AbstractView<MonthReport> {
         final MonthReportCell cell;
 
         if (j == WEEK_COLUMN) {
-          cell = new WeekSummaryCell();
+          cell = loadView(WeekSummaryCell.class);
           weekSummaryCells.put(currentDay.get(woyField), (WeekSummaryCell) cell);
         }
         else {
-          cell = new AttendanceCell();
+          cell = loadView(AttendanceCell.class);
           ((AttendanceCell) cell).setDay(currentDay);
 
           attendanceCells.put(currentDay, (AttendanceCell) cell);
@@ -230,7 +228,7 @@ public class MonthlyReportView extends AbstractView<MonthReport> {
   public void setData(MonthReport data) {
     this.currentMonth = data.getDate();
 
-    currentMonthLabel.setText(currentMonthLabelFormatter.format(currentMonth));
+    currentMonthLabel.setText(CURRENT_MONTH_LABEL_FORMATTER.format(currentMonth));
     buildCalendar(currentMonth, data.getPeriod());
 
     // Set attendances

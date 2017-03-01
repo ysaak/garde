@@ -14,14 +14,14 @@ import ysaak.hera.nexus.gui.common.view.AbstractView;
 
 public class WeekSummaryCell extends AbstractView<WeekSummary> implements MonthReportCell {
 
-  private final BorderPane mainPane;
+  private BorderPane mainPane;
 
-  private final Label totalHoursLabel = new Label(" ");
-  private final Label complementHoursLabel;
-  private final Label increasedHoursLabel;
+  private Label totalHoursLabel = new Label(" ");
+  private Label complementHoursLabel;
+  private Label increasedHoursLabel;
 
-  public WeekSummaryCell() {
-
+  @Override
+  public void initialize() {
     // Center pane
     totalHoursLabel.getStyleClass().addAll("month-report-cell", "hours");
     VBox thBox = new VBox(totalHoursLabel);
@@ -31,18 +31,20 @@ public class WeekSummaryCell extends AbstractView<WeekSummary> implements MonthR
 
     // --- Supplements
     // Complements hours
-    final Label chTextLabel = new Label("Complément. : ");
+    final Label chTextLabel = new Label(translationFacade.get("report.hours.complement"));
     complementHoursLabel = new Label(" ");
     complementHoursLabel.getStyleClass().addAll("month-report-cell", "other-hours");
     final HBox chBox = new HBox(chTextLabel, complementHoursLabel);
+    chBox.setSpacing(5.);
     chBox.setAlignment(Pos.CENTER_LEFT);
     chBox.setPadding(new Insets(0, 5, 0, 5));
 
     // Increased hours
-    final Label ihTextLabel = new Label("Majorées : ");
+    final Label ihTextLabel = new Label(translationFacade.get("report.hours.increased"));
     increasedHoursLabel = new Label(" ");
     increasedHoursLabel.getStyleClass().addAll("week-summary-cell", "other-hours");
     final HBox ihBox = new HBox(ihTextLabel, increasedHoursLabel);
+    ihBox.setSpacing(5.);
     ihBox.setAlignment(Pos.CENTER_LEFT);
     ihBox.setPadding(new Insets(0, 5, 0, 5));
 

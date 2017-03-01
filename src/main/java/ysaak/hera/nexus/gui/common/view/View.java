@@ -4,6 +4,9 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.scene.Node;
 
 public interface View<DATA> {
+
+  void initialize();
+
   Node getView();
   
   void setData(DATA data);

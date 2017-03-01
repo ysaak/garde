@@ -21,14 +21,11 @@ public class ChildListPresenter extends AbstractFichePresenter<List<Child>, Chil
 
   @Override
   protected ChildListView initView() {
-    return new ChildListView();
+    return viewLoader.loadView(ChildListView.class);
   }
 
   @Override
   protected List<Child> loadData(Context context) throws Exception {
-    
-    System.err.println("WWW > " + childService.hasBirthDayNearby());
-    
     return childService.listAll();
   }
 

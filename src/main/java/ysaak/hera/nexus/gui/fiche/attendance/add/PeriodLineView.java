@@ -11,12 +11,13 @@ public class PeriodLineView extends AbstractView<AttendancePeriod> {
 
   private HBox rootNode;
   
-  private final TextField startField;
+  private TextField startField;
   
-  private final TextField endField;
-  
-  public PeriodLineView() {
-    
+  private TextField endField;
+
+  @Override
+  public void initialize() {
+
     startField = new TextField();
     endField = new TextField();
     
