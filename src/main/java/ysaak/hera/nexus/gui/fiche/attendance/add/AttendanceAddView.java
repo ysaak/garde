@@ -1,9 +1,5 @@
 package ysaak.hera.nexus.gui.fiche.attendance.add;
 
-import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.List;
-
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
@@ -21,6 +17,10 @@ import ysaak.hera.nexus.data.attendance.MealFee;
 import ysaak.hera.nexus.gui.common.components.IterativeList;
 import ysaak.hera.nexus.gui.common.components.RadioButtonGroup;
 import ysaak.hera.nexus.gui.common.view.AbstractView;
+
+import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 
 public class AttendanceAddView extends AbstractView<Attendance> {
   

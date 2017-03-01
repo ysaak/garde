@@ -93,7 +93,7 @@ public class MainViewController {
   }
 
   @SuppressWarnings("unchecked")
-  private final Map<String, Class<? extends Presenter>> loadModules() {
+  private Map<String, Class<? extends Presenter>> loadModules() {
 
     Map<String, Class<? extends Presenter>> forms = new HashMap<>();
 
@@ -127,7 +127,7 @@ public class MainViewController {
   }
 
   @SuppressWarnings("unchecked")
-  private final List<Class<? extends Presenter>> loadNavbarComponents() {
+  private List<Class<? extends Presenter>> loadNavbarComponents() {
     final List<Class<? extends Presenter>> navElements = new ArrayList<>();
 
     try {
@@ -172,10 +172,13 @@ public class MainViewController {
     }
   }
 
-  protected final void showView(Class<? extends Presenter> presenterClazz, Context context) {
+  private void showView(Class<? extends Presenter> presenterClazz, Context context) {
     try {
 
-      final Presenter presenter = applicationContext.getBean(presenterClazz);
+      //final Presenter presenter = applicationContext.getBean(presenterClazz);
+      final Presenter presenter = presenterClazz.newInstance();
+      applicationContext.getAutowireCapableBeanFactory().autowireBean(presenter);
+
       presenter.init();
 
       final Node node = presenter.getView();

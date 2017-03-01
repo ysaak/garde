@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.springframework.stereotype.Component;
 import ysaak.hera.nexus.data.attendance.Attendance;
 import ysaak.hera.nexus.data.attendance.AttendancePeriod;
 import ysaak.hera.nexus.data.attendance.MaintenanceFee;
@@ -24,7 +23,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@Component
 public class AttendanceListView extends AbstractFxmlView<List<Attendance>> {
   @FXML
   private TableView<Attendance> attendanceTable;
