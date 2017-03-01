@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 
 /**
  * Custom resource bundle control to load UTF-8 translation properties
- * @see @url{http://stackoverflow.com/questions/4659929/how-to-use-utf-8-in-resource-properties-with-resourcebundle}
+ * @see <a href="http://stackoverflow.com/questions/4659929/how-to-use-utf-8-in-resource-properties-with-resourcebundle">stackoverflow question</a>
  */
 class UTF8Control extends ResourceBundle.Control {
 
