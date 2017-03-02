@@ -49,8 +49,14 @@ public class CustomButtonBar extends ButtonBar {
 
       btn.setOnAction(action);
 
-      btn.getStyleClass().add("hbtn");
-      btn.getStyleClass().addAll(customStyles);
+      btn.disableProperty().bind(action.disabledProperty());
+
+      if (customStyles.isEmpty()) {
+        btn.getStyleClass().add("hbtn");
+      }
+      else {
+        btn.getStyleClass().addAll(customStyles);
+      }
 
       children.add(btn);
     }

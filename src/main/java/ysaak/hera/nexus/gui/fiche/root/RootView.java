@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.apache.commons.lang3.StringUtils;
 import ysaak.hera.nexus.data.Child;
@@ -124,6 +123,8 @@ public class RootView extends AbstractFormView<List<Child>> {
 
       Text icon = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.SETTINGS);
       setGraphic(icon);
+
+      setDisabled(true);
     }
 
     @Override
