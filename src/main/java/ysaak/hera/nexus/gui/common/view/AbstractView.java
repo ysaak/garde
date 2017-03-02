@@ -4,9 +4,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import ysaak.hera.nexus.gui.common.Context;
-import ysaak.hera.nexus.service.translation.TranslationFacade;
 
-public abstract class AbstractView<DATA> implements View<DATA>, TranslationAware {
+public abstract class AbstractView<DATA> implements View<DATA> {
   private ViewListener listener;
   
   private final BooleanProperty hasChanged = new SimpleBooleanProperty();
@@ -14,8 +13,6 @@ public abstract class AbstractView<DATA> implements View<DATA>, TranslationAware
   private final BooleanProperty isValid = new SimpleBooleanProperty(true);
 
   protected DATA originalData = null;
-
-  protected TranslationFacade translationFacade;
   
   @Override
   public void setListener(ViewListener listener) {
@@ -36,11 +33,6 @@ public abstract class AbstractView<DATA> implements View<DATA>, TranslationAware
     if (listener != null) {
       listener.openForm(viewCode, context);
     }
-  }
-
-  @Override
-  public void setTranslationFacade(TranslationFacade translationFacade) {
-    this.translationFacade = translationFacade;
   }
 
   protected <T> T loadView(Class<T> viewClazz) {

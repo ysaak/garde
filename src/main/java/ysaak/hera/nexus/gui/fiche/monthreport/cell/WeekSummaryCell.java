@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import ysaak.hera.nexus.data.monthreport.WeekSummary;
 import ysaak.hera.nexus.gui.common.Formatters;
 import ysaak.hera.nexus.gui.common.view.AbstractView;
+import ysaak.hera.nexus.service.translation.I18n;
 
 public class WeekSummaryCell extends AbstractView<WeekSummary> implements MonthReportCell {
 
@@ -31,7 +32,7 @@ public class WeekSummaryCell extends AbstractView<WeekSummary> implements MonthR
 
     // --- Supplements
     // Complements hours
-    final Label chTextLabel = new Label(translationFacade.get("report.hours.complement"));
+    final Label chTextLabel = new Label(I18n.get("report.hours.complement"));
     complementHoursLabel = new Label(" ");
     complementHoursLabel.getStyleClass().addAll("month-report-cell", "other-hours");
     final HBox chBox = new HBox(chTextLabel, complementHoursLabel);
@@ -40,7 +41,7 @@ public class WeekSummaryCell extends AbstractView<WeekSummary> implements MonthR
     chBox.setPadding(new Insets(0, 5, 0, 5));
 
     // Increased hours
-    final Label ihTextLabel = new Label(translationFacade.get("report.hours.increased"));
+    final Label ihTextLabel = new Label(I18n.get("report.hours.increased"));
     increasedHoursLabel = new Label(" ");
     increasedHoursLabel.getStyleClass().addAll("week-summary-cell", "other-hours");
     final HBox ihBox = new HBox(ihTextLabel, increasedHoursLabel);

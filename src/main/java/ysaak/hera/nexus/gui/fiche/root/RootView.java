@@ -23,6 +23,7 @@ import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
 import ysaak.hera.nexus.gui.common.buttonbar.CustomButtonBar;
 import ysaak.hera.nexus.gui.common.components.grid.SelectableGridView;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
+import ysaak.hera.nexus.service.translation.I18n;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +38,7 @@ public class RootView extends AbstractFormView<List<Child>> {
 
   @Override
   public String getTitle() {
-    return translationFacade.get("root.title");
+    return I18n.get("root.title");
   }
 
   @Override
@@ -50,7 +51,7 @@ public class RootView extends AbstractFormView<List<Child>> {
 
   @Override
   public void initialize() {
-    filter.setPromptText(translationFacade.get("common.filter"));
+    filter.setPromptText(I18n.get("common.filter"));
     
     filteredData = new FilteredList<>(list, p -> true);
 
@@ -119,7 +120,7 @@ public class RootView extends AbstractFormView<List<Child>> {
 
   private class ParametersAction extends Action {
     private ParametersAction() {
-      super(translationFacade.get("root.actions.parameters"));
+      super(I18n.get("root.actions.parameters"));
 
       Text icon = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.SETTINGS);
       setGraphic(icon);

@@ -18,6 +18,7 @@ import ysaak.hera.nexus.gui.common.view.AbstractFormView;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.AttendanceCell;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.MonthReportCell;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.WeekSummaryCell;
+import ysaak.hera.nexus.service.translation.I18n;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -74,7 +75,7 @@ public class MonthlyReportView extends AbstractFormView<MonthReport> {
     grid.getStyleClass().add("monthreport-grid");
 
     for (int i=0; i < COLUMN_NAMES.length; i++) {
-      Label label = new Label(translationFacade.get(COLUMN_NAMES[i]));
+      Label label = new Label(I18n.get(COLUMN_NAMES[i]));
       VBox pane = new VBox();
       pane.setAlignment(Pos.CENTER);
 

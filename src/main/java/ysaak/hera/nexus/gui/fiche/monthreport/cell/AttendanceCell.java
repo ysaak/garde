@@ -20,6 +20,7 @@ import ysaak.hera.nexus.data.attendance.MaintenanceFee;
 import ysaak.hera.nexus.data.attendance.MealFee;
 import ysaak.hera.nexus.gui.common.Formatters;
 import ysaak.hera.nexus.gui.common.view.AbstractView;
+import ysaak.hera.nexus.service.translation.I18n;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -64,13 +65,13 @@ public class AttendanceCell extends AbstractView<Attendance> implements MonthRep
     // Fee pane
     mealFeeLabel = new Label(" ");
     mealFeeIconLabel = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.FOOD);
-    Tooltip.install(mealFeeIconLabel, new Tooltip(translationFacade.get("attendance.fee.meal")));
+    Tooltip.install(mealFeeIconLabel, new Tooltip(I18n.get("attendance.fee.meal")));
     HBox.setMargin(mealFeeLabel, new Insets(0,0,0,10));
     HBox.setMargin(mealFeeIconLabel, new Insets(0,5,0,0));
     mealFeeIconLabel.setVisible(false);
 
     maintenanceFeeLabel = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.WRENCH);
-    Tooltip.install(maintenanceFeeLabel, new Tooltip(translationFacade.get("attendance.fee.maintenance")));
+    Tooltip.install(maintenanceFeeLabel, new Tooltip(I18n.get("attendance.fee.maintenance")));
     HBox.setMargin(maintenanceFeeLabel, new Insets(0,0,0,10));
     maintenanceFeeLabel.setVisible(false);
 

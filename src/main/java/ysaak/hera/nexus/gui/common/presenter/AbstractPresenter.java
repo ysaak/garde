@@ -9,7 +9,6 @@ import ysaak.hera.nexus.gui.common.ViewLoader;
 import ysaak.hera.nexus.gui.events.view.CloseFormEvent;
 import ysaak.hera.nexus.gui.events.view.OpenFormEvent;
 import ysaak.hera.nexus.service.event.EventFacade;
-import ysaak.hera.nexus.service.translation.TranslationFacade;
 
 public abstract class AbstractPresenter<DATA> implements Presenter {
   
@@ -18,9 +17,6 @@ public abstract class AbstractPresenter<DATA> implements Presenter {
 
   @Autowired
   protected ViewLoader viewLoader;
-
-  @Autowired
-  protected TranslationFacade translationFacade;
 
   protected Context currentContext = null;
   
