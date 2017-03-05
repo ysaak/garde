@@ -3,6 +3,7 @@ package ysaak.hera.nexus.gui.common.presenter;
 import javafx.scene.Node;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.ViewLoader;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarAction;
 import ysaak.hera.nexus.gui.common.components.ModulePane;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
@@ -26,13 +27,17 @@ public abstract class AbstractFormPresenter<DATA, VIEW extends AbstractFormView<
 
     pane.setTitle(view.getTitle());
     pane.setToolbarComponents(view.getToolbarComponents());
-    pane.setButtonBar(view.getButtonBar());
 
-    if (view.getButtonBar() != null) {
-      view.getButtonBar().hasChangedProperty().bind(this.view.hasChangedProperty());
-      view.getButtonBar().isValidProperty().bind(this.view.isValidProperty());
 
-      view.getButtonBar().setListener(action -> {
+    final ButtonBar buttonBar = view.getButtonBar();
+    pane.setButtonBar(buttonBar);
+
+    if (buttonBar != null) {
+
+      buttonBar.hasChangedProperty().bind(this.view.hasChangedProperty());
+      buttonBar.isValidProperty().bind(this.view.isValidProperty());
+
+      buttonBar.setListener(action -> {
         if (action == ButtonBarAction.FINISH || action == ButtonBarAction.CANCEL) {
           closeView();
         }
