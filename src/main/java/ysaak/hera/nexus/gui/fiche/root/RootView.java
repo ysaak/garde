@@ -48,10 +48,6 @@ public class RootView extends AbstractFormView<List<Child>> {
     JFXButton birthdayButton = new JFXButton(I18n.get("root.actions.birthdays"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.CAKE_VARIANT));
     birthdayButton.setOnAction(evt -> showBirthdayDrawer());
 
-    // TODO remove raised state
-    birthdayButton.setButtonType(JFXButton.ButtonType.RAISED);
-    birthdayButton.setStyle("-fx-background-color: -light-primary-color");
-
     bar.setRightNodes(birthdayButton, parametersButton);
     return bar;
   }
@@ -74,9 +70,7 @@ public class RootView extends AbstractFormView<List<Child>> {
     menuItems.setOnMouseReleased(e -> {
       if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() > 1) {
         Child child = (Child) e.getSource();
-        fireOpenFormRequest("MONTHLY-VIEW", ContextBuilder.get().withId(child.getId()).build());
-
-
+        fireOpenFormRequest("CHILD-ROOT", ContextBuilder.get().withId(child.getId()).build());
       }
     });
 
