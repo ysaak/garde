@@ -12,26 +12,23 @@ import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.Contexts;
 import ysaak.hera.nexus.gui.common.ViewLoader;
 import ysaak.hera.nexus.gui.common.annotation.Fiche;
-import ysaak.hera.nexus.gui.common.annotation.NavbarComponent;
 import ysaak.hera.nexus.gui.common.presenter.Presenter;
 import ysaak.hera.nexus.gui.common.view.ViewListener;
 import ysaak.hera.nexus.gui.events.view.CloseFormEvent;
 import ysaak.hera.nexus.gui.events.view.OpenFormEvent;
+import ysaak.hera.nexus.gui.leftpanel.LeftPanelPresenter;
 import ysaak.hera.nexus.service.event.EventFacade;
 
 import javax.annotation.PreDestroy;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class MainViewController {
   private static final Logger LOGGER = LoggerFactory.getLogger(MainViewController.class);
   
-  private static final String FORMS_PACKAGE = "ysaak.hera.nexus.gui.fiche";
-  private static final String NAVBAR_COMP_PACKAGE = "ysaak.hera.nexus.gui.navbar";
+  private static final String FORMS_PACKAGE = MainViewController.class.getPackage().getName();
 
   @Autowired
   private EventFacade eventFacade;
@@ -48,13 +45,11 @@ public class MainViewController {
 
   private Class<? extends Presenter> rootForm = null;
   private final Map<String, Class<? extends Presenter>> formsMap;
-  private final List<Class<? extends Presenter>> navComponentsList;
 
   public MainViewController(MainView mainView) {
     this.mainView = mainView;
 
     formsMap = loadModules();
-    navComponentsList = loadNavbarComponents();
     
     if (rootForm == null) {
       LOGGER.error("No root forms");
@@ -79,13 +74,19 @@ public class MainViewController {
     eventFacade.register(this);
     eventFacade.register(mainView);
 
-    // Display nav elements
-    for (Class<? extends Presenter> ne : navComponentsList) {
-      final Presenter presenter = applicationContext.getBean(ne);
-      presenter.init();
+    // Load left panel
+    LeftPanelPresenter leftPanelPresenter;
+    try {
 
-      mainView.addNavbarElement(presenter.getView());
-      presenter.startLoadData(Contexts.emptyContext());
+      leftPanelPresenter = loadPresenter(LeftPanelPresenter.class);
+    }
+    catch (Exception e) {
+      LOGGER.error("Error while loading left panel presenter", e);
+      leftPanelPresenter = null;
+    }
+
+    if (leftPanelPresenter != null) {
+      mainView.setLeftPane(leftPanelPresenter.getView());
     }
 
     showAppRootView();
@@ -131,27 +132,6 @@ public class MainViewController {
     return forms;
   }
 
-  @SuppressWarnings("unchecked")
-  private List<Class<? extends Presenter>> loadNavbarComponents() {
-    final List<Class<? extends Presenter>> navElements = new ArrayList<>();
-
-    try {
-      ClassPath classpath = ClassPath.from(getClass().getClassLoader());
-
-      for (ClassPath.ClassInfo classInfo : classpath.getTopLevelClassesRecursive(NAVBAR_COMP_PACKAGE)) {
-        Class<?> clazz = classInfo.load();
-        if (clazz.isAnnotationPresent(NavbarComponent.class) && Presenter.class.isAssignableFrom(clazz)) {
-          navElements.add((Class<? extends Presenter>) clazz);
-        }
-      }
-    }
-    catch (IOException e) {
-      LOGGER.error("Error while loading navbar components", e);
-    }
-
-    return navElements;
-  }
-
   private void showAppRootView() {
     if (rootForm != null) {
       showView(rootForm, Contexts.emptyContext());
@@ -166,7 +146,7 @@ public class MainViewController {
       showView(view, event.getContext());
     }
     else {
-      LOGGER.error("No form with code '" + event.getViewCode() + "' is registred");
+      LOGGER.error("No form with code '" + event.getViewCode() + "' is registered");
     }
   }
 
@@ -177,15 +157,18 @@ public class MainViewController {
     }
   }
 
+  private <T extends Presenter> T loadPresenter(Class<T> presenterClazz) throws Exception {
+    final T presenter = presenterClazz.newInstance();
+    applicationContext.getAutowireCapableBeanFactory().autowireBean(presenter);
+
+    presenter.init();
+
+    return presenter;
+  }
+
   private void showView(Class<? extends Presenter> presenterClazz, Context context) {
     try {
-
-      //final Presenter presenter = applicationContext.getBean(presenterClazz);
-      final Presenter presenter = presenterClazz.newInstance();
-      applicationContext.getAutowireCapableBeanFactory().autowireBean(presenter);
-
-      presenter.init();
-
+      final Presenter presenter = loadPresenter(presenterClazz);
       final Node node = presenter.getView();
 
       // Display node

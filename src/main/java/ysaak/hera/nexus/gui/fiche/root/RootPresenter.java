@@ -6,19 +6,18 @@ import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.annotation.Fiche;
 import ysaak.hera.nexus.gui.common.presenter.AbstractFormPresenter;
+import ysaak.hera.nexus.gui.events.leftpanel.LeftPanelUpdateEvent;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Fiche(value="ROOT", root=true)
 public class RootPresenter extends AbstractFormPresenter<List<Child>, RootView> {
 
+  private static final List<String> VIEW_CODE_EXCEPTIONS = Arrays.asList("", "");
+
   @Autowired
   private ChildService childService;
-
-  @Override
-  protected RootView initView() {
-    return viewLoader.loadView(RootView.class);
-  }
 
   @Override
   protected List<Child> loadData(Context context) throws Exception {
@@ -28,5 +27,14 @@ public class RootPresenter extends AbstractFormPresenter<List<Child>, RootView> 
   @Override
   protected void updataData(List<Child> data) throws Exception {
     // Not used
+  }
+
+  @Override
+  protected void fireOpenFormRequest(String viewCode, Context context) {
+    if (!VIEW_CODE_EXCEPTIONS.contains(viewCode)) {
+      eventFacade.post(new LeftPanelUpdateEvent(context.getLongId()));
+    }
+
+    super.fireOpenFormRequest(viewCode, context);
   }
 }

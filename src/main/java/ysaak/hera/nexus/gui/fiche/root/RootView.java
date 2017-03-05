@@ -75,6 +75,8 @@ public class RootView extends AbstractFormView<List<Child>> {
       if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() > 1) {
         Child child = (Child) e.getSource();
         fireOpenFormRequest("MONTHLY-VIEW", ContextBuilder.get().withId(child.getId()).build());
+
+
       }
     });
 
@@ -128,5 +130,4 @@ public class RootView extends AbstractFormView<List<Child>> {
   public List<Child> getData() {
     return null;
   }
-
 }

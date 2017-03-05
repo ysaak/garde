@@ -8,11 +8,9 @@ import ysaak.hera.nexus.gui.common.components.ModulePane;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
 import ysaak.hera.nexus.gui.common.view.ViewListener;
 
-public abstract class AbstractFormPresenter<DATA, VIEW extends AbstractFormView<DATA>> extends AbstractPresenter<DATA> implements Presenter {
+public abstract class AbstractFormPresenter<DATA, VIEW extends AbstractFormView<DATA>> extends AbstractPresenter<DATA, VIEW> implements Presenter {
   
   private ModulePane pane;
-  
-  protected VIEW view;
 
   public AbstractFormPresenter() {}
 
@@ -57,21 +55,9 @@ public abstract class AbstractFormPresenter<DATA, VIEW extends AbstractFormView<
       }
     });
   }
-  
-  protected abstract VIEW initView();
 
   @Override
   public Node getView() {
     return pane.getView();
-  }
-
-  @Override
-  protected DATA getData() {
-    return view.getData();
-  }
-  
-  @Override
-  protected void setData(DATA data) {
-    view.setData(data);
   }
 }

@@ -37,6 +37,11 @@ public class ChildServiceImpl extends AbstractService implements ChildService {
   }
 
   @Override
+  public Child get(long id) {
+    return childRepository.findOne(id);
+  }
+
+  @Override
   public List<Child> listAll() {
     final Iterable<Child> children = childRepository.findAll();
     return Lists.newArrayList(children);

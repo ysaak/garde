@@ -161,6 +161,14 @@
   	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 0.0, 0.0;
 }
 
+/*****************************************/
+
+.left-panel {
+    -fx-background-color: #FFFFFF;
+  	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 0.0, 0.0;
+
+  	-fx-effect: dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);
+}
 
 
 /*****************************************/
