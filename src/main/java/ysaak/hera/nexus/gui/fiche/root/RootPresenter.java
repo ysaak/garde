@@ -25,7 +25,7 @@ public class RootPresenter extends AbstractFormPresenter<List<Child>, RootView> 
   }
 
   @Override
-  protected void updataData(List<Child> data) throws Exception {
+  protected void updateData(List<Child> data) throws Exception {
     // Not used
   }
 

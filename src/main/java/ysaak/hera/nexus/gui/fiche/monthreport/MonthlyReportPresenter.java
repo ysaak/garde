@@ -31,7 +31,7 @@ public class MonthlyReportPresenter extends AbstractFormPresenter<MonthReport, M
   }
 
   @Override
-  protected void updataData(MonthReport data) throws Exception {
+  protected void updateData(MonthReport data) throws Exception {
     // Not used
   }
 }

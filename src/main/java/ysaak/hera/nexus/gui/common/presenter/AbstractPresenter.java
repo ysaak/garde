@@ -73,7 +73,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends View<DATA>> implement
 
           @Override
           protected Void call() throws Exception {
-            updataData(getData());
+            updateData(getData());
             return null;
           }
         };
@@ -87,7 +87,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends View<DATA>> implement
   
   protected abstract DATA loadData(Context context) throws Exception;
   
-  protected abstract void updataData(DATA data) throws Exception;
+  protected abstract void updateData(DATA data) throws Exception;
   
   protected void showError(Throwable error) {
     error.printStackTrace();

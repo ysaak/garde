@@ -30,7 +30,7 @@ public class AttendanceListPresenter extends AbstractFormPresenter<List<Attendan
   }
 
   @Override
-  protected void updataData(List<Attendance> data) throws Exception {
+  protected void updateData(List<Attendance> data) throws Exception {
     // Not used
   }
 }

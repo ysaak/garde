@@ -61,7 +61,7 @@ public class LeftPanelPresenter extends AbstractPresenter<Child, LeftPanelView> 
   }
 
   @Override
-  protected void updataData(Child child) throws Exception {
+  protected void updateData(Child child) throws Exception {
     // Nothing to save
   }
 }
