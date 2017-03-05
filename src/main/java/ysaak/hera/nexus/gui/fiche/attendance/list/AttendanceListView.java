@@ -16,6 +16,8 @@ import ysaak.hera.nexus.data.attendance.AttendancePeriod;
 import ysaak.hera.nexus.data.attendance.MaintenanceFee;
 import ysaak.hera.nexus.data.attendance.MealFee;
 import ysaak.hera.nexus.gui.common.Formatters;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarFactory;
 import ysaak.hera.nexus.gui.common.components.tablecell.DurationTableCell;
 import ysaak.hera.nexus.gui.common.components.tablecell.LocalDateTableCell;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
@@ -70,6 +72,11 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
   @Override
   public String getTitle() {
     return "Temp title";
+  }
+
+  @Override
+  public ButtonBar getButtonBar() {
+    return ButtonBarFactory.getFinishButtonBar();
   }
 
   @FXML

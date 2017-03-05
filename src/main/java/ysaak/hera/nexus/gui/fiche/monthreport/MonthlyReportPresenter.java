@@ -6,7 +6,6 @@ import ysaak.hera.nexus.data.monthreport.MonthReport;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.ContextBuilder;
 import ysaak.hera.nexus.gui.common.annotation.Fiche;
-import ysaak.hera.nexus.gui.common.buttonbar.EditorButtonBar;
 import ysaak.hera.nexus.gui.common.presenter.AbstractFormPresenter;
 
 import java.time.LocalDate;
@@ -16,10 +15,6 @@ public class MonthlyReportPresenter extends AbstractFormPresenter<MonthReport, M
 
   @Autowired
   private MonthReportService monthReportService;
-
-  public MonthlyReportPresenter() {
-    super(new EditorButtonBar());
-  }
 
   @Override
   protected MonthlyReportView initView() {

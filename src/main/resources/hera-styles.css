@@ -129,23 +129,7 @@
 	-fx-border-color: #01549b;
 }
 
-/* Button flat */
-.hbtn-flat {
-    -fx-background-color: transparent;
-    -fx-background-radius: 5.0;
-    -fx-border-width: 0;
-    -fx-border-radius: 5.0;
-    -fx-text-fill: #212121;
-}
-.hbtn-flat:hover {
-	-fx-background-color: #DDD;
-}
-.hbtn-flat:pressed {
-	-fx-background-color: #CCC;
-}
-.hbtn-flat:disabled {
-    -fx-text-fill: #B0B0B0;
-}
+
 
 
 

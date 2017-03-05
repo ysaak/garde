@@ -5,10 +5,8 @@ import ysaak.hera.nexus.business.service.attendance.AttendanceService;
 import ysaak.hera.nexus.data.attendance.Attendance;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.annotation.Fiche;
-import ysaak.hera.nexus.gui.common.buttonbar.FinishButtonBar;
 import ysaak.hera.nexus.gui.common.presenter.AbstractFormPresenter;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,10 +15,6 @@ public class AttendanceListPresenter extends AbstractFormPresenter<List<Attendan
 
   @Autowired
   private AttendanceService attendanceService;
-  
-  public AttendanceListPresenter() throws IOException {
-    super(new FinishButtonBar());
-  }
 
   @Override
   protected AttendanceListView initView() {

@@ -1,11 +1,11 @@
 package ysaak.hera.nexus.gui.fiche.root;
 
+import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.utils.MaterialDesignIconFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -13,19 +13,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import org.apache.commons.lang3.StringUtils;
 import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.gui.common.ContextBuilder;
 import ysaak.hera.nexus.gui.common.Contexts;
-import ysaak.hera.nexus.gui.common.buttonbar.Action;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
 import ysaak.hera.nexus.gui.common.buttonbar.CustomButtonBar;
 import ysaak.hera.nexus.gui.common.components.grid.SelectableGridView;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
 import ysaak.hera.nexus.service.translation.I18n;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class RootView extends AbstractFormView<List<Child>> {
@@ -44,8 +41,18 @@ public class RootView extends AbstractFormView<List<Child>> {
   @Override
   public ButtonBar getButtonBar() {
     CustomButtonBar bar = new CustomButtonBar();
-    bar.setCustomStyles(Arrays.asList("hbtn-flat"));
-    bar.setRightActions(new ParametersAction());
+
+    JFXButton parametersButton = new JFXButton(I18n.get("root.actions.parameters"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.SETTINGS));
+    parametersButton.setOnAction(evt -> displayParametersDialog());
+
+    JFXButton birthdayButton = new JFXButton(I18n.get("root.actions.birthdays"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.CAKE_VARIANT));
+    birthdayButton.setOnAction(evt -> showBirthdayDrawer());
+
+    // TODO remove raised state
+    birthdayButton.setButtonType(JFXButton.ButtonType.RAISED);
+    birthdayButton.setStyle("-fx-background-color: -light-primary-color");
+
+    bar.setRightNodes(birthdayButton, parametersButton);
     return bar;
   }
 
@@ -109,8 +116,12 @@ public class RootView extends AbstractFormView<List<Child>> {
     list.addAll(data);
   }
 
-  private void onParametersAction() {
-    System.err.println("TODO");
+  private void displayParametersDialog() {
+    System.err.println("TODO displayParametersDialog");
+  }
+
+  private void showBirthdayDrawer() {
+    System.err.println("TODO displayParametersDialog");
   }
 
   @Override
@@ -118,19 +129,4 @@ public class RootView extends AbstractFormView<List<Child>> {
     return null;
   }
 
-  private class ParametersAction extends Action {
-    private ParametersAction() {
-      super(I18n.get("root.actions.parameters"));
-
-      Text icon = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.SETTINGS);
-      setGraphic(icon);
-
-      setDisabled(true);
-    }
-
-    @Override
-    public void handle(ActionEvent event) {
-      onParametersAction();
-    }
-  }
 }

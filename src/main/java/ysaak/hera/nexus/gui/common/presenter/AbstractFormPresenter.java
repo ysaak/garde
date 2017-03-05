@@ -3,7 +3,6 @@ package ysaak.hera.nexus.gui.common.presenter;
 import javafx.scene.Node;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.ViewLoader;
-import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarAction;
 import ysaak.hera.nexus.gui.common.components.ModulePane;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
@@ -17,11 +16,6 @@ public abstract class AbstractFormPresenter<DATA, VIEW extends AbstractFormView<
 
   public AbstractFormPresenter() {}
 
-  @Deprecated
-  public AbstractFormPresenter(ButtonBar buttonBar) {
-    super();
-  }
-  
   @Override
   public void init() {
     super.init();

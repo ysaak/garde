@@ -1,16 +1,16 @@
 package ysaak.hera.nexus.gui.common.buttonbar;
 
-import javafx.scene.control.Button;
+import com.jfoenix.controls.JFXButton;
 
 public class FinishButtonBar extends ButtonBar {
-  
-  private Button finishButton;
-  
+
   public FinishButtonBar() {
     super();
-    
-    finishButton = new Button("Finish");
-    finishButton.getStyleClass().add("hbtn");
+
+    // FIXME translations
+    JFXButton finishButton = new JFXButton("Finish");
+    finishButton.setStyle("-fx-background-color: #FFF");
+    finishButton.setButtonType(JFXButton.ButtonType.RAISED);
     finishButton.setOnAction(evt -> fireEvent(ButtonBarAction.FINISH));
     
     setRight(finishButton);

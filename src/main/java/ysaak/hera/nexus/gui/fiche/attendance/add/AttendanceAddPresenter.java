@@ -9,10 +9,6 @@ import ysaak.hera.nexus.gui.common.presenter.AbstractFormPresenter;
 @Fiche("ATTENDANCE-ADD")
 public class AttendanceAddPresenter extends AbstractFormPresenter<Attendance, AttendanceAddView> {
 
-  public AttendanceAddPresenter() {
-    super(new EditorButtonBar());
-  }
-
   @Override
   protected AttendanceAddView initView() {
     return new AttendanceAddView();

@@ -14,10 +14,11 @@ import ysaak.hera.nexus.data.attendance.Attendance;
 import ysaak.hera.nexus.data.attendance.AttendancePeriod;
 import ysaak.hera.nexus.data.attendance.MaintenanceFee;
 import ysaak.hera.nexus.data.attendance.MealFee;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarFactory;
 import ysaak.hera.nexus.gui.common.components.IterativeList;
 import ysaak.hera.nexus.gui.common.components.RadioButtonGroup;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
-import ysaak.hera.nexus.gui.common.view.AbstractView;
 
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -37,6 +38,11 @@ public class AttendanceAddView extends AbstractFormView<Attendance> {
   public String getTitle() {
     //FIXME use translation
     return "Ajout d'une présence";
+  }
+
+  @Override
+  public ButtonBar getButtonBar() {
+    return ButtonBarFactory.getEditorButtonBar();
   }
 
   @Override
