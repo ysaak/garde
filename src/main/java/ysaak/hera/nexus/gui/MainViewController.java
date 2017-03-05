@@ -153,9 +153,11 @@ public class MainViewController {
   @Subscribe
   public void onCloseFormEvent(CloseFormEvent event) {
     if (event.getPresenter() != null) {
+      LOGGER.debug("Receiving request to close presenter named {}", event.getPresenter().getClass().getName());
       closeView(event.getPresenter());
     }
     else if (event.isCloseWholeContext()) {
+      LOGGER.debug("Receiving request to close the whole context");
       openedViews.clear();
       showAppRootView();
     }
@@ -171,6 +173,8 @@ public class MainViewController {
   }
 
   private void showView(Class<? extends Presenter> presenterClazz, Context context) {
+    LOGGER.debug("Opening presenter {} with context {}", presenterClazz.getName(), context.toString());
+
     try {
       final Presenter presenter = loadPresenter(presenterClazz);
       final Node node = presenter.getView();
@@ -194,19 +198,22 @@ public class MainViewController {
   }
 
   private void closeView(Presenter presenter) {
+    LOGGER.debug("Closing presenter {}", presenter.getClass().getName());
+
 
     final int index = openedViews.indexOf(presenter);
     final int lastIndex = openedViews.size() - 1;
 
-    if (index == lastIndex) {
-      // Remove the last entry
-      openedViews.remove(index);
-    }
+    // Remove the last entry
+    openedViews.remove(index);
 
     if (openedViews.size() > 0) {
-      // Display top element
-      Presenter last = openedViews.getLast();
-      mainView.setCenterNode(last.getView());
+
+      if (index == lastIndex) {
+        // Display top element if removed presenter was the last one
+        Presenter last = openedViews.getLast();
+        mainView.setCenterNode(last.getView());
+      }
     }
     else {
       // Nothing to display, show root pane
