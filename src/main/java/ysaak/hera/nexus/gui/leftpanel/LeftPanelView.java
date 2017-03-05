@@ -15,7 +15,7 @@ import ysaak.hera.nexus.gui.common.view.AbstractView;
 import ysaak.hera.nexus.service.translation.I18n;
 
 /**
- * Left panel displaying child informations
+ * Left panel displaying child information
  */
 public class LeftPanelView extends AbstractView<Child> {
   private static final double PANEL_WIDTH = 200.;
