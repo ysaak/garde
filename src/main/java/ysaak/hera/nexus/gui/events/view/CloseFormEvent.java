@@ -5,5 +5,12 @@ import ysaak.hera.nexus.gui.common.presenter.Presenter;
 
 @Data
 public class CloseFormEvent {
-  private final Presenter presenter;
+  private Presenter presenter;
+  private boolean closeWholeContext = false;
+
+  public CloseFormEvent() { /* Empty constructor */}
+
+  public CloseFormEvent(Presenter presenter) {
+    this.presenter = presenter;
+  }
 }

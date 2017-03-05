@@ -155,6 +155,10 @@ public class MainViewController {
     if (event.getPresenter() != null) {
       closeView(event.getPresenter());
     }
+    else if (event.isCloseWholeContext()) {
+      openedViews.clear();
+      showAppRootView();
+    }
   }
 
   private <T extends Presenter> T loadPresenter(Class<T> presenterClazz) throws Exception {

@@ -1,48 +1,71 @@
 package ysaak.hera.nexus.gui.leftpanel;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.gui.common.view.AbstractView;
+import ysaak.hera.nexus.service.translation.I18n;
 
 /**
  * Left panel displaying child informations
  */
-public class ChildLeftPanel extends AbstractView<Child> {
+public class LeftPanelView extends AbstractView<Child> {
   private static final double PANEL_WIDTH = 200.;
   private static final double PANEL_PADDING = 10.;
 
-  private final VBox mainPane;
+  private final BorderPane mainPane;
 
   private final Label firstNameLabel;
   private final Label lastNameLabel;
 
-  public ChildLeftPanel() {
+  private JFXButton terminateButton;
 
-    mainPane = new VBox();
-    mainPane.setPrefWidth(PANEL_WIDTH + 2*PANEL_PADDING);
-    mainPane.setMinWidth(PANEL_WIDTH + 2*PANEL_PADDING);
+  public LeftPanelView() {
 
-    mainPane.setPadding(new Insets(PANEL_PADDING));
-
-    mainPane.getStyleClass().add("left-panel");
-
+    VBox topPane = new VBox();
 
     ImageView childImage = new ImageView(getClass().getResource("/testimg.jpg").toExternalForm());
     lastNameLabel = new Label(" ");
     lastNameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 1.2em");
     firstNameLabel = new Label(" ");
 
-    mainPane.getChildren().addAll(childImage, lastNameLabel, firstNameLabel);
+    topPane.getChildren().addAll(childImage, lastNameLabel, firstNameLabel);
+
+    // Bottom pane
+    terminateButton = new JFXButton(I18n.get("common.button.terminate"));
+    terminateButton.setMaxWidth(Double.MAX_VALUE);
+
+    VBox bottomPane = new VBox(terminateButton);
+    bottomPane.setFillWidth(true);
+    bottomPane.setAlignment(Pos.CENTER);
+
+    mainPane = new BorderPane();
+    mainPane.setTop(topPane);
+    mainPane.setBottom(bottomPane);
+
+    mainPane.getStyleClass().add("left-panel");
+
+    mainPane.setPadding(new Insets(PANEL_PADDING));
+    mainPane.setPrefWidth(PANEL_WIDTH + 2*PANEL_PADDING);
+    mainPane.setMinWidth(PANEL_WIDTH + 2*PANEL_PADDING);
   }
 
   @Override
   public void initialize() {
     // By default the pane is hidden
     mainPane.setVisible(false);
+  }
+
+  public void setOnTerminateAction(EventHandler<ActionEvent> value) {
+    terminateButton.setOnAction(value);
   }
 
   @Override

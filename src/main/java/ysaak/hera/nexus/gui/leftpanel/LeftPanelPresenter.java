@@ -8,14 +8,30 @@ import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.ContextBuilder;
 import ysaak.hera.nexus.gui.common.presenter.AbstractPresenter;
 import ysaak.hera.nexus.gui.events.leftpanel.LeftPanelUpdateEvent;
+import ysaak.hera.nexus.gui.events.view.CloseFormEvent;
 
 /**
  * Left panel presenter
  */
-public class LeftPanelPresenter extends AbstractPresenter<Child, ChildLeftPanel> {
+public class LeftPanelPresenter extends AbstractPresenter<Child, LeftPanelView> {
 
   @Autowired
   private ChildService childService;
+
+  @Override
+  protected LeftPanelView initView() {
+    LeftPanelView view = super.initView();
+
+    view.setOnTerminateAction(evt -> {
+      CloseFormEvent closeEvt = new CloseFormEvent();
+      closeEvt.setCloseWholeContext(true);
+      eventFacade.post(closeEvt);
+
+      getView().setVisible(false);
+    });
+
+    return view;
+  }
 
   @Subscribe
   public void onLeftPanelUpdateEvent(LeftPanelUpdateEvent event) {
