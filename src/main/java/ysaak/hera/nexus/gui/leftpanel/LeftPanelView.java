@@ -11,13 +11,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import ysaak.hera.nexus.data.Child;
-import ysaak.hera.nexus.gui.common.view.AbstractView;
+import ysaak.hera.nexus.gui.common.view.AbstractFormView;
 import ysaak.hera.nexus.service.translation.I18n;
 
 /**
  * Left panel displaying child information
  */
-public class LeftPanelView extends AbstractView<Child> {
+public class LeftPanelView extends AbstractFormView<Child> {
   private static final double PANEL_WIDTH = 200.;
   private static final double PANEL_PADDING = 10.;
 
@@ -59,10 +59,12 @@ public class LeftPanelView extends AbstractView<Child> {
   }
 
   @Override
-  public void initialize() {
-    // By default the pane is hidden
-    mainPane.setVisible(false);
+  public String getTitle() {
+    return "";
   }
+
+  @Override
+  public void initialize() { /**/ }
 
   public void setOnTerminateAction(EventHandler<ActionEvent> value) {
     terminateButton.setOnAction(value);

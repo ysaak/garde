@@ -19,6 +19,17 @@
    /* .divider-color         { border-color: #BDBDBD; }*/
 }
 
+.load-indicator {
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+}
+
+.load-indicator .text {
+    -fx-font-size: 14.0px;
+    -fx-text-fill: #FFF;
+	-fx-font-weight: bold;
+	-fx-font-family: Roboto;
+}
+
 .navbar {
 	-fx-background-color: #464646;
 	-fx-pref-width: 40.0;

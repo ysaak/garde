@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ysaak.hera.nexus.business.service.child.ChildService;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.annotation.Fiche;
-import ysaak.hera.nexus.gui.common.presenter.AbstractFormPresenter;
+import ysaak.hera.nexus.gui.common.presenter.AbstractPresenter;
 
 @Fiche("CHILD-ROOT")
-public class ChildRootPresenter extends AbstractFormPresenter<Long, ChildRootView> {
+public class ChildRootPresenter extends AbstractPresenter<Long, ChildRootView> {
 
   @Autowired
   private ChildService childService;

@@ -27,8 +27,11 @@ public class LeftPanelPresenter extends AbstractPresenter<Child, LeftPanelView> 
       closeEvt.setCloseWholeContext(true);
       eventFacade.post(closeEvt);
 
-      getView().setVisible(false);
+      pane.getView().setVisible(false);
     });
+
+    pane.getView().visibleProperty().bindBidirectional(view.getView().visibleProperty());
+    view.getView().setVisible(false);
 
     return view;
   }
@@ -52,11 +55,11 @@ public class LeftPanelPresenter extends AbstractPresenter<Child, LeftPanelView> 
   @Override
   protected void setData(Child child) {
     if (child == null) {
-      getView().setVisible(false);
+      pane.getView().setVisible(false);
     }
     else {
       super.setData(child);
-      getView().setVisible(true);
+      pane.getView().setVisible(true);
     }
   }
 

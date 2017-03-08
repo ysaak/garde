@@ -13,6 +13,7 @@ import ysaak.hera.nexus.business.MockInitializer;
 import ysaak.hera.nexus.gui.MainView;
 import ysaak.hera.nexus.gui.MainViewController;
 import ysaak.hera.nexus.gui.common.ViewLoader;
+import ysaak.hera.nexus.service.task.TaskFacade;
 
 @Lazy
 @SpringBootApplication
@@ -25,17 +26,12 @@ public class GardeApp extends Application {
   @Autowired
   private ViewLoader viewLoader;
 
-  public static void main(String[] args) {
-    /*
-    System.setProperty("prism.lcdtext", "false");
-    System.setProperty("prism.text", "t2k");
-    System.setProperty("prism.order", "d3d,j2d");
-    System.setProperty("prism.vsync", "true");
-    System.setProperty("prism.forceGPU", "true");
-    */
+  @Autowired
+  private TaskFacade taskFacade;
 
+  public static void main(String[] args) {
     System.setProperty("apple.laf.useScreenMenuBar", "true");
-    System.setProperty("com.apple.mrj.application.apple.mennu.about.name", "Garde!");
+    System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Garde!");
 
     savedArgs = args;
     Application.launch(GardeApp.class, args);
@@ -75,6 +71,7 @@ public class GardeApp extends Application {
 
   @Override
   public void stop() throws Exception {
+    taskFacade.shutdown();
     applicationContext.close();
   }
 }

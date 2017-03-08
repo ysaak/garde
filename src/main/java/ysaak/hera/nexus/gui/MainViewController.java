@@ -2,8 +2,6 @@ package ysaak.hera.nexus.gui;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.common.reflect.ClassPath;
-import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +84,7 @@ public class MainViewController {
     }
 
     if (leftPanelPresenter != null) {
-      mainView.setLeftPane(leftPanelPresenter.getView());
+      mainView.setLeftPane(leftPanelPresenter.getView().getView());
     }
 
     showAppRootView();
@@ -177,17 +175,9 @@ public class MainViewController {
 
     try {
       final Presenter presenter = loadPresenter(presenterClazz);
-      final Node node = presenter.getView();
-
-      // Display node
-      AnchorPane.setTopAnchor(node, 0.0);
-      AnchorPane.setBottomAnchor(node, 0.0);
-      AnchorPane.setLeftAnchor(node, 0.0);
-      AnchorPane.setRightAnchor(node, 0.0);
-
       openedViews.add(presenter);
 
-      mainView.setCenterNode(node);
+      mainView.setCenterNode(presenter.getView());
 
       // Load data
       presenter.startLoadData(context);
@@ -199,7 +189,6 @@ public class MainViewController {
 
   private void closeView(Presenter presenter) {
     LOGGER.debug("Closing presenter {}", presenter.getClass().getName());
-
 
     final int index = openedViews.indexOf(presenter);
     final int lastIndex = openedViews.size() - 1;

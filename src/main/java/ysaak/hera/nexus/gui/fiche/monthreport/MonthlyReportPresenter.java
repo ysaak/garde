@@ -6,12 +6,12 @@ import ysaak.hera.nexus.data.monthreport.MonthReport;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.ContextBuilder;
 import ysaak.hera.nexus.gui.common.annotation.Fiche;
-import ysaak.hera.nexus.gui.common.presenter.AbstractFormPresenter;
+import ysaak.hera.nexus.gui.common.presenter.AbstractPresenter;
 
 import java.time.LocalDate;
 
 @Fiche("MONTHLY-VIEW")
-public class MonthlyReportPresenter extends AbstractFormPresenter<MonthReport, MonthlyReportView> {
+public class MonthlyReportPresenter extends AbstractPresenter<MonthReport, MonthlyReportView> {
 
   @Autowired
   private MonthReportService monthReportService;

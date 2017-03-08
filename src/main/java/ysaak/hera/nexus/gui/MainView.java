@@ -5,50 +5,73 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import org.springframework.stereotype.Component;
+import ysaak.hera.nexus.gui.common.components.ModulePane;
 import ysaak.hera.nexus.gui.common.view.AbstractView;
 
 @Component
 public class MainView extends AbstractView<Void> {
-  @FXML
-  private StackPane rootPane;
 
   @FXML
-  private BorderPane basePane;
+  private BorderPane rootPane;
 
   @FXML
   private AnchorPane centerPane;
 
   private Node leftPane;
 
+  private ModulePane centerNode = null;
+
   @Override
   public void initialize() {
-    // Unused
   }
-  
-  public void setCenterNode(Node node) {
+
+  public void setCenterNode(ModulePane node) {
     centerPane.getChildren().clear();
-    centerPane.getChildren().add(node);
+
+    if (node != null) {
+      centerNode = node;
+
+      // Set anchors
+      AnchorPane.setTopAnchor(node.getView(), 0.);
+      AnchorPane.setBottomAnchor(node.getView(), 0.);
+      AnchorPane.setLeftAnchor(node.getView(), 0.);
+      AnchorPane.setRightAnchor(node.getView(), 0.);
+
+      // Compute padding
+      computeCenterNodePadding();
+
+      centerPane.getChildren().add(node.getView());
+    }
   }
 
   public void setLeftPane(Node node) {
     this.leftPane = node;
 
-    BorderPane.setMargin(leftPane, new Insets(0, 10., 0, 0));
-
     leftPane.visibleProperty().addListener((observable, oldValue, newValue) -> {
 
       if (newValue != null && newValue) {
-        basePane.setLeft(leftPane);
+        rootPane.setLeft(leftPane);
       }
       else {
-        basePane.setLeft(null);
+        rootPane.setLeft(null);
       }
     });
 
     if (node.isVisible()) {
-      basePane.setLeft(node);
+      rootPane.setLeft(node);
+    }
+
+    computeCenterNodePadding();
+  }
+
+  /**
+   * Compute the center node padding
+   */
+  private void computeCenterNodePadding() {
+    if (centerNode != null) {
+      double leftPadding = rootPane.getLeft() != null ? 40. : 20.;
+      centerNode.setPadding(new Insets(20., 20., 20., leftPadding));
     }
   }
 

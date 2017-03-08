@@ -5,14 +5,14 @@ import ysaak.hera.nexus.business.service.child.ChildService;
 import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.annotation.Fiche;
-import ysaak.hera.nexus.gui.common.presenter.AbstractFormPresenter;
+import ysaak.hera.nexus.gui.common.presenter.AbstractPresenter;
 import ysaak.hera.nexus.gui.events.leftpanel.LeftPanelUpdateEvent;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Fiche(value="ROOT", root=true)
-public class RootPresenter extends AbstractFormPresenter<List<Child>, RootView> {
+public class RootPresenter extends AbstractPresenter<List<Child>, RootView> {
 
   private static final List<String> VIEW_CODE_EXCEPTIONS = Arrays.asList("", "");
 
