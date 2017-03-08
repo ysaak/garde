@@ -3,9 +3,11 @@ package ysaak.hera.nexus.gui.fiche.child.root;
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.utils.MaterialDesignIconFactory;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import ysaak.hera.nexus.gui.common.ContextBuilder;
@@ -23,13 +25,15 @@ public class ChildRootView extends AbstractFormView<Long> {
   @Override
   public void initialize() {
 
-    FlowPane actionsPane = new FlowPane();
+    FlowPane actionsListPane = new FlowPane();
+    actionsListPane.setVgap(10.);
+    actionsListPane.setHgap(10.);
+    actionsListPane.setAlignment(Pos.TOP_CENTER);
 
-
-    actionsPane.getChildren().addAll(
-            createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
-            createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
-            createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
+    actionsListPane.getChildren().addAll(
+            createActionButton("Rapport mensuel", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
+            createActionButton("Présences", MaterialDesignIcon.ACCOUNT, "ATTENDANCE-LIST"),
+            createActionButton("attList3", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
             createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
             createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
             createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
@@ -37,6 +41,9 @@ public class ChildRootView extends AbstractFormView<Long> {
             createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW")
     );
 
+
+    TitledPane actionsPane = new TitledPane(I18n.get("child.root.actionsList"), actionsListPane);
+    actionsPane.getStyleClass().add("card");
 
     pane = new BorderPane(actionsPane);
   }
