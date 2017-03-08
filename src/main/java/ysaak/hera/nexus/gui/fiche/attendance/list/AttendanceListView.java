@@ -1,26 +1,34 @@
 package ysaak.hera.nexus.gui.fiche.attendance.list;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import ysaak.hera.nexus.data.attendance.Attendance;
 import ysaak.hera.nexus.data.attendance.AttendancePeriod;
 import ysaak.hera.nexus.data.attendance.MaintenanceFee;
 import ysaak.hera.nexus.data.attendance.MealFee;
 import ysaak.hera.nexus.gui.common.Formatters;
+import ysaak.hera.nexus.gui.common.UiUtils;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarFactory;
 import ysaak.hera.nexus.gui.common.components.tablecell.DurationTableCell;
+import ysaak.hera.nexus.gui.common.components.tablecell.EnumTableCell;
 import ysaak.hera.nexus.gui.common.components.tablecell.LocalDateTableCell;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
+import ysaak.hera.nexus.service.translation.I18n;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -30,6 +38,9 @@ import java.util.List;
 public class AttendanceListView extends AbstractFormView<List<Attendance>> {
   @FXML
   protected Pane rootPane;
+
+  @FXML
+  private HBox tableActionBar;
 
   @FXML
   private TableView<Attendance> attendanceTable;
@@ -71,7 +82,7 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
 
   @Override
   public String getTitle() {
-    return "Temp title";
+    return I18n.get("attendance.list.title");
   }
 
   @Override
@@ -81,6 +92,29 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
 
   @FXML
   public void initialize() {
+    // Init table
+    attendanceTable.setRowFactory(tableView -> {
+      final TableRow<Attendance> row = new TableRow<>();
+
+      // Build context menu
+
+      MenuItem editItem = new MenuItem(I18n.get("button.edit"), UiUtils.getEditIcon());
+      editItem.setOnAction(evt -> onEditAction(row.getItem()));
+
+      MenuItem removeItem = new MenuItem(I18n.get("button.delete"), UiUtils.getDeleteIcon());
+      removeItem.setOnAction(evt -> onDeleteAction(row.getItem()));
+
+      final ContextMenu rowMenu = new ContextMenu();
+      rowMenu.getItems().addAll(editItem, removeItem);
+
+      // only display context menu for non-null items:
+      row.contextMenuProperty().bind(
+              Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                      .then(rowMenu)
+                      .otherwise((ContextMenu)null));
+      return row;
+    });
+
     attendanceTable.setItems(data);
     
     dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -99,7 +133,10 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
     durationColumn.setCellFactory(p -> new DurationTableCell<>());
     
     mealFeeColumn.setCellValueFactory(new PropertyValueFactory<>("mealFee"));
+    mealFeeColumn.setCellFactory(p -> new EnumTableCell<>(MealFee.NO));
+
     maintenanceFeeColumn.setCellValueFactory(new PropertyValueFactory<>("maintenanceFee"));
+    maintenanceFeeColumn.setCellFactory(p -> new EnumTableCell<>());
     
     totalHoursLabel.setText("00:00");
   }
@@ -160,4 +197,10 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
     return rootPane;
   }
 
+  private void onEditAction(Attendance attendance) {
+  }
+
+  private void onDeleteAction(Attendance attendance) {
+
+  }
 }

@@ -43,6 +43,23 @@ public final class I18n {
   }
 
   /**
+   * Find a translation for an enum
+   * @param enumValue Enum to translate
+   * @param <T> Enum type
+   * @return Translated enum
+   */
+  public static <T extends Enum<T>> String get(T enumValue) {
+
+    if (enumValue == null) {
+      return "";
+    }
+
+    final String key = enumValue.getClass().getName() + "." + enumValue.toString();
+
+    return get(key);
+  }
+
+  /**
    * Returns the resource BUNDLE used by the facade
    * @return A resource BUNDLE
    */
