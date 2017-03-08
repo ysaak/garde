@@ -24,7 +24,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
     private final Context context;
 
     private DataLoaderTask(final Context context) {
-      super(TaskType.LOAD, pane);
+      super(TaskType.LOAD, rootPane);
       this.context = context;
     }
 
@@ -47,7 +47,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
   private class DataUpdaterTask extends GuiTask<DATA> {
 
     private DataUpdaterTask() {
-      super(TaskType.UPDATE, pane);
+      super(TaskType.UPDATE, rootPane);
     }
 
     @Override
@@ -76,7 +76,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
   @Autowired
   protected TaskFacade taskFacade;
 
-  protected ModulePane pane;
+  protected ModulePane rootPane;
 
   protected VIEW view;
 
@@ -93,20 +93,20 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
   public void init() {
     eventFacade.register(this);
 
-    pane = new ModulePane();
+    rootPane = new ModulePane();
     this.view = initView();
 
     // Store the default action listener
     this.view.setActionListener(this::onActionEvent);
-    this.pane.setCenter(this.view.getView());
+    this.rootPane.setCenter(this.view.getView());
 
 
-    pane.setTitle(view.getTitle());
-    pane.setToolbarComponents(view.getToolbarComponents());
+    rootPane.setTitle(view.getTitle());
+    rootPane.setToolbarComponents(view.getToolbarComponents());
 
 
     final ButtonBar buttonBar = view.getButtonBar();
-    pane.setButtonBar(buttonBar);
+    rootPane.setButtonBar(buttonBar);
 
     if (buttonBar != null) {
 
@@ -146,6 +146,16 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
     currentContext = context;
     taskFacade.submit(new DataLoaderTask(context));
   }
+
+  @Override
+  public void startReloadData() {
+    startLoadData(currentContext);
+  }
+
+  @Override
+  public boolean reloadOnDisplay() {
+    return false;
+  }
   
   private void startUpdateData() {
     taskFacade.submit(new DataUpdaterTask());
@@ -155,7 +165,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
   
   protected abstract void updateData(DATA data) throws Exception;
   
-  private void showError(Throwable error) {
+  protected void showError(Throwable error) {
     //FIXME correctly trace and show error
     error.printStackTrace();
   }
@@ -175,7 +185,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
 
   @Override
   public ModulePane getView() {
-    return pane;
+    return rootPane;
   }
 
   protected DATA getData() {

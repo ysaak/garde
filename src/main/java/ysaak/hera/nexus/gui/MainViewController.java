@@ -202,6 +202,10 @@ public class MainViewController {
         // Display top element if removed presenter was the last one
         Presenter last = openedViews.getLast();
         mainView.setCenterNode(last.getView());
+
+        if (last.reloadOnDisplay()) {
+          last.startReloadData();
+        }
       }
     }
     else {
