@@ -1,5 +1,7 @@
 package ysaak.hera.nexus.gui.common.view;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import ysaak.hera.nexus.gui.common.actions.ActionListener;
 import ysaak.hera.nexus.gui.common.actions.ActionType;
@@ -12,11 +14,41 @@ public abstract class AbstractFormView<DATA> extends AbstractView<DATA> {
 
   private ActionListener<DATA> actionListener = null;
 
+  private StringProperty title = new SimpleStringProperty();
+
+  @Deprecated
+  public AbstractFormView() {
+    title.set(getTitle());
+  }
+
+  public AbstractFormView(String title) {
+    this.title.set(title);
+  }
+
+  /**
+   * Defines the new title of the form
+   * @param title New title
+   */
+  protected void setTitle(String title) {
+    this.title.set(title);
+  }
+
+  /**
+   * Returns the title property
+   * @return Title
+   */
+  public StringProperty titleProperty() {
+    return title;
+  }
+
   /**
    * Title of the module
    * @return Title
    */
-  public abstract String getTitle();
+  @Deprecated
+  public String getTitle() {
+    return null;
+  }
 
   /**
    * Components of the right toolbar

@@ -1,5 +1,6 @@
 package ysaak.hera.nexus.gui.common.components;
 
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -35,6 +36,7 @@ public class ModulePane implements TaskMonitoringInterface {
   public ModulePane() {
     titleLabel = new Label(" ");
     titleLabel.getStyleClass().add("module-title");
+    titleLabel.textProperty().addListener((object, oldValue, newValue) -> computeTopPaneVisibility());
 
     toolbarPane = new HBox(20.);
 
@@ -56,9 +58,8 @@ public class ModulePane implements TaskMonitoringInterface {
     mainPane = new StackPane(centerPane, overlayIndicator.getView());
   }
 
-  public void setTitle(String title) {
-    titleLabel.setText(title);
-    computeTopPaneVisibility();
+  public StringProperty titleProperty() {
+    return titleLabel.textProperty();
   }
 
   public void setToolbarComponents(List<Node> components) {

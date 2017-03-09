@@ -101,8 +101,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
     this.view.setActionListener(this::onActionEvent);
     this.rootPane.setCenter(this.view.getView());
 
-
-    rootPane.setTitle(view.getTitle());
+    rootPane.titleProperty().bind(view.titleProperty());
     rootPane.setToolbarComponents(view.getToolbarComponents());
 
 
