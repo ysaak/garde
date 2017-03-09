@@ -35,6 +35,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
 
     @Override
     public void onSucceeded(DATA result) {
+      setExtraData();
       setData(result);
     }
 
@@ -186,6 +187,10 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
   @Override
   public ModulePane getView() {
     return rootPane;
+  }
+
+  protected void setExtraData() {
+    // Override to use
   }
 
   protected DATA getData() {

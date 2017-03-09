@@ -13,4 +13,10 @@ public interface AttendanceService {
   Attendance get(long childId, LocalDate date);
 
   List<Attendance> getBetween(long childId, LocalDate startPeriod, LocalDate endPeriod);
+
+  /**
+   * Delete an attendance
+   * @param attendanceId ID of the attendance to delete
+   */
+  void delete(long attendanceId);
 }

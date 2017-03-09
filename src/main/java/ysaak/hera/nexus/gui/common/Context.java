@@ -8,6 +8,8 @@ import java.time.LocalDate;
 public class Context {
   public static final Context EMPTY = new Context();
 
+  private Long childId;
+
   private Long longId;
 
   private LocalDate date;

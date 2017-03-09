@@ -10,6 +10,9 @@ import javafx.scene.text.Text;
 public final class UiUtils {
   private UiUtils() { /* Hidden constructor */ }
 
+  public static Text getAddIcon() {
+    return MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.PLUS_CIRCLE);
+  }
 
   public static Text getEditIcon() {
     return MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.PENCIL);

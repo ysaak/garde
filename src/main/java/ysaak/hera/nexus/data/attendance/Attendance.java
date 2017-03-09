@@ -27,7 +27,7 @@ public class Attendance implements Comparable<Attendance> {
   @Enumerated
   private MealFee mealFee;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "attendance")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "attendance")
   private List<AttendancePeriod> periods;
 
   @Override

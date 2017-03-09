@@ -1,5 +1,6 @@
 package ysaak.hera.nexus.gui.fiche.attendance.list;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -14,7 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import ysaak.hera.nexus.data.attendance.Attendance;
 import ysaak.hera.nexus.data.attendance.AttendancePeriod;
@@ -22,8 +23,11 @@ import ysaak.hera.nexus.data.attendance.MaintenanceFee;
 import ysaak.hera.nexus.data.attendance.MealFee;
 import ysaak.hera.nexus.gui.common.Formatters;
 import ysaak.hera.nexus.gui.common.UiUtils;
+import ysaak.hera.nexus.gui.common.actions.ActionType;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarFactory;
+import ysaak.hera.nexus.gui.common.components.monthselector.MonthSelector;
+import ysaak.hera.nexus.gui.common.components.monthselector.MonthSelectorListener;
 import ysaak.hera.nexus.gui.common.components.tablecell.DurationTableCell;
 import ysaak.hera.nexus.gui.common.components.tablecell.EnumTableCell;
 import ysaak.hera.nexus.gui.common.components.tablecell.LocalDateTableCell;
@@ -33,14 +37,15 @@ import ysaak.hera.nexus.service.translation.I18n;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 
 public class AttendanceListView extends AbstractFormView<List<Attendance>> {
   @FXML
-  protected Pane rootPane;
+  private Pane rootPane;
 
   @FXML
-  private HBox tableActionBar;
+  private BorderPane tableActionBar;
 
   @FXML
   private TableView<Attendance> attendanceTable;
@@ -77,12 +82,25 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
   
   @FXML
   private Label totalHoursLabel;
+
+  private JFXButton addButton;
   
   private ObservableList<Attendance> data = FXCollections.observableArrayList();
+
+  private LocalDate currentMonth = null;
+
+  private MonthSelector monthSelector = null;
+
+  private MonthSelectorListener monthSelectorListener = null;
 
   @Override
   public String getTitle() {
     return I18n.get("attendance.list.title");
+  }
+
+  @Override
+  public List<Node> getToolbarComponents() {
+    return Collections.singletonList(addButton);
   }
 
   @Override
@@ -92,6 +110,8 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
 
   @FXML
   public void initialize() {
+    initializeToolbar();
+
     // Init table
     attendanceTable.setRowFactory(tableView -> {
       final TableRow<Attendance> row = new TableRow<>();
@@ -139,6 +159,33 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
     maintenanceFeeColumn.setCellFactory(p -> new EnumTableCell<>());
     
     totalHoursLabel.setText("00:00");
+  }
+
+  private void initializeToolbar() {
+    // Initialize main toolbar
+    addButton = new JFXButton(I18n.get("button.add"), UiUtils.getAddIcon());
+    addButton.setOnAction(evt -> fireActionEvent(ActionType.CREATE, null));
+
+    // Initialize date selector
+    monthSelector = new MonthSelector();
+    monthSelector.setOnNextAction(event -> {
+      if (currentMonth != null) {
+        fireMonthSelected(currentMonth.plusMonths(1));
+      }
+    });
+    monthSelector.setOnPreviousAction(event -> {
+      if (currentMonth != null) {
+        fireMonthSelected(currentMonth.minusMonths(1));
+      }
+    });
+    tableActionBar.setLeft(monthSelector);
+
+    // Today button
+    JFXButton todayButton = new JFXButton(I18n.get("common.today"));
+    todayButton.setOnAction(event -> fireMonthSelected(LocalDate.now().withDayOfMonth(1)));
+
+    tableActionBar.setRight(todayButton);
+
   }
 
   @Override
@@ -197,10 +244,26 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
     return rootPane;
   }
 
+  public void setCurrentMonth(LocalDate currentMonth) {
+    this.currentMonth = currentMonth;
+    this.monthSelector.setMonth(currentMonth);
+  }
+
+  public void setMonthSelectorListener(MonthSelectorListener monthSelectorListener) {
+    this.monthSelectorListener = monthSelectorListener;
+  }
+
+  private void fireMonthSelected(LocalDate month) {
+    if (monthSelectorListener != null) {
+      monthSelectorListener.monthSelected(month);
+    }
+  }
+
   private void onEditAction(Attendance attendance) {
+    fireActionEvent(ActionType.UPDATE, Collections.singletonList(attendance));
   }
 
   private void onDeleteAction(Attendance attendance) {
-
+    fireActionEvent(ActionType.DELETE, Collections.singletonList(attendance));
   }
 }

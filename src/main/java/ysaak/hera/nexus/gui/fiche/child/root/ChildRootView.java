@@ -58,7 +58,7 @@ public class ChildRootView extends AbstractFormView<Long> {
   }
 
   private void openForm(String viewCode) {
-    fireOpenFormRequest(viewCode, ContextBuilder.get().withId(originalData).build());
+    fireOpenFormRequest(viewCode, ContextBuilder.get().withChildId(originalData).build());
   }
 
   @Override

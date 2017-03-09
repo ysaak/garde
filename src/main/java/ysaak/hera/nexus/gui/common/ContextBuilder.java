@@ -17,6 +17,15 @@ public class ContextBuilder {
     return new ContextBuilder();
   }
 
+  public static Context ofChild(Long childId) {
+    return get().withChildId(childId).build();
+  }
+
+  public ContextBuilder withChildId(Long id) {
+    context.setChildId(id);
+    return this;
+  }
+
   public ContextBuilder withId(Long id) {
     context.setLongId(id);
     return this;
