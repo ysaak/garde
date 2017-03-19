@@ -141,40 +141,31 @@
 }
 
 
-
-
-.untitled-card {
+.btn-raised {
     -fx-background-color: #FFFFFF;
+	-fx-font-weight: bold;
+}
+
+.btn-raised:default {
+    -fx-background-color: -default-primary-color;
+}
+
+/** Card **/
+.card {
+	-fx-background-color: #FFFFFF;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 0.0, 0.0;
     -fx-border-width: 0;
+
+    -fx-padding: 10;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);
 }
 
-.card {
-	-fx-collapsible: false;
-}
-
-.card > .title {
-	-fx-background-color: #FFFFFF;
-	
-	-fx-border-radius: 10 10 0 0;
-  	-fx-background-radius: 10 10 0 0;
-
-  	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 0.0, 0.0;
-  	
-  	-fx-font-size: 16.0px;
-}
-
-.card > .content {
-	-fx-background-color: #FFFFFF;
-	
-	-fx-border-radius: 0 0 10 10;
-  	-fx-background-radius: 0 0 10 10;
-  	
-  	-fx-border-width: 0;
-  	
-  	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 0.0, 0.0;
+.card-title {
+    -fx-font-size: 16.0px;
+    -fx-padding: 0 0 10 0;
 }
 
 /*****************************************/

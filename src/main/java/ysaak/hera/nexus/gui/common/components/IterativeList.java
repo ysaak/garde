@@ -1,13 +1,10 @@
 package ysaak.hera.nexus.gui.common.components;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.utils.MaterialDesignIconFactory;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -15,9 +12,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import ysaak.hera.nexus.gui.common.view.AbstractView;
+import ysaak.hera.nexus.service.translation.I18n;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IterativeList<T> extends BorderPane {
-  private final Button addButton;
+  private final JFXButton addButton;
   
   private final VBox centerBox;
   
@@ -36,8 +37,7 @@ public class IterativeList<T> extends BorderPane {
     setCenter(centerBox);
 
     final Text icon = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.PLUS_BOX);
-    addButton = new Button("Ajouter", icon);
-    addButton.getStyleClass().add("hbtn");
+    addButton = new JFXButton(I18n.get("button.add"), icon);
     addButton.setOnAction(this::addLine);
     setBottom(addButton);
   }
@@ -52,7 +52,7 @@ public class IterativeList<T> extends BorderPane {
     handleAddButtonActivation();
   }
   
-  protected AbstractView<T> addLine(ActionEvent evt) {
+  private AbstractView<T> addLine(ActionEvent evt) {
     if (lineFactory == null)
       return null;
     
@@ -66,9 +66,8 @@ public class IterativeList<T> extends BorderPane {
     linePane.setRight(removeBtnBox);
 
 
-    Button removeButton = new Button("", MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.MINUS_BOX));
+    JFXButton removeButton = new JFXButton("", MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.MINUS_BOX));
     removeButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-    removeButton.getStyleClass().add("hbtn");
     
     removeButton.setOnAction(revt -> {
       viewList.remove(newLine);
@@ -97,11 +96,12 @@ public class IterativeList<T> extends BorderPane {
   public void setData(List<T> data) {
     for (T d : data) {
       AbstractView<T> view = addLine(null);
-      view.setData(d);
+      if (view != null)
+        view.setData(d);
     }
   }
   
-  protected void handleAddButtonActivation() {
+  private void handleAddButtonActivation() {
     if (maxLinesCount > 0 && viewList.size() >= maxLinesCount) {
       addButton.setDisable(true);
     }

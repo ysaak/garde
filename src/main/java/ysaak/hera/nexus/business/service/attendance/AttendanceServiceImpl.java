@@ -19,13 +19,23 @@ public class AttendanceServiceImpl extends AbstractService implements Attendance
   private AttendanceRepository attendanceRepository;
 
   @Override
-  public Attendance create(long childId, Attendance attendance) {
+  public Attendance save(long childId, Attendance attendance) {
 
+    if (attendance.getContractId() != null) {
+      attendance.setContractId(childId);
+    }
+
+    // Store data
     for (AttendancePeriod p : attendance.getPeriods()) {
       p.setAttendance(attendance);
     }
 
     return attendanceRepository.save(attendance);
+  }
+
+  @Override
+  public Attendance get(long id) {
+    return attendanceRepository.findOne(id);
   }
 
   @Override
@@ -42,7 +52,6 @@ public class AttendanceServiceImpl extends AbstractService implements Attendance
   @Override
   public void delete(long attendanceId) {
     final Attendance attendance = attendanceRepository.findOne(attendanceId);
-    //attendance.getPeriods().clear();
     attendanceRepository.delete(attendance);
   }
 }

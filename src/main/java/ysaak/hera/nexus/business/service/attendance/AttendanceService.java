@@ -1,14 +1,26 @@
 package ysaak.hera.nexus.business.service.attendance;
 
+import ysaak.hera.nexus.data.attendance.Attendance;
+
 import java.time.LocalDate;
 import java.util.List;
 
-import ysaak.hera.nexus.data.attendance.Attendance;
-import ysaak.hera.nexus.data.attendance.AttendancePeriod;
-
 public interface AttendanceService {
 
-  Attendance create(long childId, Attendance attendance);
+  /**
+   * Create or update an attendance
+   * @param childId ID of the child which attended
+   * @param attendance Attendance data
+   * @return Attendance
+   */
+  Attendance save(long childId, Attendance attendance);
+
+  /**
+   * Find an attendance by its ID
+   * @param id ID of an attendance
+   * @return Attendance
+   */
+  Attendance get(long id);
 
   Attendance get(long childId, LocalDate date);
 

@@ -97,7 +97,7 @@ public class MockInitializer {
         nb = ThreadLocalRandom.current().nextInt(0, MealFee.values().length);
         a1.setMealFee(MealFee.values()[nb]);
 
-        attendanceService.create(child.getId(), a1);
+        attendanceService.save(child.getId(), a1);
       }
 
       currentDate = currentDate.plusDays(1);
