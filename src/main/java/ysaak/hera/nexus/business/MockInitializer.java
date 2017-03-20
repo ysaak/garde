@@ -39,7 +39,7 @@ public class MockInitializer {
       a.setFirstName(ng.getName());
       a.setLastName((i==0 ? "XX " : "") + ng.getName().toUpperCase());
       a.setBirthDate(getRandomTimeBetweenTwoDates());
-      a = childService.create(a);
+      a = childService.save(a);
 
       if (i == 0) {
         baseChild = a;
@@ -60,11 +60,11 @@ public class MockInitializer {
 
     AttendancePeriod p2 = new AttendancePeriod();
     p2.setStartHour(LocalTime.of(13, 0));
-    p2.setEndHour(LocalTime.of(16, 00));
+    p2.setEndHour(LocalTime.of(16, 0));
 
     AttendancePeriod p3 = new AttendancePeriod();
     p3.setStartHour(LocalTime.of(17, 45));
-    p3.setEndHour(LocalTime.of(19, 00));
+    p3.setEndHour(LocalTime.of(19, 0));
 
     List<AttendancePeriod> periods = Arrays.asList(p1, p2, p3);
 

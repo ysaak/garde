@@ -30,7 +30,7 @@ public class ChildServiceImpl extends AbstractService implements ChildService {
   private ChildRepository childRepository;
   
   @Override
-  public Child create(Child child) throws DataValidationException {
+  public Child save(Child child) throws DataValidationException {
     validate(child);
     childRepository.save(child);
     return child;

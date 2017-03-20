@@ -33,7 +33,7 @@ public class ChildRootView extends AbstractFormView<Long> {
     actionsListPane.getChildren().addAll(
             createActionButton("Rapport mensuel", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
             createActionButton("Présences", MaterialDesignIcon.ACCOUNT, "ATTENDANCE-LIST"),
-            createActionButton("attList3", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
+            createActionButton("Edit", MaterialDesignIcon.PENCIL, "CHILD-EDIT"),
             createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
             createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
             createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),

@@ -1,15 +1,18 @@
 package ysaak.hera.nexus.gui.common;
 
 import ysaak.hera.nexus.data.attendance.AttendancePeriod;
+import ysaak.hera.nexus.service.translation.I18n;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.TextStyle;
 import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 
-public class Formatters {
+public final class Formatters {
 
   private static final DateTimeFormatter TIME_FORMATTER;// = DateTimeFormatter.ofPattern("HH'hmm");
   static {
@@ -21,7 +24,9 @@ public class Formatters {
             .toFormatter();
   }
 
-  public static  final String formatPeriod(AttendancePeriod period) {
+  private Formatters() { /* private constructor */ }
+
+  public static String formatPeriod(AttendancePeriod period) {
 
     StringBuilder sb = new StringBuilder();
     sb.append(formatLocalTime(period.getStartHour()))
@@ -31,19 +36,46 @@ public class Formatters {
     return sb.toString();
   }
 
-  public static final String formatLocalTime(LocalTime time) {
-    String strTime = time.format(TIME_FORMATTER);
-    return strTime;
+  public static String formatLocalTime(LocalTime time) {
+    return time.format(TIME_FORMATTER);
   }
 
-  public static final String formatDuration(Duration d) {
+  public static String formatDuration(Duration d) {
     return formatDuration(d, ":");
   }
 
-  public static final String formatDuration(Duration d, String separator) {
+  public static String formatDuration(Duration d, String separator) {
     long hours = d.toHours();
     long minutes = d.minusHours(hours).toMinutes();
     
     return String.format("%02d" + separator + "%02d", hours, minutes);
+  }
+
+  /**
+   * Format the age according to the birthday
+   * @param birthday Birthday
+   * @return Formatted age
+   */
+  public static String formatAge(LocalDate birthday) {
+    if (birthday == null) {
+      throw new NullPointerException("birthday is null");
+    }
+
+    long yearsDelta = birthday.until(LocalDate.now(), ChronoUnit.YEARS);
+    long monthsDelta = birthday.until(LocalDate.now(), ChronoUnit.MONTHS);
+
+    if (yearsDelta > 0) {
+      monthsDelta -= yearsDelta * 12;
+    }
+
+    if (yearsDelta == 0) {
+      return I18n.get("format.age.onlyMonths", monthsDelta);
+    }
+    else if (monthsDelta == 0) {
+      return I18n.get("format.age.onlyYears", yearsDelta);
+    }
+    else {
+      return I18n.get("format.age.full", yearsDelta, monthsDelta);
+    }
   }
 }

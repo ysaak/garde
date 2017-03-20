@@ -90,7 +90,7 @@
 .module-title {
 	-fx-font-size: 30.0px;
 	-fx-font-weight: bold;
-	-fx-font-familly: Roboto;
+	-fx-font-family: Roboto;
 }
 
 .module-button {
@@ -111,6 +111,15 @@
 }
 .module-button:pressed {
 	-fx-background-color: #DDD;
+}
+
+/******/
+.form-label {
+	-fx-font-weight: bold;
+	-fx-font-family: Roboto;
+}
+.form-label-required {
+    -fx-text-fill: red;
 }
 
 
@@ -164,7 +173,7 @@
 }
 
 .card-title {
-    -fx-font-size: 16.0px;
+    -fx-font-size: 20.0px;
     -fx-padding: 0 0 10 0;
 }
 
