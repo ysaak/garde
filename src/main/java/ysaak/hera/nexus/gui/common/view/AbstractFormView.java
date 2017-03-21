@@ -5,7 +5,6 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import ysaak.hera.nexus.gui.common.actions.ActionListener;
 import ysaak.hera.nexus.gui.common.actions.ActionType;
-import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
 
 import java.util.Collections;
 import java.util.List;
@@ -56,14 +55,6 @@ public abstract class AbstractFormView<DATA> extends AbstractView<DATA> {
    */
   public List<Node> getToolbarComponents() {
     return Collections.emptyList();
-  }
-
-  /**
-   * Button bar of the module
-   * @return Button bar of the module
-   */
-  public ButtonBar getButtonBar() {
-    return null;
   }
 
   /**

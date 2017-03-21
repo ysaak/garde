@@ -17,12 +17,11 @@ import org.apache.commons.lang3.StringUtils;
 import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.gui.common.ContextBuilder;
 import ysaak.hera.nexus.gui.common.Contexts;
-import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
-import ysaak.hera.nexus.gui.common.buttonbar.CustomButtonBar;
 import ysaak.hera.nexus.gui.common.components.grid.SelectableGridView;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
 import ysaak.hera.nexus.service.translation.I18n;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class RootView extends AbstractFormView<List<Child>> {
@@ -33,14 +32,12 @@ public class RootView extends AbstractFormView<List<Child>> {
   private final ObservableList<Child> list = FXCollections.observableArrayList();
   private FilteredList<Child> filteredData = null;
 
-  @Override
-  public String getTitle() {
-    return I18n.get("root.title");
+  public RootView() {
+    super(I18n.get("root.title"));
   }
 
   @Override
-  public ButtonBar getButtonBar() {
-    CustomButtonBar bar = new CustomButtonBar();
+  public List<Node> getToolbarComponents() {
 
     JFXButton parametersButton = new JFXButton(I18n.get("root.actions.parameters"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.SETTINGS));
     parametersButton.setOnAction(evt -> displayParametersDialog());
@@ -48,8 +45,7 @@ public class RootView extends AbstractFormView<List<Child>> {
     JFXButton birthdayButton = new JFXButton(I18n.get("root.actions.birthdays"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.CAKE_VARIANT));
     birthdayButton.setOnAction(evt -> showBirthdayDrawer());
 
-    bar.setRightNodes(birthdayButton, parametersButton);
-    return bar;
+    return Arrays.asList(birthdayButton, parametersButton);
   }
 
   @Override

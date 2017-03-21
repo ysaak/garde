@@ -41,11 +41,6 @@ public class ChildEditView extends AbstractFormView<Child> {
   }
 
   @Override
-  public ButtonBar getButtonBar() {
-    return ButtonBarFactory.getEditorButtonBar();
-  }
-
-  @Override
   public void initialize() {
 
     lastNameField = new JFXTextField();

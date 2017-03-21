@@ -7,11 +7,25 @@ public final class ButtonBarFactory {
 
   private ButtonBarFactory() { /* Hidden constructor */ }
 
-  public static ButtonBar getFinishButtonBar() {
-    return new FinishButtonBar();
-  }
+  public static ButtonBar get(ButtonBarType type) {
 
-  public static ButtonBar getEditorButtonBar() {
-    return new EditorButtonBar();
+    final ButtonBar bar;
+
+    switch (type) {
+
+      case DEFAULT:
+        bar = new FinishButtonBar();
+        break;
+
+      case EDIT:
+        bar = new EditorButtonBar();
+        break;
+
+      case NONE:
+      default:
+        bar = null;
+    }
+
+    return bar;
   }
 }

@@ -13,8 +13,6 @@ import ysaak.hera.nexus.data.attendance.Attendance;
 import ysaak.hera.nexus.data.attendance.AttendancePeriod;
 import ysaak.hera.nexus.data.attendance.MaintenanceFee;
 import ysaak.hera.nexus.data.attendance.MealFee;
-import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
-import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarFactory;
 import ysaak.hera.nexus.gui.common.components.Card;
 import ysaak.hera.nexus.gui.common.components.IterativeList;
 import ysaak.hera.nexus.gui.common.components.RadioButtonGroup;
@@ -38,11 +36,6 @@ public class AttendanceAddView extends AbstractFormView<Attendance> {
 
   public AttendanceAddView() {
     super(I18n.get("attendance.edit.title"));
-  }
-
-  @Override
-  public ButtonBar getButtonBar() {
-    return ButtonBarFactory.getEditorButtonBar();
   }
 
   @Override

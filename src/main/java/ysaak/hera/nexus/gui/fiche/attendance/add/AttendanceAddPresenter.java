@@ -5,6 +5,7 @@ import ysaak.hera.nexus.business.service.attendance.AttendanceService;
 import ysaak.hera.nexus.data.attendance.Attendance;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.annotation.Fiche;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarType;
 import ysaak.hera.nexus.gui.common.presenter.AbstractPresenter;
 
 @Fiche("ATTENDANCE-ADD")
@@ -12,6 +13,10 @@ public class AttendanceAddPresenter extends AbstractPresenter<Attendance, Attend
 
   @Autowired
   private AttendanceService attendanceService;
+
+  public AttendanceAddPresenter() {
+    super(ButtonBarType.EDIT);
+  }
 
   @Override
   protected Attendance loadData(Context context) throws Exception {

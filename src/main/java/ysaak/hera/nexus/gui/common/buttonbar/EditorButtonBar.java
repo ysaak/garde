@@ -3,7 +3,7 @@ package ysaak.hera.nexus.gui.common.buttonbar;
 import com.jfoenix.controls.JFXButton;
 import ysaak.hera.nexus.service.translation.I18n;
 
-public class EditorButtonBar extends ButtonBar {
+class EditorButtonBar extends ButtonBar {
 
   public EditorButtonBar() {
     super();

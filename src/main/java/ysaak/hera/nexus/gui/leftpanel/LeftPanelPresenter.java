@@ -6,6 +6,7 @@ import ysaak.hera.nexus.business.service.child.ChildService;
 import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.ContextBuilder;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarType;
 import ysaak.hera.nexus.gui.common.presenter.AbstractPresenter;
 import ysaak.hera.nexus.gui.events.ChildUpdateEvent;
 import ysaak.hera.nexus.gui.events.leftpanel.LeftPanelUpdateEvent;
@@ -18,6 +19,10 @@ public class LeftPanelPresenter extends AbstractPresenter<Child, LeftPanelView> 
 
   @Autowired
   private ChildService childService;
+
+  public LeftPanelPresenter() {
+    super(ButtonBarType.NONE);
+  }
 
   @Override
   protected LeftPanelView initView() {

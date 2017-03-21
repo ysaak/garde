@@ -5,6 +5,7 @@ import ysaak.hera.nexus.business.service.child.ChildService;
 import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.annotation.Fiche;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarType;
 import ysaak.hera.nexus.gui.common.presenter.AbstractPresenter;
 import ysaak.hera.nexus.gui.events.leftpanel.LeftPanelUpdateEvent;
 
@@ -18,6 +19,10 @@ public class RootPresenter extends AbstractPresenter<List<Child>, RootView> {
 
   @Autowired
   private ChildService childService;
+
+  public RootPresenter() {
+    super(ButtonBarType.NONE);
+  }
 
   @Override
   protected List<Child> loadData(Context context) throws Exception {

@@ -2,7 +2,7 @@ package ysaak.hera.nexus.gui.common.buttonbar;
 
 import com.jfoenix.controls.JFXButton;
 
-public class FinishButtonBar extends ButtonBar {
+class FinishButtonBar extends ButtonBar {
 
   public FinishButtonBar() {
     super();

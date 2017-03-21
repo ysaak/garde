@@ -1,11 +1,14 @@
 package ysaak.hera.nexus.gui.common.presenter;
 
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.ViewLoader;
 import ysaak.hera.nexus.gui.common.actions.ActionType;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
 import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarAction;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarFactory;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarType;
 import ysaak.hera.nexus.gui.common.components.ModulePane;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
 import ysaak.hera.nexus.gui.common.view.ViewListener;
@@ -83,10 +86,20 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
 
   protected Context currentContext = null;
 
+  private final ButtonBarType buttonBarType;
+
   private final Class<VIEW> viewClass;
 
-  @SuppressWarnings("unchecked")
   public AbstractPresenter() {
+    this(ButtonBarType.DEFAULT);
+  }
+
+  @SuppressWarnings("unchecked")
+  public AbstractPresenter(ButtonBarType buttonBarType) {
+    Preconditions.checkNotNull(buttonBarType, "ButtonBarType cannot be null");
+
+    this.buttonBarType = buttonBarType;
+
     this.viewClass = (Class<VIEW>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
   }
   
@@ -104,8 +117,8 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
     rootPane.titleProperty().bind(view.titleProperty());
     rootPane.setToolbarComponents(view.getToolbarComponents());
 
-
-    final ButtonBar buttonBar = view.getButtonBar();
+    // Build button bar
+    final ButtonBar buttonBar = ButtonBarFactory.get(buttonBarType); //view.getButtonBar();
     rootPane.setButtonBar(buttonBar);
 
     if (buttonBar != null) {

@@ -5,6 +5,7 @@ import ysaak.hera.nexus.business.service.child.ChildService;
 import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.annotation.Fiche;
+import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarType;
 import ysaak.hera.nexus.gui.common.presenter.AbstractPresenter;
 
 @Fiche("CHILD-EDIT")
@@ -12,6 +13,10 @@ public class ChildEditPresenter extends AbstractPresenter<Child, ChildEditView> 
 
   @Autowired
   private ChildService childService;
+
+  public ChildEditPresenter() {
+    super(ButtonBarType.EDIT);
+  }
 
   @Override
   protected Child loadData(Context context) throws Exception {

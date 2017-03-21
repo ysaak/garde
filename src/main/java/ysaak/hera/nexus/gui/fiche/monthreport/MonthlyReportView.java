@@ -14,8 +14,6 @@ import javafx.scene.layout.VBox;
 import ysaak.hera.nexus.data.Period;
 import ysaak.hera.nexus.data.attendance.Attendance;
 import ysaak.hera.nexus.data.monthreport.MonthReport;
-import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
-import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarFactory;
 import ysaak.hera.nexus.gui.common.view.AbstractFormView;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.AttendanceCell;
 import ysaak.hera.nexus.gui.fiche.monthreport.cell.MonthReportCell;
@@ -67,11 +65,6 @@ public class MonthlyReportView extends AbstractFormView<MonthReport> {
   public String getTitle() {
     // FIXME use translations
     return "Rapport mensuel";
-  }
-
-  @Override
-  public ButtonBar getButtonBar() {
-    return ButtonBarFactory.getFinishButtonBar();
   }
 
   public void initialize() {

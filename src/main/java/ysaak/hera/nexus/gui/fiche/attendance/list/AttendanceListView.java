@@ -24,8 +24,6 @@ import ysaak.hera.nexus.data.attendance.MealFee;
 import ysaak.hera.nexus.gui.common.Formatters;
 import ysaak.hera.nexus.gui.common.UiUtils;
 import ysaak.hera.nexus.gui.common.actions.ActionType;
-import ysaak.hera.nexus.gui.common.buttonbar.ButtonBar;
-import ysaak.hera.nexus.gui.common.buttonbar.ButtonBarFactory;
 import ysaak.hera.nexus.gui.common.components.monthselector.MonthSelector;
 import ysaak.hera.nexus.gui.common.components.monthselector.MonthSelectorListener;
 import ysaak.hera.nexus.gui.common.components.tablecell.DurationTableCell;
@@ -101,11 +99,6 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
   @Override
   public List<Node> getToolbarComponents() {
     return Collections.singletonList(addButton);
-  }
-
-  @Override
-  public ButtonBar getButtonBar() {
-    return ButtonBarFactory.getFinishButtonBar();
   }
 
   @FXML
