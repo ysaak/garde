@@ -17,6 +17,8 @@ import ysaak.hera.nexus.business.service.parameter.ParameterService;
 import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.data.parameter.Parameter;
 import ysaak.hera.nexus.exception.DataValidationException;
+import ysaak.hera.nexus.gui.events.ChildUpdateEvent;
+import ysaak.hera.nexus.service.event.EventFacade;
 
 @Service
 public class ChildServiceImpl extends AbstractService implements ChildService {
@@ -28,11 +30,20 @@ public class ChildServiceImpl extends AbstractService implements ChildService {
   
   @Autowired
   private ChildRepository childRepository;
+
+  @Autowired
+  private EventFacade eventFacade;
   
   @Override
   public Child save(Child child) throws DataValidationException {
     validate(child);
-    childRepository.save(child);
+
+    final Child newChild = childRepository.save(child);
+
+    if (child.getId() != null) {
+      eventFacade.post(new ChildUpdateEvent(newChild.getId()));
+    }
+
     return child;
   }
 

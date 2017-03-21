@@ -7,6 +7,7 @@ import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.gui.common.Context;
 import ysaak.hera.nexus.gui.common.ContextBuilder;
 import ysaak.hera.nexus.gui.common.presenter.AbstractPresenter;
+import ysaak.hera.nexus.gui.events.ChildUpdateEvent;
 import ysaak.hera.nexus.gui.events.leftpanel.LeftPanelUpdateEvent;
 import ysaak.hera.nexus.gui.events.view.CloseFormEvent;
 
@@ -38,6 +39,13 @@ public class LeftPanelPresenter extends AbstractPresenter<Child, LeftPanelView> 
 
   @Subscribe
   public void onLeftPanelUpdateEvent(LeftPanelUpdateEvent event) {
+    if (event != null && event.getChildId() != null) {
+      startLoadData(ContextBuilder.get().withId(event.getChildId()).build());
+    }
+  }
+
+  @Subscribe
+  public void onChildUpdateEvent(ChildUpdateEvent event) {
     if (event != null && event.getChildId() != null) {
       startLoadData(ContextBuilder.get().withId(event.getChildId()).build());
     }
