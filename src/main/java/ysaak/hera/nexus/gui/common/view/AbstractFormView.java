@@ -15,11 +15,6 @@ public abstract class AbstractFormView<DATA> extends AbstractView<DATA> {
 
   private StringProperty title = new SimpleStringProperty();
 
-  @Deprecated
-  public AbstractFormView() {
-    title.set(getTitle());
-  }
-
   public AbstractFormView(String title) {
     this.title.set(title);
   }
@@ -38,15 +33,6 @@ public abstract class AbstractFormView<DATA> extends AbstractView<DATA> {
    */
   public StringProperty titleProperty() {
     return title;
-  }
-
-  /**
-   * Title of the module
-   * @return Title
-   */
-  @Deprecated
-  public String getTitle() {
-    return null;
   }
 
   /**

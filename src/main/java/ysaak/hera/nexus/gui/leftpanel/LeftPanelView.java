@@ -29,6 +29,7 @@ public class LeftPanelView extends AbstractFormView<Child> {
   private JFXButton terminateButton;
 
   public LeftPanelView() {
+    super("");
 
     VBox topPane = new VBox();
 
@@ -56,11 +57,6 @@ public class LeftPanelView extends AbstractFormView<Child> {
     mainPane.setPadding(new Insets(PANEL_PADDING));
     mainPane.setPrefWidth(PANEL_WIDTH + 2*PANEL_PADDING);
     mainPane.setMinWidth(PANEL_WIDTH + 2*PANEL_PADDING);
-  }
-
-  @Override
-  public String getTitle() {
-    return "";
   }
 
   @Override

@@ -91,9 +91,8 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
 
   private MonthSelectorListener monthSelectorListener = null;
 
-  @Override
-  public String getTitle() {
-    return I18n.get("attendance.list.title");
+  public AttendanceListView() {
+    super(I18n.get("attendance.list.title"));
   }
 
   @Override

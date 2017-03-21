@@ -17,9 +17,8 @@ import ysaak.hera.nexus.service.translation.I18n;
 public class ChildRootView extends AbstractFormView<Long> {
   private BorderPane pane;
 
-  @Override
-  public String getTitle() {
-    return I18n.get("child.root.title");
+  public ChildRootView() {
+    super(I18n.get("child.root.title"));
   }
 
   @Override

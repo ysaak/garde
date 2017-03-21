@@ -61,10 +61,8 @@ public class MonthlyReportView extends AbstractFormView<MonthReport> {
 
   private MonthChangeEvent monthChangeEvent = null;
 
-  @Override
-  public String getTitle() {
-    // FIXME use translations
-    return "Rapport mensuel";
+  public MonthlyReportView() {
+    super(I18n.get("report.title"));
   }
 
   public void initialize() {
