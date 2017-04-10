@@ -1,19 +1,17 @@
 package ysaak.hera.nexus.business.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import ysaak.hera.nexus.exception.validation.FieldValidationException;
+import ysaak.hera.nexus.exception.validation.ValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-import org.springframework.validation.FieldError;
-
-import ysaak.hera.nexus.exception.DataValidationException;
-
-public abstract class AbstractService {
+public abstract class AbstractService<T> {
 
   private final Validator validator;
   
@@ -22,20 +20,19 @@ public abstract class AbstractService {
     validator = validatorFactory.getValidator();
   }
   
-  protected <T> void validate(T bean) throws DataValidationException {
+  protected void validate(T bean) throws ValidationException {
     Set<ConstraintViolation<T>> violations = validator.validate(bean);
     
-    List<FieldError> errors = new ArrayList<>();
+    List<String> errors = new ArrayList<>();
     
     for (ConstraintViolation<T> violation : violations) {
       String propertyPath = violation.getPropertyPath().toString();
-      String message = violation.getMessage();
       
-      errors.add(new FieldError(bean.getClass().getSimpleName(), propertyPath, message));
+      errors.add(propertyPath);
     }
     
     if (errors.size() > 0) {
-      throw new DataValidationException(errors);
+      throw new FieldValidationException(errors);
     }
   }
 }

@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class AttendanceServiceImpl extends AbstractService implements AttendanceService {
+public class AttendanceServiceImpl extends AbstractService<Attendance> implements AttendanceService {
 
   @Autowired
   private AttendanceRepository attendanceRepository;
@@ -25,7 +25,7 @@ public class AttendanceServiceImpl extends AbstractService implements Attendance
       attendance.setContractId(childId);
     }
 
-    // Store data
+    // Store validation
     for (AttendancePeriod p : attendance.getPeriods()) {
       p.setAttendance(attendance);
     }

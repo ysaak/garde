@@ -16,12 +16,12 @@ import ysaak.hera.nexus.business.service.AbstractService;
 import ysaak.hera.nexus.business.service.parameter.ParameterService;
 import ysaak.hera.nexus.data.Child;
 import ysaak.hera.nexus.data.parameter.Parameter;
-import ysaak.hera.nexus.exception.DataValidationException;
+import ysaak.hera.nexus.exception.validation.ValidationException;
 import ysaak.hera.nexus.gui.events.ChildUpdateEvent;
 import ysaak.hera.nexus.service.event.EventFacade;
 
 @Service
-public class ChildServiceImpl extends AbstractService implements ChildService {
+public class ChildServiceImpl extends AbstractService<Child> implements ChildService {
 
   private static final String BDAY_THRESHOLD_PARAM = "BIRTH-DAY-THRESHOLD";
   
@@ -35,7 +35,7 @@ public class ChildServiceImpl extends AbstractService implements ChildService {
   private EventFacade eventFacade;
   
   @Override
-  public Child save(Child child) throws DataValidationException {
+  public Child save(Child child) throws ValidationException {
     validate(child);
 
     final Child newChild = childRepository.save(child);

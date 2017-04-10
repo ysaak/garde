@@ -10,6 +10,7 @@ import ysaak.hera.nexus.data.attendance.Attendance;
 import ysaak.hera.nexus.data.attendance.AttendancePeriod;
 import ysaak.hera.nexus.data.attendance.MaintenanceFee;
 import ysaak.hera.nexus.data.attendance.MealFee;
+import ysaak.hera.nexus.exception.validation.ValidationException;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -39,7 +40,12 @@ public class MockInitializer {
       a.setFirstName(ng.getName());
       a.setLastName((i==0 ? "XX " : "") + ng.getName().toUpperCase());
       a.setBirthDate(getRandomTimeBetweenTwoDates());
-      a = childService.save(a);
+      try {
+        a = childService.save(a);
+      }
+      catch (ValidationException v) {
+        v.printStackTrace();
+      }
 
       if (i == 0) {
         baseChild = a;
