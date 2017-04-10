@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -17,12 +18,15 @@ public class Parameter {
   private Long id;
   
   @Column(unique = true, nullable = false)
+  @NotNull
   private String code;
   
   @Column(nullable = false)
+  @NotNull
   private ParameterType type;
   
   @Column(nullable = false)
+  @NotNull
   private String value;
 
   public String getStringValue() {

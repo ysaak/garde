@@ -7,5 +7,5 @@ import ysaak.hera.nexus.data.parameter.Parameter;
 
 @Repository
 public interface ParameterRepository extends CrudRepository<Parameter, Long> {
-  public Parameter findByCode(String code);
+  Parameter findByCode(String code);
 }
