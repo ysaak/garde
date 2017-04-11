@@ -29,6 +29,14 @@ public class Parameter {
   @NotNull
   private String value;
 
+  public Parameter() { /* empty constructor */ }
+
+  public Parameter(String code, ParameterType type, String value) {
+    this.code = code;
+    this.type = type;
+    this.value = value;
+  }
+
   public String getStringValue() {
     return value;
   }

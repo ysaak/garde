@@ -15,6 +15,7 @@ import ysaak.garde.exception.validation.FieldValidationException;
 import ysaak.garde.exception.validation.NotUniqueValueException;
 import ysaak.garde.exception.validation.ValidationException;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.BDDMockito.any;
@@ -35,7 +36,7 @@ public class TestParameterService {
   private ParameterService service;
 
   @Test
-  public void testCreate() throws ValidationException {
+  public void testSave() throws ValidationException {
     final Parameter expectedParameter = new Parameter();
     expectedParameter.setId(1L);
     expectedParameter.setCode("TEST_CODE");
@@ -51,7 +52,7 @@ public class TestParameterService {
     p.setType(ParameterType.STRING);
     p.setValue("TEST");
 
-    final Parameter cParam = service.create(p);
+    final Parameter cParam = service.save(p);
 
     Assert.assertNotNull(cParam);
     Assert.assertNotNull(cParam.getId());
@@ -61,7 +62,7 @@ public class TestParameterService {
   }
 
   @Test
-  public void testCreateValidation() throws ValidationException {
+  public void testSaveValidation() throws ValidationException {
     final Parameter expectedParameter = new Parameter();
     expectedParameter.setId(1L);
     expectedParameter.setCode("TEST_CODE");
@@ -76,7 +77,7 @@ public class TestParameterService {
 
     // Check not null validation
     try {
-      service.create(p);
+      service.save(p);
       Assert.fail("Code not detected as empty");
     }
     catch (FieldValidationException e) {
@@ -89,13 +90,38 @@ public class TestParameterService {
     p.setValue("TEST");
 
     try {
-      service.create(p);
+      service.save(p);
       Assert.fail("Code duplication not detected");
     }
     catch (NotUniqueValueException e) {
       // Code detected as duplicated
     }
   }
+
+  @Test
+  public void testListAll() {
+    when(this.parameterRepository.findAll()).thenReturn(null);
+
+    // Check empty result
+    final List<Parameter> result1 = service.listAll();
+    Assert.assertNotNull(result1);
+    Assert.assertTrue(result1.isEmpty());
+
+    // Check not empty result
+    final List<Parameter> expectedResult = Arrays.asList(
+            new Parameter("TEST_CODE1", ParameterType.STRING, "TEST"),
+            new Parameter("TEST_CODE2", ParameterType.STRING, "TEST")
+    );
+
+    when(this.parameterRepository.findAll()).thenReturn(expectedResult);
+
+    final List<Parameter> result2 = service.listAll();
+    Assert.assertNotNull(result2);
+    Assert.assertEquals(2, result2.size());
+
+    assertListContains(result2, expectedResult.get(0), expectedResult.get(1));
+  }
+
 
   @SafeVarargs
   private final <T> void assertListContains(List<T> list, T... items) {

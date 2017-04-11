@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Lazy;
+import ysaak.garde.business.BusinessInitializer;
 import ysaak.garde.business.MockInitializer;
 import ysaak.garde.gui.MainView;
 import ysaak.garde.gui.MainViewController;
@@ -41,6 +42,9 @@ public class GardeApp extends Application {
   public void init() throws Exception {
     applicationContext = SpringApplication.run(getClass(), savedArgs);
     applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
+
+    // Initialize business data
+    applicationContext.getBean(BusinessInitializer.class).initialize();
 
     // Initialize mock data
     applicationContext.getBean(MockInitializer.class).init();
