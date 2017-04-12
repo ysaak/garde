@@ -1,24 +1,20 @@
 package ysaak.garde.business.service.child;
 
+import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ysaak.garde.business.repository.ChildRepository;
+import ysaak.garde.business.service.AbstractService;
+import ysaak.garde.business.service.parameter.ParameterService;
+import ysaak.garde.data.Child;
+import ysaak.garde.data.parameter.Parameter;
+import ysaak.garde.exception.validation.ValidationException;
+
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.google.common.collect.Lists;
-
-import ysaak.garde.business.service.AbstractService;
-import ysaak.garde.data.Child;
-import ysaak.garde.exception.validation.ValidationException;
-import ysaak.garde.gui.events.ChildUpdateEvent;
-import ysaak.garde.service.event.EventFacade;
-import ysaak.garde.business.repository.ChildRepository;
-import ysaak.garde.business.service.parameter.ParameterService;
-import ysaak.garde.data.parameter.Parameter;
 
 @Service
 public class ChildServiceImpl extends AbstractService<Child> implements ChildService {
@@ -31,20 +27,10 @@ public class ChildServiceImpl extends AbstractService<Child> implements ChildSer
   @Autowired
   private ChildRepository childRepository;
 
-  @Autowired
-  private EventFacade eventFacade;
-  
   @Override
   public Child save(Child child) throws ValidationException {
     validate(child);
-
-    final Child newChild = childRepository.save(child);
-
-    if (child.getId() != null) {
-      eventFacade.post(new ChildUpdateEvent(newChild.getId()));
-    }
-
-    return child;
+    return childRepository.save(child);
   }
 
   @Override

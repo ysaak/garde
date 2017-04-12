@@ -7,6 +7,7 @@ import ysaak.garde.gui.common.annotation.Fiche;
 import ysaak.garde.gui.common.buttonbar.ButtonBarType;
 import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.presenter.AbstractPresenter;
+import ysaak.garde.gui.events.ChildUpdateEvent;
 
 @Fiche("CHILD-EDIT")
 public class ChildEditPresenter extends AbstractPresenter<Child, ChildEditView> {
@@ -32,6 +33,10 @@ public class ChildEditPresenter extends AbstractPresenter<Child, ChildEditView> 
 
   @Override
   protected void updateData(Child data) throws Exception {
-    childService.save(data);
+    final Child child = childService.save(data);
+
+    if (child.getId() != null) {
+      eventFacade.post(new ChildUpdateEvent(child.getId()));
+    }
   }
 }
