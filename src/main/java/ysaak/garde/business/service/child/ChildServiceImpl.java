@@ -1,12 +1,12 @@
 package ysaak.garde.business.service.child;
 
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ysaak.garde.business.model.Child;
 import ysaak.garde.business.repository.ChildRepository;
 import ysaak.garde.business.service.AbstractService;
 import ysaak.garde.business.service.parameter.ParameterService;
-import ysaak.garde.data.Child;
+import ysaak.garde.data.ChildDTO;
 import ysaak.garde.data.parameter.Parameter;
 import ysaak.garde.exception.validation.ValidationException;
 
@@ -19,7 +19,7 @@ import java.util.Locale;
 @Service
 public class ChildServiceImpl extends AbstractService<Child> implements ChildService {
 
-  private static final String BDAY_THRESHOLD_PARAM = "BIRTH-DAY-THRESHOLD";
+  private static final String BIRTHDAY_THRESHOLD_PARAM = "BIRTH-DAY-THRESHOLD";
   
   @Autowired
   private ParameterService parameterService;
@@ -28,20 +28,29 @@ public class ChildServiceImpl extends AbstractService<Child> implements ChildSer
   private ChildRepository childRepository;
 
   @Override
-  public Child save(Child child) throws ValidationException {
-    validate(child);
-    return childRepository.save(child);
+  public ChildDTO save(ChildDTO child) throws ValidationException {
+    // Convert
+    Child model = mapTo(child, Child.class);
+
+    // Validate
+    validate(model);
+
+    // Store data
+    model = childRepository.save(model);
+
+    return mapTo(model, ChildDTO.class);
   }
 
   @Override
-  public Child get(long id) {
-    return childRepository.findOne(id);
+  public ChildDTO get(long id) {
+    return mapTo(childRepository.findOne(id), ChildDTO.class);
   }
 
   @Override
-  public List<Child> listAll() {
+  public List<ChildDTO> listAll() {
     final Iterable<Child> children = childRepository.findAll();
-    return Lists.newArrayList(children);
+
+    return mapTo(children, ChildDTO.class);
   }
 
   @Override
@@ -51,7 +60,7 @@ public class ChildServiceImpl extends AbstractService<Child> implements ChildSer
     int initWeek = currWeek;
     boolean multiYear = false;
     
-    final Parameter thresholdParam = parameterService.get(BDAY_THRESHOLD_PARAM);
+    final Parameter thresholdParam = parameterService.get(BIRTHDAY_THRESHOLD_PARAM);
     if (thresholdParam != null)
       initWeek -= thresholdParam.getIntValue();
     else
@@ -64,7 +73,7 @@ public class ChildServiceImpl extends AbstractService<Child> implements ChildSer
     }
     
     
-    for (Child c : listAll()) {
+    for (ChildDTO c : listAll()) {
       int cbdWeek = c.getBirthDate().get(weekOfYearField);
       
       if (multiYear) {

@@ -4,10 +4,12 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import ysaak.garde.business.BusinessInitializer;
 import ysaak.garde.business.MockInitializer;
@@ -29,6 +31,11 @@ public class GardeApp extends Application {
 
   @Autowired
   private TaskFacade taskFacade;
+
+  @Bean
+  public ModelMapper getModelMapper() {
+    return new ModelMapper();
+  }
 
   public static void main(String[] args) {
     System.setProperty("apple.laf.useScreenMenuBar", "true");

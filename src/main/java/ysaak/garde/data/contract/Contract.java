@@ -3,7 +3,7 @@ package ysaak.garde.data.contract;
 import java.time.LocalDate;
 
 import lombok.Data;
-import ysaak.garde.data.Child;
+import ysaak.garde.business.model.Child;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

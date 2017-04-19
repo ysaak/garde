@@ -11,11 +11,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import ysaak.garde.data.Child;
+import ysaak.garde.data.ChildDTO;
 import ysaak.garde.gui.common.components.button.IconButton;
 import ysaak.garde.gui.common.components.grid.ToggleableView;
 
-public class ChildCard extends ToggleableView<Child> {
+public class ChildCard extends ToggleableView<ChildDTO> {
 
   public static final double CARD_WIDTH = 160.;
   public static final double CARD_HEIGHT = 250.;
@@ -83,7 +83,7 @@ public class ChildCard extends ToggleableView<Child> {
   }
 
   @Override
-  public void setData(Child data) {
+  public void setData(ChildDTO data) {
     this.data = data;
     
     firstNameLabel.setText(data.getFirstName());
@@ -91,7 +91,7 @@ public class ChildCard extends ToggleableView<Child> {
   }
 
   @Override
-  public Child getData() {
+  public ChildDTO getData() {
     return this.data;
   }
 

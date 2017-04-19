@@ -10,14 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import ysaak.garde.data.Child;
+import ysaak.garde.data.ChildDTO;
 import ysaak.garde.gui.common.view.AbstractFormView;
 import ysaak.garde.service.translation.I18n;
 
 /**
  * Left panel displaying child information
  */
-public class LeftPanelView extends AbstractFormView<Child> {
+public class LeftPanelView extends AbstractFormView<ChildDTO> {
   private static final double PANEL_WIDTH = 200.;
   private static final double PANEL_PADDING = 10.;
 
@@ -67,7 +67,7 @@ public class LeftPanelView extends AbstractFormView<Child> {
   }
 
   @Override
-  public void setData(Child child) {
+  public void setData(ChildDTO child) {
     if (child != null) {
       lastNameLabel.setText(child.getLastName());
       firstNameLabel.setText(child.getFirstName());
@@ -79,7 +79,7 @@ public class LeftPanelView extends AbstractFormView<Child> {
   }
 
   @Override
-  public Child getData() {
+  public ChildDTO getData() {
     return null;
   }
 

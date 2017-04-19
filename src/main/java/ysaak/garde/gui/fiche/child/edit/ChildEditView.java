@@ -11,16 +11,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ysaak.garde.data.Child;
-import ysaak.garde.gui.common.GridFormHelper;
+import ysaak.garde.data.ChildDTO;
 import ysaak.garde.gui.common.Formatters;
+import ysaak.garde.gui.common.GridFormHelper;
 import ysaak.garde.gui.common.components.Card;
 import ysaak.garde.gui.common.view.AbstractFormView;
 import ysaak.garde.service.translation.I18n;
 
 import java.time.LocalDate;
 
-public class ChildEditView extends AbstractFormView<Child> {
+public class ChildEditView extends AbstractFormView<ChildDTO> {
 
   private VBox mainPane;
 
@@ -95,7 +95,7 @@ public class ChildEditView extends AbstractFormView<Child> {
   }
 
   @Override
-  public void setData(Child data) {
+  public void setData(ChildDTO data) {
     originalData = data;
     if (data != null) {
       setTitle(I18n.get("child.edit.title.update"));
@@ -113,8 +113,8 @@ public class ChildEditView extends AbstractFormView<Child> {
   }
 
   @Override
-  public Child getData() {
-    Child data = (originalData != null) ? originalData : new Child();
+  public ChildDTO getData() {
+    ChildDTO data = (originalData != null) ? originalData : new ChildDTO();
 
     data.setLastName(lastNameField.getText());
     data.setFirstName(firstNameField.getText());

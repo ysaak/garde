@@ -2,13 +2,13 @@ package ysaak.garde.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ysaak.garde.business.utils.NameGenerator;
-import ysaak.garde.data.Child;
-import ysaak.garde.data.attendance.MaintenanceFee;
 import ysaak.garde.business.service.attendance.AttendanceService;
 import ysaak.garde.business.service.child.ChildService;
+import ysaak.garde.business.utils.NameGenerator;
+import ysaak.garde.data.ChildDTO;
 import ysaak.garde.data.attendance.Attendance;
 import ysaak.garde.data.attendance.AttendancePeriod;
+import ysaak.garde.data.attendance.MaintenanceFee;
 import ysaak.garde.data.attendance.MealFee;
 import ysaak.garde.exception.validation.ValidationException;
 
@@ -33,10 +33,10 @@ public class MockInitializer {
   public void init() {
     final NameGenerator ng = new NameGenerator();
 
-    Child baseChild = null;
+    ChildDTO baseChild = null;
 
     for (int i = 0; i < 10; i++) {
-      Child a = new Child();
+      ChildDTO a = new ChildDTO();
       a.setFirstName(ng.getName());
       a.setLastName((i==0 ? "XX " : "") + ng.getName().toUpperCase());
       a.setBirthDate(getRandomTimeBetweenTwoDates());
@@ -59,7 +59,7 @@ public class MockInitializer {
     initAttendance(baseChild);
   }
 
-  private void initAttendance(Child child) {
+  private void initAttendance(ChildDTO child) {
     AttendancePeriod p1 = new AttendancePeriod();
     p1.setStartHour(LocalTime.of(8, 0));
     p1.setEndHour(LocalTime.of(11, 30));

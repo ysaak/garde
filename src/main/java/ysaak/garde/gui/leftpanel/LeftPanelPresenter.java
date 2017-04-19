@@ -2,8 +2,8 @@ package ysaak.garde.gui.leftpanel;
 
 import com.google.common.eventbus.Subscribe;
 import org.springframework.beans.factory.annotation.Autowired;
-import ysaak.garde.data.Child;
 import ysaak.garde.business.service.child.ChildService;
+import ysaak.garde.data.ChildDTO;
 import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.ContextBuilder;
 import ysaak.garde.gui.common.buttonbar.ButtonBarType;
@@ -15,7 +15,7 @@ import ysaak.garde.gui.events.view.CloseFormEvent;
 /**
  * Left panel presenter
  */
-public class LeftPanelPresenter extends AbstractPresenter<Child, LeftPanelView> {
+public class LeftPanelPresenter extends AbstractPresenter<ChildDTO, LeftPanelView> {
 
   @Autowired
   private ChildService childService;
@@ -57,7 +57,7 @@ public class LeftPanelPresenter extends AbstractPresenter<Child, LeftPanelView> 
   }
 
   @Override
-  protected Child loadData(Context context) throws Exception {
+  protected ChildDTO loadData(Context context) throws Exception {
     if (context != null && context.getLongId() != null) {
       return childService.get(context.getLongId());
     }
@@ -66,7 +66,7 @@ public class LeftPanelPresenter extends AbstractPresenter<Child, LeftPanelView> 
   }
 
   @Override
-  protected void setData(Child child) {
+  protected void setData(ChildDTO child) {
     if (child == null) {
       rootPane.getView().setVisible(false);
     }
@@ -77,7 +77,7 @@ public class LeftPanelPresenter extends AbstractPresenter<Child, LeftPanelView> 
   }
 
   @Override
-  protected void updateData(Child child) throws Exception {
+  protected void updateData(ChildDTO child) throws Exception {
     // Nothing to save
   }
 }

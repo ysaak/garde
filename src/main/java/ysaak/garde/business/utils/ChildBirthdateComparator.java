@@ -3,7 +3,7 @@ package ysaak.garde.business.utils;
 import java.time.MonthDay;
 import java.util.Comparator;
 
-import ysaak.garde.data.Child;
+import ysaak.garde.business.model.Child;
 
 public class ChildBirthdateComparator implements Comparator<Child> {
 

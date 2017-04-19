@@ -1,9 +1,9 @@
 package ysaak.garde.business.service.child;
 
-import java.util.List;
-
-import ysaak.garde.data.Child;
+import ysaak.garde.data.ChildDTO;
 import ysaak.garde.exception.validation.ValidationException;
+
+import java.util.List;
 
 public interface ChildService {
 
@@ -12,11 +12,20 @@ public interface ChildService {
    * @param child Child to store
    * @return Stored child
    */
-  Child save(Child child) throws ValidationException;
+  ChildDTO save(ChildDTO child) throws ValidationException;
 
-  Child get(long id);
-  
-  List<Child> listAll();
+  /**
+   * Find a child from its ID
+   * @param id ID of a child
+   * @return Child
+   */
+  ChildDTO get(long id);
+
+  /**
+   * List all children
+   * @return All children
+   */
+  List<ChildDTO> listAll();
   
   boolean hasBirthDayNearby();
 }

@@ -14,25 +14,25 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang3.StringUtils;
-import ysaak.garde.data.Child;
+import ysaak.garde.data.ChildDTO;
 import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.ContextBuilder;
-import ysaak.garde.gui.common.view.AbstractFormView;
 import ysaak.garde.gui.common.Contexts;
 import ysaak.garde.gui.common.components.grid.SelectableGridView;
+import ysaak.garde.gui.common.view.AbstractFormView;
 import ysaak.garde.service.translation.I18n;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RootView extends AbstractFormView<List<Child>> {
+public class RootView extends AbstractFormView<List<ChildDTO>> {
   private BorderPane pane;
 
   private TextField filter = new TextField();
 
-  private final ObservableList<Child> list = FXCollections.observableArrayList();
-  private FilteredList<Child> filteredData = null;
+  private final ObservableList<ChildDTO> list = FXCollections.observableArrayList();
+  private FilteredList<ChildDTO> filteredData = null;
 
   public RootView() {
     super(I18n.get("root.title"));
@@ -65,7 +65,7 @@ public class RootView extends AbstractFormView<List<Child>> {
     
     filteredData = new FilteredList<>(list, p -> true);
 
-    SelectableGridView<Child> menuItems = new SelectableGridView<>(filteredData, i -> {
+    SelectableGridView<ChildDTO> menuItems = new SelectableGridView<>(filteredData, i -> {
       ChildCard card = new ChildCard();
       card.getAddAttendanceButton().setOnAction(e -> fireOpenFormRequest("ATTENDANCE-LIST", Contexts.idContext(card.getData().getId())));
 
@@ -76,7 +76,7 @@ public class RootView extends AbstractFormView<List<Child>> {
     
     menuItems.setOnMouseReleased(e -> {
       if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() > 1) {
-        Child child = (Child) e.getSource();
+        ChildDTO child = (ChildDTO) e.getSource();
         fireOpenFormRequest("CHILD-ROOT", ContextBuilder.get().withId(child.getId()).build());
       }
     });
@@ -114,7 +114,7 @@ public class RootView extends AbstractFormView<List<Child>> {
   }
 
   @Override
-  public void setData(List<Child> data) {
+  public void setData(List<ChildDTO> data) {
     list.clear();
     list.addAll(data);
   }
@@ -130,7 +130,7 @@ public class RootView extends AbstractFormView<List<Child>> {
   }
 
   @Override
-  public List<Child> getData() {
+  public List<ChildDTO> getData() {
     return null;
   }
 

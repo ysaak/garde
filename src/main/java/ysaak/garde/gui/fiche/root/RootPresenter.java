@@ -2,10 +2,10 @@ package ysaak.garde.gui.fiche.root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ysaak.garde.business.service.child.ChildService;
-import ysaak.garde.data.Child;
+import ysaak.garde.data.ChildDTO;
+import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.annotation.Fiche;
 import ysaak.garde.gui.common.buttonbar.ButtonBarType;
-import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.presenter.AbstractPresenter;
 import ysaak.garde.gui.events.leftpanel.LeftPanelUpdateEvent;
 
@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Fiche(value="ROOT", root=true)
-public class RootPresenter extends AbstractPresenter<List<Child>, RootView> {
+public class RootPresenter extends AbstractPresenter<List<ChildDTO>, RootView> {
 
   private static final List<String> VIEW_CODE_EXCEPTIONS = Arrays.asList("", "");
 
@@ -25,12 +25,12 @@ public class RootPresenter extends AbstractPresenter<List<Child>, RootView> {
   }
 
   @Override
-  protected List<Child> loadData(Context context) throws Exception {
+  protected List<ChildDTO> loadData(Context context) throws Exception {
     return childService.listAll();
   }
 
   @Override
-  protected void updateData(List<Child> data) throws Exception {
+  protected void updateData(List<ChildDTO> data) throws Exception {
     // Not used
   }
 
