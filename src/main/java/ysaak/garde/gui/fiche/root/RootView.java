@@ -22,6 +22,7 @@ import ysaak.garde.gui.common.Contexts;
 import ysaak.garde.gui.common.components.grid.SelectableGridView;
 import ysaak.garde.service.translation.I18n;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,16 +41,22 @@ public class RootView extends AbstractFormView<List<Child>> {
   @Override
   public List<Node> getToolbarComponents() {
 
-    JFXButton createChildButton = new JFXButton(I18n.get("root.actions.createChild"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.PLUS_CIRCLE));
-    createChildButton.setOnAction(evt -> createNewChildEvent());
 
-    JFXButton parametersButton = new JFXButton(I18n.get("root.actions.parameters"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.SETTINGS));
-    parametersButton.setOnAction(evt -> displayParametersDialog());
+    List<ToolbarItem> items = Arrays.asList(
+      new ToolbarItem("CHILD-EDIT", MaterialDesignIcon.PLUS_CIRCLE, "root.actions.createChild"),
+      new ToolbarItem(null, MaterialDesignIcon.CAKE_VARIANT, "root.actions.birthdays"),
+      new ToolbarItem(null, MaterialDesignIcon.SETTINGS, "root.actions.parameters")
+    );
 
-    JFXButton birthdayButton = new JFXButton(I18n.get("root.actions.birthdays"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.CAKE_VARIANT));
-    birthdayButton.setOnAction(evt -> showBirthdayDrawer());
+    List<Node> components = new ArrayList<>(items.size());
 
-    return Arrays.asList(createChildButton, birthdayButton, parametersButton);
+    for (ToolbarItem item : items) {
+      JFXButton button = new JFXButton(I18n.get(item.text), MaterialDesignIconFactory.get().createIcon(item.icon));
+      button.setOnAction(evt -> executorToolbarAction(item.formCode));
+      components.add(button);
+    }
+
+    return components;
   }
 
   @Override
@@ -112,20 +119,30 @@ public class RootView extends AbstractFormView<List<Child>> {
     list.addAll(data);
   }
 
-  private void displayParametersDialog() {
-    System.err.println("TODO displayParametersDialog");
-  }
-
-  private void showBirthdayDrawer() {
-    System.err.println("TODO displayParametersDialog");
-  }
-
-  private void createNewChildEvent() {
-    fireOpenFormRequest("CHILD-EDIT", Context.EMPTY);
+  private void executorToolbarAction(String formCode) {
+    if (formCode != null) {
+      fireOpenFormRequest(formCode, Context.EMPTY);
+    }
+    else {
+      // TODO remove temporary message
+      System.err.println("TODO");
+    }
   }
 
   @Override
   public List<Child> getData() {
     return null;
+  }
+
+  private class ToolbarItem {
+    public final String formCode;
+    public final MaterialDesignIcon icon;
+    public final String text;
+
+    ToolbarItem(String formCode, MaterialDesignIcon icon, String text) {
+      this.formCode = formCode;
+      this.icon = icon;
+      this.text = text;
+    }
   }
 }
