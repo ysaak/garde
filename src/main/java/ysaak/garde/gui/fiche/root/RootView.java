@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang3.StringUtils;
 import ysaak.garde.data.Child;
+import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.ContextBuilder;
 import ysaak.garde.gui.common.view.AbstractFormView;
 import ysaak.garde.gui.common.Contexts;
@@ -39,13 +40,16 @@ public class RootView extends AbstractFormView<List<Child>> {
   @Override
   public List<Node> getToolbarComponents() {
 
+    JFXButton createChildButton = new JFXButton(I18n.get("root.actions.createChild"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.PLUS_CIRCLE));
+    createChildButton.setOnAction(evt -> createNewChildEvent());
+
     JFXButton parametersButton = new JFXButton(I18n.get("root.actions.parameters"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.SETTINGS));
     parametersButton.setOnAction(evt -> displayParametersDialog());
 
     JFXButton birthdayButton = new JFXButton(I18n.get("root.actions.birthdays"), MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.CAKE_VARIANT));
     birthdayButton.setOnAction(evt -> showBirthdayDrawer());
 
-    return Arrays.asList(birthdayButton, parametersButton);
+    return Arrays.asList(createChildButton, birthdayButton, parametersButton);
   }
 
   @Override
@@ -114,6 +118,10 @@ public class RootView extends AbstractFormView<List<Child>> {
 
   private void showBirthdayDrawer() {
     System.err.println("TODO displayParametersDialog");
+  }
+
+  private void createNewChildEvent() {
+    fireOpenFormRequest("CHILD-EDIT", Context.EMPTY);
   }
 
   @Override
