@@ -1,6 +1,6 @@
 package ysaak.garde.gui.common;
 
-import ysaak.garde.data.attendance.AttendancePeriod;
+import ysaak.garde.data.attendance.AttendancePeriodDTO;
 import ysaak.garde.service.translation.I18n;
 
 import java.time.Duration;
@@ -25,7 +25,7 @@ public final class Formatters {
 
   private Formatters() { /* private constructor */ }
 
-  public static String formatPeriod(AttendancePeriod period) {
+  public static String formatPeriod(AttendancePeriodDTO period) {
 
     StringBuilder sb = new StringBuilder();
     sb.append(formatLocalTime(period.getStartHour()))

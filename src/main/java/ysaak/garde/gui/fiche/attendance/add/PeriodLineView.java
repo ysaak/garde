@@ -5,13 +5,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import ysaak.garde.data.attendance.AttendancePeriod;
+import ysaak.garde.data.attendance.AttendancePeriodDTO;
 import ysaak.garde.gui.common.view.AbstractView;
 import ysaak.garde.service.translation.I18n;
 
 import java.time.LocalTime;
 
-public class PeriodLineView extends AbstractView<AttendancePeriod> {
+public class PeriodLineView extends AbstractView<AttendancePeriodDTO> {
 
   private HBox rootNode;
   
@@ -42,7 +42,7 @@ public class PeriodLineView extends AbstractView<AttendancePeriod> {
   }
 
   @Override
-  public void setData(AttendancePeriod data) {
+  public void setData(AttendancePeriodDTO data) {
     originalData = data;
 
     if (data != null) {
@@ -56,8 +56,8 @@ public class PeriodLineView extends AbstractView<AttendancePeriod> {
   }
 
   @Override
-  public AttendancePeriod getData() {
-    AttendancePeriod period = (originalData != null) ? originalData : new AttendancePeriod();
+  public AttendancePeriodDTO getData() {
+    AttendancePeriodDTO period = (originalData != null) ? originalData : new AttendancePeriodDTO();
     period.setStartHour(parseTime(startField.getText()));
     period.setEndHour(parseTime(endField.getText()));
     return period;

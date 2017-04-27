@@ -17,8 +17,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import ysaak.garde.data.attendance.Attendance;
-import ysaak.garde.data.attendance.AttendancePeriod;
+import ysaak.garde.data.attendance.AttendanceDTO;
+import ysaak.garde.data.attendance.AttendancePeriodDTO;
 import ysaak.garde.data.attendance.MaintenanceFee;
 import ysaak.garde.data.attendance.MealFee;
 import ysaak.garde.gui.common.Formatters;
@@ -38,7 +38,7 @@ import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
-public class AttendanceListView extends AbstractFormView<List<Attendance>> {
+public class AttendanceListView extends AbstractFormView<List<AttendanceDTO>> {
   @FXML
   private Pane rootPane;
 
@@ -46,44 +46,44 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
   private BorderPane tableActionBar;
 
   @FXML
-  private TableView<Attendance> attendanceTable;
+  private TableView<AttendanceDTO> attendanceTable;
   
   @FXML
-  private TableColumn<Attendance, LocalDate> dateColumn;
+  private TableColumn<AttendanceDTO, LocalDate> dateColumn;
   
   @FXML
-  private TableColumn<Attendance, LocalTime> period1StartColumn;
+  private TableColumn<AttendanceDTO, LocalTime> period1StartColumn;
   
   @FXML
-  private TableColumn<Attendance, LocalTime> period1EndColumn;
+  private TableColumn<AttendanceDTO, LocalTime> period1EndColumn;
   
   @FXML
-  private TableColumn<Attendance, LocalTime> period2StartColumn;
+  private TableColumn<AttendanceDTO, LocalTime> period2StartColumn;
   
   @FXML
-  private TableColumn<Attendance, LocalTime> period2EndColumn;
+  private TableColumn<AttendanceDTO, LocalTime> period2EndColumn;
   
   @FXML
-  private TableColumn<Attendance, LocalTime> period3StartColumn;
+  private TableColumn<AttendanceDTO, LocalTime> period3StartColumn;
   
   @FXML
-  private TableColumn<Attendance, LocalTime> period3EndColumn;
+  private TableColumn<AttendanceDTO, LocalTime> period3EndColumn;
   
   @FXML
-  private TableColumn<Attendance, Duration> durationColumn;
+  private TableColumn<AttendanceDTO, Duration> durationColumn;
   
   @FXML
-  private TableColumn<Attendance, MealFee> mealFeeColumn;
+  private TableColumn<AttendanceDTO, MealFee> mealFeeColumn;
   
   @FXML
-  private TableColumn<Attendance, MaintenanceFee> maintenanceFeeColumn;
+  private TableColumn<AttendanceDTO, MaintenanceFee> maintenanceFeeColumn;
   
   @FXML
   private Label totalHoursLabel;
 
   private JFXButton addButton;
   
-  private ObservableList<Attendance> data = FXCollections.observableArrayList();
+  private ObservableList<AttendanceDTO> data = FXCollections.observableArrayList();
 
   private LocalDate currentMonth = null;
 
@@ -106,7 +106,7 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
 
     // Init table
     attendanceTable.setRowFactory(tableView -> {
-      final TableRow<Attendance> row = new TableRow<>();
+      final TableRow<AttendanceDTO> row = new TableRow<>();
 
       // Build context menu
 
@@ -145,7 +145,7 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
     durationColumn.setCellFactory(p -> new DurationTableCell<>());
     
     mealFeeColumn.setCellValueFactory(new PropertyValueFactory<>("mealFee"));
-    mealFeeColumn.setCellFactory(p -> new EnumTableCell<>(MealFee.NO));
+    mealFeeColumn.setCellFactory(p -> new EnumTableCell<>(MealFee.NONE));
 
     maintenanceFeeColumn.setCellValueFactory(new PropertyValueFactory<>("maintenanceFee"));
     maintenanceFeeColumn.setCellFactory(p -> new EnumTableCell<>());
@@ -181,23 +181,23 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
   }
 
   @Override
-  public void setData(List<Attendance> data) {
+  public void setData(List<AttendanceDTO> data) {
     this.data.setAll(data);
     
     Duration monthDuration = Duration.ofMinutes(0);
     
-    for (Attendance attendance : data) {
+    for (AttendanceDTO attendance : data) {
       monthDuration = monthDuration.plus(calculateDuration(attendance));
     }
     
     totalHoursLabel.setText(Formatters.formatDuration(monthDuration));
   }
   
-  private ReadOnlyObjectProperty<LocalTime> getPeriodValue(Attendance attendance, int periodId, boolean startTime) {
+  private ReadOnlyObjectProperty<LocalTime> getPeriodValue(AttendanceDTO attendance, int periodId, boolean startTime) {
     LocalTime value = null;
     
     if (attendance != null && attendance.getPeriods() != null && periodId <= attendance.getPeriods().size()) {
-      final AttendancePeriod period = attendance.getPeriods().get(periodId - 1);
+      final AttendancePeriodDTO period = attendance.getPeriods().get(periodId - 1);
       if (period != null) {
         value = (startTime) ? period.getStartHour() : period.getEndHour();
       }
@@ -206,11 +206,11 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
     return new ReadOnlyObjectWrapper<>(value);
   }
   
-  private Duration calculateDuration(Attendance attendance) {
+  private Duration calculateDuration(AttendanceDTO attendance) {
     Duration duration = null;
     
     if (attendance != null && attendance.getPeriods() != null) {
-      for (AttendancePeriod period : attendance.getPeriods()) {
+      for (AttendancePeriodDTO period : attendance.getPeriods()) {
         final Duration shd = Duration.ofSeconds(period.getStartHour().toSecondOfDay());
         final Duration ehd = Duration.ofSeconds(period.getEndHour().toSecondOfDay());
         
@@ -227,7 +227,7 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
   }
   
   @Override
-  public List<Attendance> getData() {
+  public List<AttendanceDTO> getData() {
     return null;
   }
 
@@ -251,11 +251,11 @@ public class AttendanceListView extends AbstractFormView<List<Attendance>> {
     }
   }
 
-  private void onEditAction(Attendance attendance) {
+  private void onEditAction(AttendanceDTO attendance) {
     fireActionEvent(ActionType.UPDATE, Collections.singletonList(attendance));
   }
 
-  private void onDeleteAction(Attendance attendance) {
+  private void onDeleteAction(AttendanceDTO attendance) {
     fireActionEvent(ActionType.DELETE, Collections.singletonList(attendance));
   }
 }

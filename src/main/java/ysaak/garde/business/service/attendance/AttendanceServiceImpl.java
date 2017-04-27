@@ -1,12 +1,12 @@
 package ysaak.garde.business.service.attendance;
 
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ysaak.garde.business.service.AbstractService;
+import ysaak.garde.business.model.attendance.Attendance;
+import ysaak.garde.business.model.attendance.AttendancePeriod;
 import ysaak.garde.business.repository.AttendanceRepository;
-import ysaak.garde.data.attendance.Attendance;
-import ysaak.garde.data.attendance.AttendancePeriod;
+import ysaak.garde.business.service.AbstractService;
+import ysaak.garde.data.attendance.AttendanceDTO;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -19,34 +19,36 @@ public class AttendanceServiceImpl extends AbstractService<Attendance> implement
   private AttendanceRepository attendanceRepository;
 
   @Override
-  public Attendance save(long childId, Attendance attendance) {
+  public AttendanceDTO save(AttendanceDTO attendance) {
 
-    if (attendance.getContractId() != null) {
-      attendance.setContractId(childId);
+    Attendance model = toModel(attendance, AttendanceDTO.class);
+
+    // Store attendance in lines
+    for (AttendancePeriod period : model.getPeriods()) {
+      period.setAttendance(model);
     }
 
-    // Store validation
-    for (AttendancePeriod p : attendance.getPeriods()) {
-      p.setAttendance(attendance);
-    }
+    model = attendanceRepository.save(model);
 
-    return attendanceRepository.save(attendance);
+    return toDto(model, AttendanceDTO.class);
   }
 
   @Override
-  public Attendance get(long id) {
-    return attendanceRepository.findOne(id);
+  public AttendanceDTO get(long id) {
+    Attendance attendance = attendanceRepository.findOne(id);
+    return toDto(attendance, AttendanceDTO.class);
   }
 
   @Override
-  public Attendance get(long childId, LocalDate date) {
-    return attendanceRepository.findByContractIdAndDate(childId, date);
+  public AttendanceDTO get(long childId, LocalDate date) {
+    Attendance attendance = attendanceRepository.findByContractIdAndDate(childId, date);
+    return toDto(attendance, AttendanceDTO.class);
   }
 
   @Override
-  public List<Attendance> getBetween(long childId, LocalDate startPeriod, LocalDate endPeriod) {
+  public List<AttendanceDTO> getBetween(long childId, LocalDate startPeriod, LocalDate endPeriod) {
     Collection<Attendance> attendances = attendanceRepository.findByContractIdAndDateBetween(childId, startPeriod, endPeriod);
-    return Lists.newArrayList(attendances);
+    return toDto(attendances, AttendanceDTO.class);
   }
 
   @Override

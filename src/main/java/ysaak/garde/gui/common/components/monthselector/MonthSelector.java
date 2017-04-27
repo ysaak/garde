@@ -1,13 +1,13 @@
 package ysaak.garde.gui.common.components.monthselector;
 
 import com.jfoenix.controls.JFXButton;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-import de.jensd.fx.glyphs.materialdesignicons.utils.MaterialDesignIconFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.material.Material;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,9 +28,9 @@ public class MonthSelector extends HBox {
     super(10.);
     setAlignment(Pos.CENTER_LEFT);
 
-    previousBtn = new JFXButton("", MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.ARROW_LEFT_BOLD, "2em"));
+    previousBtn = new JFXButton("", new FontIcon(Material.KEYBOARD_ARROW_LEFT));
 
-    nextBtn = new JFXButton("", MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.ARROW_RIGHT_BOLD, "2em"));
+    nextBtn = new JFXButton("", new FontIcon(Material.KEYBOARD_ARROW_RIGHT));
 
     currentMonthLabel = new Label("");
     currentMonthLabel.setAlignment(Pos.CENTER);

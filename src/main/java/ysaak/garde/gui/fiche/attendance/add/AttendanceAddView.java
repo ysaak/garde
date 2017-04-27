@@ -11,8 +11,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import ysaak.garde.data.attendance.MaintenanceFee;
 import ysaak.garde.gui.common.view.AbstractFormView;
-import ysaak.garde.data.attendance.Attendance;
-import ysaak.garde.data.attendance.AttendancePeriod;
+import ysaak.garde.data.attendance.AttendanceDTO;
+import ysaak.garde.data.attendance.AttendancePeriodDTO;
 import ysaak.garde.data.attendance.MealFee;
 import ysaak.garde.gui.common.components.Card;
 import ysaak.garde.gui.common.components.IterativeList;
@@ -22,11 +22,11 @@ import ysaak.garde.service.translation.I18n;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class AttendanceAddView extends AbstractFormView<Attendance> {
+public class AttendanceAddView extends AbstractFormView<AttendanceDTO> {
   
   private GridPane gridPane;
   
-  private IterativeList<AttendancePeriod> periodList;
+  private IterativeList<AttendancePeriodDTO> periodList;
   
   private RadioButtonGroup<MaintenanceFee> maintenanceFeeGroup;
   
@@ -52,7 +52,7 @@ public class AttendanceAddView extends AbstractFormView<Attendance> {
     
     mealFeeGroup = new RadioButtonGroup<>();
     mealFeeGroup.setTextFactory(I18n::get);
-    mealFeeGroup.setItems(MealFee.NO, MealFee.PARTIAL, MealFee.FULL);
+    mealFeeGroup.setItems(MealFee.NONE, MealFee.PARTIAL, MealFee.FULL);
 
     gridPane = new GridPane();
 
@@ -126,7 +126,7 @@ public class AttendanceAddView extends AbstractFormView<Attendance> {
   }
 
   @Override
-  public void setData(Attendance data) {
+  public void setData(AttendanceDTO data) {
     originalData = data;
 
     System.err.println(data);
@@ -135,7 +135,7 @@ public class AttendanceAddView extends AbstractFormView<Attendance> {
       setTitle(I18n.get("attendance.edit.title"));
       attendanceDayPicker.setValue(LocalDate.now());
       maintenanceFeeGroup.setSelectedItem(MaintenanceFee.NO);
-      mealFeeGroup.setSelectedItem(MealFee.NO);
+      mealFeeGroup.setSelectedItem(MealFee.NONE);
       periodList.setData(new ArrayList<>());
     }
     else {
@@ -148,8 +148,8 @@ public class AttendanceAddView extends AbstractFormView<Attendance> {
   }
 
   @Override
-  public Attendance getData() {
-    final Attendance data = (originalData != null) ? originalData : new Attendance();
+  public AttendanceDTO getData() {
+    final AttendanceDTO data = (originalData != null) ? originalData : new AttendanceDTO();
     data.setDate(attendanceDayPicker.getValue());
     data.setMaintenanceFee(maintenanceFeeGroup.getSelectedItem());
     data.setMealFee(mealFeeGroup.getSelectedItem());

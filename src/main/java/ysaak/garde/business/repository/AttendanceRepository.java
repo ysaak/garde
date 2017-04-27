@@ -1,7 +1,7 @@
 package ysaak.garde.business.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import ysaak.garde.data.attendance.Attendance;
+import ysaak.garde.business.model.attendance.Attendance;
 
 import java.time.LocalDate;
 import java.util.Collection;

@@ -11,28 +11,24 @@ import java.time.LocalDate;
 
 @Entity
 public class Child {
-  @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
+
   @Column(unique = true, nullable = false)
   private Long id;
 
   @NotEmpty
-  @Column(nullable = false)
   private String lastName;
 
   @NotEmpty
-  @Column(nullable = false)
   private String firstName;
-  
-  @Column
+
   private LocalDate birthDate;
 
-  @Column
   private String sickness;
 
-  @Column
   private String comments;
 
+  @Id
+  @GeneratedValue(strategy=GenerationType.AUTO)
   public Long getId() {
     return id;
   }
@@ -41,6 +37,7 @@ public class Child {
     this.id = id;
   }
 
+  @Column(nullable = false)
   public String getLastName() {
     return lastName;
   }
@@ -49,6 +46,7 @@ public class Child {
     this.lastName = lastName;
   }
 
+  @Column(nullable = false)
   public String getFirstName() {
     return firstName;
   }
@@ -57,6 +55,7 @@ public class Child {
     this.firstName = firstName;
   }
 
+  @Column
   public LocalDate getBirthDate() {
     return birthDate;
   }
@@ -65,6 +64,7 @@ public class Child {
     this.birthDate = birthDate;
   }
 
+  @Column
   public String getSickness() {
     return sickness;
   }
@@ -73,6 +73,7 @@ public class Child {
     this.sickness = sickness;
   }
 
+  @Column
   public String getComments() {
     return comments;
   }

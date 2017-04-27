@@ -1,16 +1,15 @@
 package ysaak.garde.gui.common.components;
 
 import com.jfoenix.controls.JFXButton;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-import de.jensd.fx.glyphs.materialdesignicons.utils.MaterialDesignIconFactory;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.util.Callback;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.material.Material;
 import ysaak.garde.gui.common.view.AbstractView;
 import ysaak.garde.service.translation.I18n;
 
@@ -36,7 +35,7 @@ public class IterativeList<T> extends BorderPane {
     centerBox.setPadding(new Insets(0., 0., 10., 0.));
     setCenter(centerBox);
 
-    final Text icon = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.PLUS_BOX);
+    final FontIcon icon = new FontIcon(Material.ADD_CIRCLE);
     addButton = new JFXButton(I18n.get("button.add"), icon);
     addButton.setOnAction(this::addLine);
     setBottom(addButton);
@@ -65,8 +64,8 @@ public class IterativeList<T> extends BorderPane {
     removeBtnBox.setPadding(new Insets(0., 5., 0., 5.));
     linePane.setRight(removeBtnBox);
 
-
-    JFXButton removeButton = new JFXButton("", MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.MINUS_BOX));
+    final FontIcon icon = new FontIcon(Material.CANCEL);
+    JFXButton removeButton = new JFXButton("", icon);
     removeButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
     
     removeButton.setOnAction(revt -> {

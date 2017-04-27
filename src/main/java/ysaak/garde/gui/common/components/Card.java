@@ -13,6 +13,10 @@ public class Card {
   private final BorderPane pane;
   private final Label title;
 
+  public Card() {
+    this(null, null);
+  }
+
   public Card(String title, Node center) {
     pane = new BorderPane();
     pane.getStyleClass().add("card");

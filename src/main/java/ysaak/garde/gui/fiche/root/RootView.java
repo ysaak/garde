@@ -1,8 +1,6 @@
 package ysaak.garde.gui.fiche.root;
 
 import com.jfoenix.controls.JFXButton;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-import de.jensd.fx.glyphs.materialdesignicons.utils.MaterialDesignIconFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,6 +12,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang3.StringUtils;
+import org.kordamp.ikonli.Ikon;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.material.Material;
 import ysaak.garde.data.ChildDTO;
 import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.ContextBuilder;
@@ -43,15 +44,16 @@ public class RootView extends AbstractFormView<List<ChildDTO>> {
 
 
     List<ToolbarItem> items = Arrays.asList(
-      new ToolbarItem("CHILD-EDIT", MaterialDesignIcon.PLUS_CIRCLE, "root.actions.createChild"),
-      new ToolbarItem(null, MaterialDesignIcon.CAKE_VARIANT, "root.actions.birthdays"),
-      new ToolbarItem(null, MaterialDesignIcon.SETTINGS, "root.actions.parameters")
+      new ToolbarItem("CHILD-EDIT", Material.ADD_CIRCLE_OUTLINE, "root.actions.createChild"),
+      new ToolbarItem(null, Material.CAKE, "root.actions.birthdays"),
+      new ToolbarItem(null, Material.SETTINGS, "root.actions.parameters")
     );
 
     List<Node> components = new ArrayList<>(items.size());
 
     for (ToolbarItem item : items) {
-      JFXButton button = new JFXButton(I18n.get(item.text), MaterialDesignIconFactory.get().createIcon(item.icon));
+
+      JFXButton button = new JFXButton(I18n.get(item.text), new FontIcon(item.icon));
       button.setOnAction(evt -> executorToolbarAction(item.formCode));
       components.add(button);
     }
@@ -136,10 +138,10 @@ public class RootView extends AbstractFormView<List<ChildDTO>> {
 
   private class ToolbarItem {
     public final String formCode;
-    public final MaterialDesignIcon icon;
+    public final Ikon icon;
     public final String text;
 
-    ToolbarItem(String formCode, MaterialDesignIcon icon, String text) {
+    ToolbarItem(String formCode, Ikon icon, String text) {
       this.formCode = formCode;
       this.icon = icon;
       this.text = text;

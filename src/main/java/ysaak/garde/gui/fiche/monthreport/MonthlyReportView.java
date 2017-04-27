@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import ysaak.garde.data.Period;
-import ysaak.garde.data.attendance.Attendance;
+import ysaak.garde.data.attendance.AttendanceDTO;
 import ysaak.garde.data.monthreport.MonthReport;
 import ysaak.garde.gui.common.view.AbstractFormView;
 import ysaak.garde.gui.fiche.monthreport.cell.AttendanceCell;
@@ -237,7 +237,7 @@ public class MonthlyReportView extends AbstractFormView<MonthReport> {
     buildCalendar(currentMonth, data.getPeriod());
 
     // Set attendances
-    for (Attendance attendance : data.getAttendances()) {
+    for (AttendanceDTO attendance : data.getAttendances()) {
       AttendanceCell cell = attendanceCells.get(attendance.getDate());
       if (cell != null) {
         cell.setData(attendance);

@@ -2,7 +2,7 @@ package ysaak.garde.data.monthreport;
 
 import lombok.Data;
 import ysaak.garde.data.Period;
-import ysaak.garde.data.attendance.Attendance;
+import ysaak.garde.data.attendance.AttendanceDTO;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -19,7 +19,7 @@ public class MonthReport {
 
   private Period<LocalDate> period;
 
-  private List<Attendance> attendances;
+  private List<AttendanceDTO> attendances;
 
   private Map<Integer, WeekSummary> weekSummaries;
 

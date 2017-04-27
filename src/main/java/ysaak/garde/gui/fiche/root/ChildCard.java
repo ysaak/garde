@@ -1,6 +1,5 @@
 package ysaak.garde.gui.fiche.root;
 
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -11,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import org.kordamp.ikonli.material.Material;
 import ysaak.garde.data.ChildDTO;
 import ysaak.garde.gui.common.components.button.IconButton;
 import ysaak.garde.gui.common.components.grid.ToggleableView;
@@ -69,7 +69,7 @@ public class ChildCard extends ToggleableView<ChildDTO> {
   }
   
   private void initButtons() {
-    addAttendanceButton = new IconButton(MaterialDesignIcon.CALENDAR_PLUS);
+    addAttendanceButton = new IconButton(Material.DATE_RANGE);
     
     buttonBox.getChildren().add(addAttendanceButton);
   }

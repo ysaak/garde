@@ -6,7 +6,7 @@ import ysaak.garde.data.monthreport.MonthReport;
 import ysaak.garde.business.service.attendance.AttendanceService;
 import ysaak.garde.business.utils.AttendanceUtils;
 import ysaak.garde.data.Period;
-import ysaak.garde.data.attendance.Attendance;
+import ysaak.garde.data.attendance.AttendanceDTO;
 import ysaak.garde.data.monthreport.WeekSummary;
 
 import java.time.DayOfWeek;
@@ -39,7 +39,7 @@ public class MonthReportServiceImpl implements MonthReportService {
 
 
     // Fetch attendances
-    List<Attendance> attendances = attendanceService.getBetween(childId, period.getStart(), period.getEnd());
+    List<AttendanceDTO> attendances = attendanceService.getBetween(childId, period.getStart(), period.getEnd());
     Collections.sort(attendances);
     report.setAttendances(attendances);
 
@@ -126,7 +126,7 @@ public class MonthReportServiceImpl implements MonthReportService {
    * @param expectedWeekDuration Expected week duration
    * @return Week summaries
    */
-  private Map<Integer, WeekSummary> calculateWeekSummaries(List<Attendance> attendances, Period<LocalDate> period, Month currentMonth, Duration expectedWeekDuration, boolean workOnSaturday) {
+  private Map<Integer, WeekSummary> calculateWeekSummaries(List<AttendanceDTO> attendances, Period<LocalDate> period, Month currentMonth, Duration expectedWeekDuration, boolean workOnSaturday) {
     final TemporalField woyField = WeekFields.of(Locale.getDefault()).weekOfYear();
     final Map<Integer, WeekSummary> weekSummaries = new HashMap<>();
 
@@ -137,7 +137,7 @@ public class MonthReportServiceImpl implements MonthReportService {
     Duration monthDuration = Duration.ZERO;
 
     // Calcul des résumé des semaines
-    for (Attendance attendance : attendances) {
+    for (AttendanceDTO attendance : attendances) {
 
       int attWeek = attendance.getDate().get(woyField);
       if (attWeek != currentWeek) {

@@ -1,7 +1,7 @@
 package ysaak.garde.data.attendance;
 
 public enum MealFee {
-  NO,
+  NONE,
   PARTIAL,
   FULL
 }

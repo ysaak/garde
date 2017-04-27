@@ -1,8 +1,6 @@
 package ysaak.garde.gui.fiche.child.root;
 
 import com.jfoenix.controls.JFXButton;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-import de.jensd.fx.glyphs.materialdesignicons.utils.MaterialDesignIconFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -10,12 +8,18 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.material.Material;
 import ysaak.garde.gui.common.ContextBuilder;
 import ysaak.garde.gui.common.view.AbstractFormView;
+import ysaak.garde.gui.fiche.child.root.widget.ContractWidget;
 import ysaak.garde.service.translation.I18n;
 
 public class ChildRootView extends AbstractFormView<Long> {
   private BorderPane pane;
+
+  private ContractWidget contractWidget;
 
   public ChildRootView() {
     super(I18n.get("child.root.title"));
@@ -24,20 +28,20 @@ public class ChildRootView extends AbstractFormView<Long> {
   @Override
   public void initialize() {
 
+    contractWidget = new ContractWidget();
+
+
     FlowPane actionsListPane = new FlowPane();
     actionsListPane.setVgap(10.);
     actionsListPane.setHgap(10.);
     actionsListPane.setAlignment(Pos.TOP_CENTER);
 
     actionsListPane.getChildren().addAll(
-            createActionButton("Rapport mensuel", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
-            createActionButton("Présences", MaterialDesignIcon.ACCOUNT, "ATTENDANCE-LIST"),
-            createActionButton("Edit", MaterialDesignIcon.PENCIL, "CHILD-EDIT"),
-            createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
-            createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
-            createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
-            createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW"),
-            createActionButton("attList", MaterialDesignIcon.CALENDAR, "MONTHLY-VIEW")
+            createActionButton("Rapport mensuel", Material.INSERT_INVITATION, "MONTHLY-VIEW"),
+            createActionButton("Présences", Material.EVENT, "ATTENDANCE-LIST"),
+            createActionButton("Edit", Material.EDIT, "CHILD-EDIT"),
+            createActionButton("attList", Material.INSERT_INVITATION, "MONTHLY-VIEW"),
+            createActionButton("attList", Material.INSERT_INVITATION, "MONTHLY-VIEW")
     );
 
 
@@ -45,10 +49,13 @@ public class ChildRootView extends AbstractFormView<Long> {
     actionsPane.getStyleClass().add("card");
 
     pane = new BorderPane(actionsPane);
+    pane.setTop(new HBox(contractWidget.getView()));
   }
 
-  private Button createActionButton(String text, MaterialDesignIcon icon, String viewCode) {
-    JFXButton button = new JFXButton(text, MaterialDesignIconFactory.get().createIcon(icon, "4em"));
+  private Button createActionButton(String text, Material icon, String viewCode) {
+    FontIcon iconFont = new FontIcon(icon);
+    iconFont.setIconSize(24);
+    JFXButton button = new JFXButton(text, iconFont);
     button.setButtonType(JFXButton.ButtonType.RAISED);
     button.setContentDisplay(ContentDisplay.TOP);
     button.setStyle("-fx-background-color: -light-primary-color");

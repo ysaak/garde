@@ -1,7 +1,5 @@
 package ysaak.garde.gui.fiche.monthreport.cell;
 
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-import de.jensd.fx.glyphs.materialdesignicons.utils.MaterialDesignIconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -13,19 +11,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import ysaak.garde.data.attendance.MaintenanceFee;
-import ysaak.garde.gui.common.Formatters;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.material.Material;
 import ysaak.garde.business.utils.AttendanceUtils;
-import ysaak.garde.data.attendance.Attendance;
+import ysaak.garde.data.attendance.AttendanceDTO;
+import ysaak.garde.data.attendance.MaintenanceFee;
 import ysaak.garde.data.attendance.MealFee;
+import ysaak.garde.gui.common.Formatters;
 import ysaak.garde.gui.common.view.AbstractView;
 import ysaak.garde.service.translation.I18n;
 
 import java.time.Duration;
 import java.time.LocalDate;
 
-public class AttendanceCell extends AbstractView<Attendance> implements MonthReportCell {
+public class AttendanceCell extends AbstractView<AttendanceDTO> implements MonthReportCell {
   private static final int PERIODS_LAYER = 0;
   private static final int SUMMARY_LAYER = 1;
 
@@ -41,8 +40,8 @@ public class AttendanceCell extends AbstractView<Attendance> implements MonthRep
   private Label summaryLabel;
 
   private Label mealFeeLabel;
-  private Text mealFeeIconLabel;
-  private Text maintenanceFeeLabel;
+  private FontIcon mealFeeIconLabel;
+  private FontIcon maintenanceFeeLabel;
 
   @Override
   public void initialize() {
@@ -64,13 +63,13 @@ public class AttendanceCell extends AbstractView<Attendance> implements MonthRep
 
     // Fee pane
     mealFeeLabel = new Label(" ");
-    mealFeeIconLabel = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.FOOD);
+    mealFeeIconLabel = new FontIcon(Material.RESTAURANT);
     Tooltip.install(mealFeeIconLabel, new Tooltip(I18n.get("attendance.fee.meal")));
     HBox.setMargin(mealFeeLabel, new Insets(0,0,0,10));
     HBox.setMargin(mealFeeIconLabel, new Insets(0,5,0,0));
     mealFeeIconLabel.setVisible(false);
 
-    maintenanceFeeLabel = MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.WRENCH);
+    maintenanceFeeLabel = new FontIcon(Material.CHILD_CARE);
     Tooltip.install(maintenanceFeeLabel, new Tooltip(I18n.get("attendance.fee.maintenance")));
     HBox.setMargin(maintenanceFeeLabel, new Insets(0,0,0,10));
     maintenanceFeeLabel.setVisible(false);
@@ -108,7 +107,7 @@ public class AttendanceCell extends AbstractView<Attendance> implements MonthRep
   }
 
   @Override
-  public void setData(Attendance attendance) {
+  public void setData(AttendanceDTO attendance) {
 
     int nbPeriods = attendance.getPeriods().size();
     for (int i = 0; i < periodsLabel.length; i++) {
@@ -148,7 +147,7 @@ public class AttendanceCell extends AbstractView<Attendance> implements MonthRep
   }
 
   @Override
-  public Attendance getData() {
+  public AttendanceDTO getData() {
     return null;
   }
 

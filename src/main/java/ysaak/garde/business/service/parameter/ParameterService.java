@@ -1,7 +1,7 @@
 package ysaak.garde.business.service.parameter;
 
 import ysaak.garde.exception.validation.ValidationException;
-import ysaak.garde.data.parameter.Parameter;
+import ysaak.garde.data.parameter.ParameterDTO;
 
 import java.util.List;
 
@@ -12,14 +12,14 @@ public interface ParameterService {
    * @param parameter Parameter to save
    * @return Parameter
    */
-  Parameter save(Parameter parameter) throws ValidationException;
+  ParameterDTO save(ParameterDTO parameter) throws ValidationException;
 
 
-  Parameter get(String code);
+  ParameterDTO get(String code);
 
   /**
    * List all the parameters
    * @return List of parameters
    */
-  List<Parameter> listAll();
+  List<ParameterDTO> listAll();
 }

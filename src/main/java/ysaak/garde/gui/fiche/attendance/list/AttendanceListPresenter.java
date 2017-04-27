@@ -5,7 +5,7 @@ import ysaak.garde.gui.common.ContextBuilder;
 import ysaak.garde.gui.common.annotation.Fiche;
 import ysaak.garde.service.task.GuiTask;
 import ysaak.garde.business.service.attendance.AttendanceService;
-import ysaak.garde.data.attendance.Attendance;
+import ysaak.garde.data.attendance.AttendanceDTO;
 import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.actions.ActionType;
 import ysaak.garde.gui.common.presenter.AbstractPresenter;
@@ -15,20 +15,20 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Fiche("ATTENDANCE-LIST")
-public class AttendanceListPresenter extends AbstractPresenter<List<Attendance>, AttendanceListView> {
+public class AttendanceListPresenter extends AbstractPresenter<List<AttendanceDTO>, AttendanceListView> {
 
-  private class AttendanceDeleteTask extends GuiTask<List<Attendance>> {
+  private class AttendanceDeleteTask extends GuiTask<List<AttendanceDTO>> {
 
-    private final List<Attendance> attendances;
+    private final List<AttendanceDTO> attendances;
 
-    private AttendanceDeleteTask(List<Attendance> attendances) {
+    private AttendanceDeleteTask(List<AttendanceDTO> attendances) {
       super(TaskType.UPDATE, rootPane);
       this.attendances = attendances;
     }
 
     @Override
-    public List<Attendance> call() throws Exception {
-      for (Attendance attendance : attendances) {
+    public List<AttendanceDTO> call() throws Exception {
+      for (AttendanceDTO attendance : attendances) {
         attendanceService.delete(attendance.getId());
       }
 
@@ -36,7 +36,7 @@ public class AttendanceListPresenter extends AbstractPresenter<List<Attendance>,
     }
 
     @Override
-    public void onSucceeded(List<Attendance> result) {
+    public void onSucceeded(List<AttendanceDTO> result) {
       setData(result);
     }
 
@@ -61,7 +61,7 @@ public class AttendanceListPresenter extends AbstractPresenter<List<Attendance>,
   }
 
   @Override
-  protected List<Attendance> loadData(Context context) throws Exception {
+  protected List<AttendanceDTO> loadData(Context context) throws Exception {
 
     final LocalDate month;
 
@@ -87,12 +87,12 @@ public class AttendanceListPresenter extends AbstractPresenter<List<Attendance>,
   }
 
   @Override
-  protected void updateData(List<Attendance> data) throws Exception {
+  protected void updateData(List<AttendanceDTO> data) throws Exception {
     // Not used
   }
 
   @Override
-  protected void onActionEvent(ActionType action, List<Attendance> attendances) {
+  protected void onActionEvent(ActionType action, List<AttendanceDTO> attendances) {
     if (action == ActionType.CREATE) {
       fireOpenFormRequest("ATTENDANCE-ADD", ContextBuilder.ofChild(currentContext.getChildId()));
     }

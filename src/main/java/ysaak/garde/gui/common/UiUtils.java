@@ -1,8 +1,7 @@
 package ysaak.garde.gui.common;
 
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-import de.jensd.fx.glyphs.materialdesignicons.utils.MaterialDesignIconFactory;
-import javafx.scene.text.Text;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.material.Material;
 
 /**
  * Utilities for UI
@@ -10,15 +9,15 @@ import javafx.scene.text.Text;
 public final class UiUtils {
   private UiUtils() { /* Hidden constructor */ }
 
-  public static Text getAddIcon() {
-    return MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.PLUS_CIRCLE);
+  public static FontIcon getAddIcon() {
+    return new FontIcon(Material.ADD_CIRCLE_OUTLINE);
   }
 
-  public static Text getEditIcon() {
-    return MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.PENCIL);
+  public static FontIcon getEditIcon() {
+    return new FontIcon(Material.EDIT);
   }
 
-  public static Text getDeleteIcon() {
-    return MaterialDesignIconFactory.get().createIcon(MaterialDesignIcon.DELETE);
+  public static FontIcon getDeleteIcon() {
+    return new FontIcon(Material.CANCEL);
   }
 }

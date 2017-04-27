@@ -1,8 +1,5 @@
 package ysaak.garde.gui.fiche.child.edit;
 
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
@@ -41,25 +38,31 @@ public class ChildEditView extends AbstractFormView<ChildDTO> {
   @Override
   public void initialize() {
 
-    lastNameField = new JFXTextField();
-    firstNameField = new JFXTextField();
+    lastNameField = new TextField();
+    firstNameField = new TextField();
 
-    birthdayPicker = new JFXDatePicker();
+    birthdayPicker = new DatePicker();
     ageLabel = new Label("");
     birthdayPicker.setOnAction(event -> updateAgeLabel());
 
     Card baseCard = initializeBaseCard();
 
-    sicknessField = new JFXTextArea();
+    sicknessField = new TextArea();
     sicknessField.setPrefRowCount(5);
     Card sicknessCard = new Card(I18n.get("child.edit.sickness"), sicknessField);
+    sicknessCard.getView().setMaxWidth(Double.MAX_VALUE);
 
-
-    commentsField = new JFXTextArea();
+    commentsField = new TextArea();
     commentsField.setPrefRowCount(5);
     Card commentsCard = new Card(I18n.get("child.edit.comments"), commentsField);
+    commentsCard.getView().setMaxWidth(Double.MAX_VALUE);
 
-    mainPane = new VBox(20, baseCard.getView(), sicknessCard.getView(), commentsCard.getView());
+
+    HBox commentsBox = new HBox(20, sicknessCard.getView(), commentsCard.getView());
+
+    mainPane = new VBox(20);
+    mainPane.setFillWidth(true);
+    mainPane.getChildren().addAll(baseCard.getView(), commentsBox);
   }
 
   private Card initializeBaseCard() {

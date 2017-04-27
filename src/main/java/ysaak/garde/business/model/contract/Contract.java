@@ -1,16 +1,17 @@
 package ysaak.garde.business.model.contract;
 
+import org.hibernate.validator.constraints.Range;
 import ysaak.garde.business.model.Child;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -23,12 +24,19 @@ public class Contract {
   /**
    * Child
    */
+  @NotNull
   private Child child;
 
   /**
    * Type of the contract
    */
+  @NotNull
   private ContractType type;
+
+  /**
+   * Status of the contract
+   */
+  private transient ContractStatus status;
 
   /**
    * Start date of the contract (inclusive)
@@ -43,27 +51,30 @@ public class Contract {
   /**
    * Attendance weeks per year
    */
-  private int weekPerYear;
+  @NotNull
+  @Range(min = 1, max = 52)
+  private Integer weekPerYear;
 
   /**
    * Attendance per weeks
    */
-  private double attendancePerWeek;
+  @NotNull
+  @Range(min = 1, max = 7)
+  private Integer attendancePerWeek;
 
   /**
    * Hours per week
    */
-  private double hoursPerWeek;
+  @NotNull
+  @Range
+  private Double hoursPerWeek;
 
   /**
    * Base value of an hour
    */
-  private double baseHourPrice;
-
-  /**
-   * Indicate if an increased hour price is defined
-   */
-  private boolean hasIncreasedHourPrice;
+  @NotNull
+  @Range(min = 1)
+  private Double baseHourPrice;
 
   /**
    * Increased value of an hour
@@ -81,7 +92,7 @@ public class Contract {
   }
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "attendance_id", nullable = false)
+  @JoinColumn(name = "child_id", nullable = false)
   public Child getChild() {
     return child;
   }
@@ -90,8 +101,7 @@ public class Contract {
     this.child = child;
   }
 
-  @Column(nullable = false)
-  @Enumerated
+  @Column(nullable = false, length = 3)
   public ContractType getType() {
     return type;
   }
@@ -100,7 +110,15 @@ public class Contract {
     this.type = type;
   }
 
-  @Column(nullable = false)
+  public ContractStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(ContractStatus status) {
+    this.status = status;
+  }
+
+  @Column
   public LocalDate getStartDate() {
     return startDate;
   }
@@ -109,7 +127,7 @@ public class Contract {
     this.startDate = startDate;
   }
 
-  @Column(nullable = false)
+  @Column
   public LocalDate getEndDate() {
     return endDate;
   }
@@ -118,49 +136,40 @@ public class Contract {
     this.endDate = endDate;
   }
 
-  @Column(nullable = false)
-  public int getWeekPerYear() {
+  @Column(nullable = false, length = 2)
+  public Integer getWeekPerYear() {
     return weekPerYear;
   }
 
-  public void setWeekPerYear(int weekPerYear) {
+  public void setWeekPerYear(Integer weekPerYear) {
     this.weekPerYear = weekPerYear;
   }
 
   @Column(nullable = false)
-  public double getAttendancePerWeek() {
+  public Integer getAttendancePerWeek() {
     return attendancePerWeek;
   }
 
-  public void setAttendancePerWeek(double attendancePerWeek) {
+  public void setAttendancePerWeek(Integer attendancePerWeek) {
     this.attendancePerWeek = attendancePerWeek;
   }
 
   @Column(nullable = false)
-  public double getHoursPerWeek() {
+  public Double getHoursPerWeek() {
     return hoursPerWeek;
   }
 
-  public void setHoursPerWeek(double hoursPerWeek) {
+  public void setHoursPerWeek(Double hoursPerWeek) {
     this.hoursPerWeek = hoursPerWeek;
   }
 
   @Column(nullable = false)
-  public double getBaseHourPrice() {
+  public Double getBaseHourPrice() {
     return baseHourPrice;
   }
 
-  public void setBaseHourPrice(double baseHourPrice) {
+  public void setBaseHourPrice(Double baseHourPrice) {
     this.baseHourPrice = baseHourPrice;
-  }
-
-  @Column(nullable = false)
-  public boolean isHasIncreasedHourPrice() {
-    return hasIncreasedHourPrice;
-  }
-
-  public void setHasIncreasedHourPrice(boolean hasIncreasedHourPrice) {
-    this.hasIncreasedHourPrice = hasIncreasedHourPrice;
   }
 
   @Column

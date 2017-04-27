@@ -1,11 +1,11 @@
 package ysaak.garde.business.service.parameter;
 
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ysaak.garde.business.model.parameter.Parameter;
 import ysaak.garde.business.repository.ParameterRepository;
 import ysaak.garde.business.service.AbstractService;
-import ysaak.garde.data.parameter.Parameter;
+import ysaak.garde.data.parameter.ParameterDTO;
 import ysaak.garde.exception.validation.NotUniqueValueException;
 import ysaak.garde.exception.validation.ValidationException;
 
@@ -21,23 +21,25 @@ public class ParameterServiceImpl extends AbstractService<Parameter> implements 
   private ParameterRepository parameterRepository;
 
   @Override
-  public Parameter save(Parameter parameter) throws ValidationException {
-    validate(parameter);
-    return parameterRepository.save(parameter);
+  public ParameterDTO save(ParameterDTO parameter) throws ValidationException {
+
+    Parameter model = toModel(parameter, ParameterDTO.class);
+
+    validate(model);
+    model = parameterRepository.save(model);
+
+    return toDto(model, ParameterDTO.class);
   }
 
   @Override
-  public Parameter get(String code) {
-    return parameterRepository.findByCode(code);
+  public ParameterDTO get(String code) {
+    return toDto(parameterRepository.findByCode(code), ParameterDTO.class);
   }
 
   @Override
-  public List<Parameter> listAll() {
+  public List<ParameterDTO> listAll() {
     Iterable<Parameter> params = parameterRepository.findAll();
-    if (params == null) {
-      return Lists.newArrayList();
-    }
-    return Lists.newArrayList(params);
+    return toDto(params, ParameterDTO.class);
   }
 
   @Override

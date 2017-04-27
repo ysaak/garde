@@ -7,16 +7,21 @@ import ysaak.garde.business.repository.ChildRepository;
 import ysaak.garde.business.service.AbstractService;
 import ysaak.garde.business.service.parameter.ParameterService;
 import ysaak.garde.data.ChildDTO;
-import ysaak.garde.data.parameter.Parameter;
+import ysaak.garde.data.parameter.ParameterDTO;
 import ysaak.garde.exception.validation.ValidationException;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Child service implementation
+ */
 @Service
+@Transactional(rollbackOn = Exception.class)
 public class ChildServiceImpl extends AbstractService<Child> implements ChildService {
 
   private static final String BIRTHDAY_THRESHOLD_PARAM = "BIRTH-DAY-THRESHOLD";
@@ -30,7 +35,7 @@ public class ChildServiceImpl extends AbstractService<Child> implements ChildSer
   @Override
   public ChildDTO save(ChildDTO child) throws ValidationException {
     // Convert
-    Child model = mapTo(child, Child.class);
+    Child model = toModel(child, ChildDTO.class);
 
     // Validate
     validate(model);
@@ -38,19 +43,19 @@ public class ChildServiceImpl extends AbstractService<Child> implements ChildSer
     // Store data
     model = childRepository.save(model);
 
-    return mapTo(model, ChildDTO.class);
+    return toDto(model, ChildDTO.class);
   }
 
   @Override
   public ChildDTO get(long id) {
-    return mapTo(childRepository.findOne(id), ChildDTO.class);
+    return toDto(childRepository.findOne(id), ChildDTO.class);
   }
 
   @Override
   public List<ChildDTO> listAll() {
     final Iterable<Child> children = childRepository.findAll();
 
-    return mapTo(children, ChildDTO.class);
+    return toDto(children, ChildDTO.class);
   }
 
   @Override
@@ -60,7 +65,7 @@ public class ChildServiceImpl extends AbstractService<Child> implements ChildSer
     int initWeek = currWeek;
     boolean multiYear = false;
     
-    final Parameter thresholdParam = parameterService.get(BIRTHDAY_THRESHOLD_PARAM);
+    final ParameterDTO thresholdParam = parameterService.get(BIRTHDAY_THRESHOLD_PARAM);
     if (thresholdParam != null)
       initWeek -= thresholdParam.getIntValue();
     else

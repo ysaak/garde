@@ -1,6 +1,7 @@
 package ysaak.garde.data.contract;
 
 import ysaak.garde.business.model.Child;
+import ysaak.garde.data.ChildDTO;
 
 import java.time.LocalDate;
 
@@ -16,7 +17,7 @@ public class ContractDTO {
   /**
    * Child
    */
-  private Child child;
+  private ChildDTO child;
 
   /**
    * Type of the contract
@@ -71,11 +72,11 @@ public class ContractDTO {
     this.id = id;
   }
 
-  public Child getChild() {
+  public ChildDTO getChild() {
     return child;
   }
 
-  public void setChild(Child child) {
+  public void setChild(ChildDTO child) {
     this.child = child;
   }
 
