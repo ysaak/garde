@@ -6,7 +6,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import ysaak.garde.business.MappingConfiguration;
 import ysaak.garde.business.model.contract.Contract;
 import ysaak.garde.business.repository.ContractRepository;
 import ysaak.garde.business.service.contract.ContractService;
@@ -24,6 +27,8 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
+@Import(MappingConfiguration.class)
 public class TestContractService extends AbstractTestService {
   @MockBean
   private ContractRepository contractRepository;
