@@ -1,6 +1,9 @@
 package ysaak.garde.data;
 
+import com.google.common.base.MoreObjects;
+
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Child DTO
@@ -64,5 +67,38 @@ public class ChildDTO {
 
   public void setComments(String comments) {
     this.comments = comments;
+  }
+
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (!(obj instanceof ChildDTO)) return false;
+
+    ChildDTO other = (ChildDTO) obj;
+
+    return Objects.equals(id, other.id)
+            && Objects.equals(lastName, other.lastName)
+            && Objects.equals(firstName, other.firstName)
+            && Objects.equals(birthDate, other.birthDate)
+            && Objects.equals(sickness, other.sickness)
+            && Objects.equals(comments, other.comments);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, lastName, firstName, birthDate, sickness, comments);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+            .add("id", id)
+            .add("lastName", lastName)
+            .add("firstName", firstName)
+            .add("birthDate", birthDate)
+            .add("sickness", sickness)
+            .add("comments", comments)
+            .toString();
   }
 }

@@ -1,4 +1,4 @@
-package ysaak.garde.business.converter.common;
+package ysaak.garde.business.converter;
 
 import ysaak.garde.business.model.parameter.Parameter;
 import ysaak.garde.business.model.parameter.ParameterType;

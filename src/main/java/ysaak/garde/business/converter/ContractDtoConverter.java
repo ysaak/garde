@@ -1,8 +1,10 @@
-package ysaak.garde.business.converter.common;
+package ysaak.garde.business.converter;
 
+import ysaak.garde.business.model.Child;
 import ysaak.garde.business.model.contract.Contract;
 import ysaak.garde.business.model.contract.ContractStatus;
 import ysaak.garde.business.model.contract.ContractType;
+import ysaak.garde.data.ChildDTO;
 import ysaak.garde.data.contract.ContractDTO;
 import ysaak.garde.service.mapping.AbstractConverter;
 
@@ -15,7 +17,7 @@ public class ContractDtoConverter extends AbstractConverter<Contract, ContractDT
   protected ContractDTO convertNonNullEntity(Contract contract) {
     ContractDTO result = new ContractDTO();
     result.setId(contract.getId());
-    //FIXME entity.setChild(null);
+    result.setChild(lookup(Child.class, ChildDTO.class).convertEntity(contract.getChild()));
     result.setType(lookup(ContractType.class, ysaak.garde.data.contract.ContractType.class).convertEntity(contract.getType()));
     result.setStatus(lookup(ContractStatus.class, ysaak.garde.data.contract.ContractStatus.class).convertEntity(contract.getStatus()));
     result.setStartDate(contract.getStartDate());
@@ -32,7 +34,7 @@ public class ContractDtoConverter extends AbstractConverter<Contract, ContractDT
   protected Contract convertNonNullDTO(ContractDTO contract) {
     Contract result = new Contract();
     result.setId(contract.getId());
-    //FIXME entity.setChild(null);
+    result.setChild(lookup(Child.class, ChildDTO.class).convertDTO(contract.getChild()));
     result.setType(lookup(ContractType.class, ysaak.garde.data.contract.ContractType.class).convertDTO(contract.getType()));
     result.setStatus(lookup(ContractStatus.class, ysaak.garde.data.contract.ContractStatus.class).convertDTO(contract.getStatus()));
     result.setStartDate(contract.getStartDate());
