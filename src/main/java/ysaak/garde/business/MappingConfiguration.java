@@ -14,10 +14,10 @@ import java.io.IOException;
  * Application configuration
  */
 @Configuration
-public class AppConfiguration {
-  private static final Logger LOGGER = LoggerFactory.getLogger(AppConfiguration.class);
+public class MappingConfiguration {
+  private static final Logger LOGGER = LoggerFactory.getLogger(MappingConfiguration.class);
 
-  private static final String MAPPERS_PACKAGE = AppConfiguration.class.getPackage().getName() + ".converter";
+  private static final String MAPPERS_PACKAGE = MappingConfiguration.class.getPackage().getName() + ".converter";
 
   @Bean
   @SuppressWarnings("unchecked")

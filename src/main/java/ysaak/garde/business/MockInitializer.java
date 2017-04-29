@@ -94,7 +94,6 @@ public class MockInitializer {
     contract.setAttendancePerWeek(4);
     contract.setHoursPerWeek(30.);
     contract.setBaseHourPrice(3.5);
-    contract.setHasIncreasedHourPrice(true);
     contract.setIncreasedHourValue(5.);
 
     return contractService.create(contract);

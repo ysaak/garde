@@ -1,5 +1,9 @@
 package ysaak.garde.data.parameter;
 
+import com.google.common.base.MoreObjects;
+
+import java.util.Objects;
+
 public class ParameterDTO {
   private Long id;
   
@@ -55,5 +59,34 @@ public class ParameterDTO {
 
   public void setValue(String value) {
     this.value = value;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (!(obj instanceof ParameterDTO)) return false;
+
+
+    ParameterDTO other = (ParameterDTO) obj;
+
+    return Objects.equals(id, other.id)
+            && Objects.equals(code, other.code)
+            && Objects.equals(type, other.type)
+            && Objects.equals(value, other.value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, code, value);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+            .add("id", id)
+            .add("code", code)
+            .add("type", type)
+            .add("value", value)
+            .toString();
   }
 }

@@ -1,10 +1,7 @@
 package ysaak.garde.gui.common;
 
-import lombok.Data;
-
 import java.time.LocalDate;
 
-@Data
 public class Context {
   public static final Context EMPTY = new Context();
 
@@ -15,5 +12,29 @@ public class Context {
   private LocalDate date;
   
   protected Context() {
+  }
+
+  public Long getChildId() {
+    return childId;
+  }
+
+  public void setChildId(Long childId) {
+    this.childId = childId;
+  }
+
+  public Long getLongId() {
+    return longId;
+  }
+
+  public void setLongId(Long longId) {
+    this.longId = longId;
+  }
+
+  public LocalDate getDate() {
+    return date;
+  }
+
+  public void setDate(LocalDate date) {
+    this.date = date;
   }
 }

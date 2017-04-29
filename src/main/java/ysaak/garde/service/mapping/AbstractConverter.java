@@ -1,6 +1,7 @@
 package ysaak.garde.service.mapping;
 
 import com.google.common.base.Preconditions;
+import com.google.common.reflect.TypeToken;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -15,8 +16,8 @@ public abstract class AbstractConverter<Entity, DTO> implements Converter<Entity
    */
   private MappingEngine engine;
 
-  protected final Class<Entity> entityClass;
-  protected final Class<DTO> dtoClass;
+  private final Class<Entity> entityClass;
+  private final Class<DTO> dtoClass;
 
   @SuppressWarnings("unchecked")
   public AbstractConverter() {

@@ -3,16 +3,24 @@ package ysaak.garde.service.mapping;
 /**
  * Simple enum converter which convert using string value. Also work from String to Enum
  */
-public abstract class EnumConverter<Entity, DTO> extends AbstractConverter<Entity, DTO> {
+public abstract class EnumConverter<Entity, DTO> implements Converter<Entity, DTO> {
 
-  @Override
-  protected DTO convertNonNullEntity(Entity entity) {
-    return convert(entity, entityClass, dtoClass);
+  private final Class<Entity> entityClass;
+  private final Class<DTO> dtoClass;
+
+  public EnumConverter(Class<Entity> entityClass, Class<DTO> dtoClass) {
+    this.entityClass = entityClass;
+    this.dtoClass = dtoClass;
   }
 
   @Override
-  protected Entity convertNonNullDTO(DTO dto) {
-    return convert(dto, dtoClass, entityClass);
+  public DTO convertEntity(Entity entity) {
+    return (entity != null) ? convert(entity, entityClass, dtoClass) : null;
+  }
+
+  @Override
+  public Entity convertDTO(DTO dto) {
+    return (dto != null) ? convert(dto, dtoClass, entityClass) : null;
   }
 
   /**
@@ -50,7 +58,7 @@ public abstract class EnumConverter<Entity, DTO> extends AbstractConverter<Entit
 
       if (result == null) {
         // No result found, throw exception
-        throw new ConversionException("Error while converting enum from " + entityClass.toGenericString() + " to " + dtoClass.toGenericString());
+        throw new ConversionException("Error while converting enum from " + sourceClass.toGenericString() + " to " + destinationClass.toGenericString());
       }
     }
 

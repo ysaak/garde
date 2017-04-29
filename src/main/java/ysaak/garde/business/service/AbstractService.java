@@ -1,9 +1,9 @@
 package ysaak.garde.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ysaak.garde.service.mapping.MappingEngine;
 import ysaak.garde.exception.validation.FieldValidationException;
 import ysaak.garde.exception.validation.ValidationException;
+import ysaak.garde.service.mapping.MappingEngine;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -56,10 +56,10 @@ public abstract class AbstractService<MODEL> {
   }
 
   protected <TO> MODEL toModel(TO object, Class<TO> toClass) {
-    return mappingEngine.lookup(toClass, modelClass).convertEntity(object);
+    return mappingEngine.lookup(modelClass, toClass).convertDTO(object);
   }
 
   protected <TO> List<MODEL> toModel(Iterable<? extends TO> objects, Class<TO> toClass) {
-    return mappingEngine.lookup(toClass, modelClass).convertEntity(objects);
+    return mappingEngine.lookup(modelClass, toClass).convertDTO(objects);
   }
 }

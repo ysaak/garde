@@ -90,7 +90,7 @@ public class MappingEngine {
     Converter<Entity, DTO> converter = (Converter<Entity, DTO>) enumConverterInstances.get(entityClass, dtoClass);
 
     if (converter == null) {
-      converter = new EnumConverter<Entity, DTO>() {};
+      converter = new EnumConverter<Entity, DTO>(entityClass, dtoClass) {};
       enumConverterInstances.put(entityClass, dtoClass, converter);
     }
 
@@ -110,7 +110,11 @@ public class MappingEngine {
     if (instance == null) {
       try {
         instance = converter.newInstance();
-        if (converter.isInstance(AbstractConverter.class)) {
+
+        if (AbstractConverter.class.isInstance(instance)) {
+
+          System.out.println("Converter is instance of abstract converter");
+
           ((AbstractConverter) instance).setEngine(this);
         }
 

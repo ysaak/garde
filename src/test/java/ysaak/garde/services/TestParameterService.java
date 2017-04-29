@@ -6,8 +6,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import ysaak.garde.business.MappingConfiguration;
 import ysaak.garde.business.model.parameter.Parameter;
 import ysaak.garde.business.repository.ParameterRepository;
 import ysaak.garde.business.service.parameter.ParameterService;
@@ -17,6 +19,7 @@ import ysaak.garde.exception.validation.FieldValidationException;
 import ysaak.garde.exception.validation.NotUniqueValueException;
 import ysaak.garde.exception.validation.ValidationException;
 
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +33,7 @@ import static org.mockito.BDDMockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
+@Import(MappingConfiguration.class)
 public class TestParameterService extends AbstractTestService {
 
   @MockBean
@@ -84,7 +88,7 @@ public class TestParameterService extends AbstractTestService {
       Assert.fail("Code not detected as empty");
     }
     catch (FieldValidationException e) {
-      assertListContains(e.getInvalidField(), "code", "type", "value");
+      assertListContains(e.getInvalidField(), findAnnotatedFieldNames(Parameter.class, NotNull.class));
     }
 
     // Fill parameter
@@ -116,7 +120,7 @@ public class TestParameterService extends AbstractTestService {
             new ParameterDTO("TEST_CODE2", ParameterType.STRING, "TEST")
     );
 
-    //when(this.parameterRepository.findAll()).thenReturn(mapper.map(expectedResult, Parameter.class));
+    when(this.parameterRepository.findAll()).thenReturn(mapper.lookup(Parameter.class, ParameterDTO.class).convertDTO(expectedResult));
 
     final List<ParameterDTO> result2 = service.listAll();
     Assert.assertNotNull(result2);

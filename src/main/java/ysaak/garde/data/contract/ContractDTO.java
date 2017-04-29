@@ -1,9 +1,10 @@
 package ysaak.garde.data.contract;
 
-import ysaak.garde.business.model.Child;
+import com.google.common.base.MoreObjects;
 import ysaak.garde.data.ChildDTO;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Contract DTO
@@ -25,6 +26,11 @@ public class ContractDTO {
   private ContractType type;
 
   /**
+   * Status of the contract
+   */
+  private ContractStatus status;
+
+  /**
    * Start date of the contract (inclusive)
    */
   private LocalDate startDate;
@@ -37,27 +43,22 @@ public class ContractDTO {
   /**
    * Attendance weeks per year
    */
-  private int weekPerYear;
+  private Integer weekPerYear;
 
   /**
    * Attendance per weeks
    */
-  private double attendancePerWeek;
+  private Integer attendancePerWeek;
 
   /**
    * Hours per week
    */
-  private double hoursPerWeek;
+  private Double hoursPerWeek;
 
   /**
    * Base value of an hour
    */
-  private double baseHourPrice;
-
-  /**
-   * Indicate if an increased hour price is defined
-   */
-  private boolean hasIncreasedHourPrice;
+  private Double baseHourPrice;
 
   /**
    * Increased value of an hour
@@ -88,6 +89,14 @@ public class ContractDTO {
     this.type = type;
   }
 
+  public ContractStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(ContractStatus status) {
+    this.status = status;
+  }
+
   public LocalDate getStartDate() {
     return startDate;
   }
@@ -104,44 +113,36 @@ public class ContractDTO {
     this.endDate = endDate;
   }
 
-  public int getWeekPerYear() {
+  public Integer getWeekPerYear() {
     return weekPerYear;
   }
 
-  public void setWeekPerYear(int weekPerYear) {
+  public void setWeekPerYear(Integer weekPerYear) {
     this.weekPerYear = weekPerYear;
   }
 
-  public double getAttendancePerWeek() {
+  public Integer getAttendancePerWeek() {
     return attendancePerWeek;
   }
 
-  public void setAttendancePerWeek(double attendancePerWeek) {
+  public void setAttendancePerWeek(Integer attendancePerWeek) {
     this.attendancePerWeek = attendancePerWeek;
   }
 
-  public double getHoursPerWeek() {
+  public Double getHoursPerWeek() {
     return hoursPerWeek;
   }
 
-  public void setHoursPerWeek(double hoursPerWeek) {
+  public void setHoursPerWeek(Double hoursPerWeek) {
     this.hoursPerWeek = hoursPerWeek;
   }
 
-  public double getBaseHourPrice() {
+  public Double getBaseHourPrice() {
     return baseHourPrice;
   }
 
-  public void setBaseHourPrice(double baseHourPrice) {
+  public void setBaseHourPrice(Double baseHourPrice) {
     this.baseHourPrice = baseHourPrice;
-  }
-
-  public boolean isHasIncreasedHourPrice() {
-    return hasIncreasedHourPrice;
-  }
-
-  public void setHasIncreasedHourPrice(boolean hasIncreasedHourPrice) {
-    this.hasIncreasedHourPrice = hasIncreasedHourPrice;
   }
 
   public Double getIncreasedHourValue() {
@@ -150,5 +151,47 @@ public class ContractDTO {
 
   public void setIncreasedHourValue(Double increasedHourValue) {
     this.increasedHourValue = increasedHourValue;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (!(obj instanceof ContractDTO)) return false;
+
+    ContractDTO other = (ContractDTO) obj;
+
+    return Objects.equals(id, other.id)
+            && Objects.equals(child, other.child)
+            && Objects.equals(type, other.type)
+            && Objects.equals(status, other.status)
+            && Objects.equals(startDate, other.startDate)
+            && Objects.equals(endDate, other.endDate)
+            && Objects.equals(weekPerYear, other.weekPerYear)
+            && Objects.equals(attendancePerWeek, other.attendancePerWeek)
+            && Objects.equals(hoursPerWeek, other.hoursPerWeek)
+            && Objects.equals(baseHourPrice, other.baseHourPrice)
+            && Objects.equals(increasedHourValue, other.increasedHourValue);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, type, status, startDate, endDate, weekPerYear, attendancePerWeek, hoursPerWeek, baseHourPrice, increasedHourValue);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+            .add("id", id)
+            .add("child", child)
+            .add("type", type)
+            .add("status", status)
+            .add("startDate", startDate)
+            .add("endDate", endDate)
+            .add("weekPerYear", weekPerYear)
+            .add("attendancePerWeek", attendancePerWeek)
+            .add("hoursPerWeek", hoursPerWeek)
+            .add("baseHourPrice", baseHourPrice)
+            .add("increasedHourValue", increasedHourValue)
+            .toString();
   }
 }

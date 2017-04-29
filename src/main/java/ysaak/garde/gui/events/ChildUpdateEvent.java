@@ -1,8 +1,13 @@
 package ysaak.garde.gui.events;
 
-import lombok.Data;
-
-@Data
 public class ChildUpdateEvent {
   private final Long childId;
+
+  public ChildUpdateEvent(Long childId) {
+    this.childId = childId;
+  }
+
+  public Long getChildId() {
+    return childId;
+  }
 }

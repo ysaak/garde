@@ -14,7 +14,7 @@ import ysaak.garde.data.contract.ContractDTO;
 import ysaak.garde.exception.validation.FieldValidationException;
 import ysaak.garde.exception.validation.ValidationException;
 
-import java.util.Arrays;
+import javax.validation.constraints.NotNull;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
@@ -44,7 +44,7 @@ public class TestContractService extends AbstractTestService {
       Assert.fail("Values not detected as empty");
     }
     catch (FieldValidationException e) {
-      assertListContains(e.getInvalidField(), "child", "type", "startDate", "baseHourPrice", "attendancePerWeek", "weekPerYear");
+      assertListContains(e.getInvalidField(), findAnnotatedFieldNames(Contract.class, NotNull.class));
     }
   }
 }

@@ -1,5 +1,6 @@
 package ysaak.garde.business.model.contract;
 
+import com.google.common.base.MoreObjects;
 import org.hibernate.validator.constraints.Range;
 import ysaak.garde.business.model.Child;
 
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class Contract {
@@ -179,5 +181,47 @@ public class Contract {
 
   public void setIncreasedHourValue(Double increasedHourValue) {
     this.increasedHourValue = increasedHourValue;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (!(obj instanceof Contract)) return false;
+
+    Contract other = (Contract) obj;
+
+    return Objects.equals(id, other.id)
+            && Objects.equals(child, other.child)
+            && Objects.equals(type, other.type)
+            && Objects.equals(status, other.status)
+            && Objects.equals(startDate, other.startDate)
+            && Objects.equals(endDate, other.endDate)
+            && Objects.equals(weekPerYear, other.weekPerYear)
+            && Objects.equals(attendancePerWeek, other.attendancePerWeek)
+            && Objects.equals(hoursPerWeek, other.hoursPerWeek)
+            && Objects.equals(baseHourPrice, other.baseHourPrice)
+            && Objects.equals(increasedHourValue, other.increasedHourValue);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, type, status, startDate, endDate, weekPerYear, attendancePerWeek, hoursPerWeek, baseHourPrice, increasedHourValue);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+            .add("id", id)
+            .add("child", child)
+            .add("type", type)
+            .add("status", status)
+            .add("startDate", startDate)
+            .add("endDate", endDate)
+            .add("weekPerYear", weekPerYear)
+            .add("attendancePerWeek", attendancePerWeek)
+            .add("hoursPerWeek", hoursPerWeek)
+            .add("baseHourPrice", baseHourPrice)
+            .add("increasedHourValue", increasedHourValue)
+            .toString();
   }
 }

@@ -1,11 +1,14 @@
 package ysaak.garde.business.model.parameter;
 
+import com.google.common.base.MoreObjects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 public class Parameter {
@@ -83,5 +86,34 @@ public class Parameter {
 
   public void setDoubleValue(Double value) {
     this.value = value != null ? String.valueOf(value) : null;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (!(obj instanceof Parameter)) return false;
+
+
+    Parameter other = (Parameter) obj;
+
+    return Objects.equals(id, other.id)
+            && Objects.equals(code, other.code)
+            && Objects.equals(type, other.type)
+            && Objects.equals(value, other.value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, code, value);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+            .add("id", id)
+            .add("code", code)
+            .add("type", type)
+            .add("value", value)
+            .toString();
   }
 }
