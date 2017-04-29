@@ -1,6 +1,7 @@
 target/
 build/
 .gradle/
+out/
 
 # Editor files
 .classpath
