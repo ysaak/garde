@@ -31,7 +31,6 @@ public class TestParameterDtoMapper extends AbstractTestMapper {
     entity.setValue("VALUE");
 
     dto = new ParameterDTO();
-    dto.setId(1L);
     dto.setCode("CODE");
     dto.setType(ysaak.garde.data.parameter.ParameterType.STRING);
     dto.setValue("VALUE");
@@ -44,6 +43,8 @@ public class TestParameterDtoMapper extends AbstractTestMapper {
 
   @Test
   public void testParameterDTOConversion() {
+    // ID is not mapped in the dto
+    entity.setId(null);
     testDTOConversion(dto, ParameterDTO.class, entity, Parameter.class);
   }
 }

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -72,6 +73,7 @@ public class Parameter {
     this.value = value;
   }
 
+  @Transient
   public Integer getIntValue() {
     return value != null ? Integer.parseInt(value) : null;
   }
@@ -80,6 +82,7 @@ public class Parameter {
     this.value = value != null ? String.valueOf(value) : null;
   }
 
+  @Transient
   public Double getDoubleValue() {
     return value != null ? Double.parseDouble(value) : null;
   }

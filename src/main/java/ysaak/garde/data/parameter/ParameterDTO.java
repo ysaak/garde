@@ -5,8 +5,6 @@ import com.google.common.base.MoreObjects;
 import java.util.Objects;
 
 public class ParameterDTO {
-  private Long id;
-  
   private String code;
   
   private ParameterType type;
@@ -19,14 +17,6 @@ public class ParameterDTO {
     this.code = code;
     this.type = type;
     this.value = value;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getCode() {
@@ -69,21 +59,19 @@ public class ParameterDTO {
 
     ParameterDTO other = (ParameterDTO) obj;
 
-    return Objects.equals(id, other.id)
-            && Objects.equals(code, other.code)
+    return Objects.equals(code, other.code)
             && Objects.equals(type, other.type)
             && Objects.equals(value, other.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, code, value);
+    return Objects.hash(code, type, value);
   }
 
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-            .add("id", id)
             .add("code", code)
             .add("type", type)
             .add("value", value)

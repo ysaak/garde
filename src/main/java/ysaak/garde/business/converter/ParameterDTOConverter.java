@@ -13,7 +13,6 @@ public class ParameterDTOConverter extends AbstractConverter<Parameter, Paramete
   @Override
   protected ParameterDTO convertNonNullEntity(Parameter entity) {
     ParameterDTO p = new ParameterDTO();
-    p.setId(entity.getId());
     p.setCode(entity.getCode());
     p.setType(lookup(ParameterType.class, ysaak.garde.data.parameter.ParameterType.class).convertEntity(entity.getType()));
     p.setValue(entity.getValue());
@@ -23,7 +22,6 @@ public class ParameterDTOConverter extends AbstractConverter<Parameter, Paramete
   @Override
   protected Parameter convertNonNullDTO(ParameterDTO dto) {
     Parameter p = new Parameter();
-    p.setId(dto.getId());
     p.setCode(dto.getCode());
     p.setType(lookup(ParameterType.class, ysaak.garde.data.parameter.ParameterType.class).convertDTO(dto.getType()));
     p.setValue(dto.getValue());
