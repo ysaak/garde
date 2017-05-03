@@ -112,9 +112,6 @@ public class MappingEngine {
         instance = converter.newInstance();
 
         if (AbstractConverter.class.isInstance(instance)) {
-
-          System.out.println("Converter is instance of abstract converter");
-
           ((AbstractConverter) instance).setEngine(this);
         }
 
