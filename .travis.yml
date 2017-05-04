@@ -9,3 +9,21 @@ addons:
   apt:
     packages:
       - oracle-java8-installer
+  sonarqube:
+    token:
+      secure: "qwfeK3OsGW8StRH0BYE9xSRhrdKDovWuIehAvsTj5N6mD9YMk9fGQ5aXEu/Pwdr8GZPRVCvzQztticYyd1fWx/TnvGor07GKW0O/y+n1cbX9JLc+0GpKnvA488s0ha9oogUZ5RF8A25jtlWFKrfdHJm9es29MJLaWVAclFJcTXMdvME7kHwu7YzuSqfUxKmytSbi/CueBWcxTu6tXiYdRY7PQGVJ4mpefnC4wL6LpPGm7IMgTYSwGaTUbiLWfnyuDtEvW50jHgDS+mHdAkj1Sio6W74hFA1884Bbd8TSjUkzjUypAi8A3H5nXGcA2OnMLEDz+L85ydLcJ4E1ktcR43iDzHJXkLJNszzpt7KFlPPIrh95fuan5HisTfyNo3kKtS+ITEwFNi5LW+4w8/EbXEzRhSQ7semg9EazeI7ivfUo807pVzsrCYt8up1p68ufCQ7ETMzVuaMR9ABWpQyAq4tbtc0lW42Npjv7gPvjgVmWRDOrRCrRqY5gUwUBGVcdaDySoHngJ5AdZLLHYAW7VorpGutWsrcLF01OViFnXai/tz8nFlMn5XSNfSK81Jwv7KXerZ3YSfFZ5wWY8Gn90MLAe8igjU+7G+XexSCyfAkq999QUjcaK1lSG8dXG4zOzEFaRCEGppQUBihWcPF6FYCEVviWaoITzpl5BFy3s2Q="
+  branches:
+    - master
+    - develop
+
+script: gradle sonarqube
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.sonar
