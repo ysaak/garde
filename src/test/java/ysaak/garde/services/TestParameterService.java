@@ -17,14 +17,19 @@ import ysaak.garde.data.parameter.ParameterDTO;
 import ysaak.garde.data.parameter.ParameterType;
 import ysaak.garde.exception.validation.FieldValidationException;
 import ysaak.garde.exception.validation.ValidationException;
+import ysaak.garde.service.mapping.Converter;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.anyString;
 import static org.mockito.BDDMockito.when;
+import static org.mockito.Matchers.anyCollection;
 
 /**
  * Test class for ParameterService
@@ -248,6 +253,92 @@ public class TestParameterService extends AbstractTestService {
     p.setValue("TEST NEW STRING");
 
     service.save(p);
+  }
+
+  @Test
+  public void testGetOneParameterFound() {
+    final Parameter existingParameter = new Parameter();
+    existingParameter.setId(1L);
+    existingParameter.setCode("TEST_CODE");
+    existingParameter.setType(ysaak.garde.business.model.parameter.ParameterType.INTEGER);
+    existingParameter.setValue("1");
+
+    when(this.parameterRepository.findByCode("TEST_CODE")).thenReturn(existingParameter);
+
+    final ParameterDTO parameter = service.get("TEST_CODE");
+
+    Assert.assertNotNull(parameter);
+    Assert.assertEquals(mapper.lookup(Parameter.class, ParameterDTO.class).convertEntity(existingParameter), parameter);
+  }
+
+  @Test
+  public void testGetOneParameterNotFound() {
+    when(this.parameterRepository.findByCode(anyString())).thenReturn(null);
+    final ParameterDTO parameter = service.get("TEST_CODE");
+    Assert.assertNull(parameter);
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  public void testGetMultipleParametersFound() {
+    final Parameter existingParameter1 = new Parameter();
+    existingParameter1.setId(1L);
+    existingParameter1.setCode("TEST_CODE1");
+    existingParameter1.setType(ysaak.garde.business.model.parameter.ParameterType.INTEGER);
+    existingParameter1.setValue("1");
+
+    final Parameter existingParameter2 = new Parameter();
+    existingParameter2.setId(2L);
+    existingParameter2.setCode("TEST_CODE2");
+    existingParameter2.setType(ysaak.garde.business.model.parameter.ParameterType.INTEGER);
+    existingParameter2.setValue("1");
+
+    final Parameter existingParameter3 = new Parameter();
+    existingParameter3.setId(3L);
+    existingParameter3.setCode("TEST_CODE3");
+    existingParameter3.setType(ysaak.garde.business.model.parameter.ParameterType.INTEGER);
+    existingParameter3.setValue("1");
+
+    final Map<String, Parameter> parameterMap = new HashMap<>();
+    parameterMap.put(existingParameter1.getCode(), existingParameter1);
+    parameterMap.put(existingParameter2.getCode(), existingParameter2);
+    parameterMap.put(existingParameter3.getCode(), existingParameter3);
+
+
+    when(this.parameterRepository.findByCodeIn(anyCollection())).thenAnswer(invocation -> {
+      final List<Parameter> result = new ArrayList<>();
+
+      final Iterable<String> codes = invocation.getArgumentAt(0, Iterable.class);
+      for (String code : codes) {
+        if (parameterMap.containsKey(code)) {
+          result.add(parameterMap.get(code));
+        }
+      }
+
+      return result;
+    });
+
+    final List<ParameterDTO> parameters = service.get(Arrays.asList("TEST_CODE1", "TEST_CODE2"));
+    Assert.assertNotNull(parameters);
+    Assert.assertEquals(2, parameters.size());
+
+
+    final Converter<Parameter, ParameterDTO> converter = mapper.lookup(Parameter.class, ParameterDTO.class);
+    List<ParameterDTO> expectedResult = Arrays.asList(
+        converter.convertEntity(existingParameter1),
+        converter.convertEntity(existingParameter2)
+    );
+
+    assertListContains(parameters, expectedResult);
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  public void testGetMultipleParametersNotFound() {
+    when(this.parameterRepository.findByCodeIn(anyCollection())).thenReturn(null);
+    final List<ParameterDTO> parameters = service.get(Arrays.asList("TEST_CODE1", "TEST_CODE2"));
+    Assert.assertNotNull(parameters);
+    Assert.assertTrue(parameters.isEmpty());
   }
 
   @Test

@@ -75,11 +75,11 @@ public class Parameter {
 
   @Transient
   public Integer getIntValue() {
-    return value != null ? Integer.parseInt(value) : null;
+    return value != null ? Integer.parseInt(value) : 0;
   }
 
   public void setIntValue(Integer value) {
-    this.value = value != null ? String.valueOf(value) : null;
+    this.value = value != null ? String.valueOf(value) : "0";
   }
 
   @Transient
@@ -88,14 +88,17 @@ public class Parameter {
   }
 
   public void setDoubleValue(Double value) {
-    this.value = value != null ? String.valueOf(value) : null;
+    this.value = value != null ? String.valueOf(value) : "0.0";
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this) return true;
-    if (!(obj instanceof Parameter)) return false;
-
+    if (obj == this) {
+      return true;
+    }
+    if (!(obj instanceof Parameter)) {
+      return false;
+    }
 
     Parameter other = (Parameter) obj;
 

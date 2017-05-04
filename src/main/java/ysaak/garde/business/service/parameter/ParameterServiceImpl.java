@@ -23,7 +23,7 @@ public class ParameterServiceImpl extends AbstractService<Parameter> implements 
 
   @Override
   public ParameterDTO save(ParameterDTO parameter) throws ValidationException {
-    Preconditions.checkNotNull(parameter);
+    Preconditions.checkNotNull(parameter, "Parameter is null");
 
     // Transform to model and validate
     Parameter model = toModel(parameter, ParameterDTO.class);
@@ -52,6 +52,7 @@ public class ParameterServiceImpl extends AbstractService<Parameter> implements 
 
   @Override
   public List<ParameterDTO> save(Iterable<ParameterDTO> parameters) throws ValidationException {
+    Preconditions.checkNotNull(parameters, "Parameters list is null");
     List<ParameterDTO> result = new ArrayList<>();
 
     for (ParameterDTO param : parameters) {
@@ -63,7 +64,15 @@ public class ParameterServiceImpl extends AbstractService<Parameter> implements 
 
   @Override
   public ParameterDTO get(String code) {
+    Preconditions.checkNotNull(code, "Code is null");
     return toDto(parameterRepository.findByCode(code), ParameterDTO.class);
+  }
+
+  @Override
+  public List<ParameterDTO> get(Iterable<String> codes) {
+    Preconditions.checkNotNull(codes, "Codes list is null");
+    final List<Parameter> parameters = parameterRepository.findByCodeIn(codes);
+    return toDto(parameters, ParameterDTO.class);
   }
 
   @Override

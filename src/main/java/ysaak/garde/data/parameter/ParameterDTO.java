@@ -53,9 +53,12 @@ public class ParameterDTO {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this) return true;
-    if (!(obj instanceof ParameterDTO)) return false;
-
+    if (obj == this) {
+      return true;
+    }
+    if (!(obj instanceof ParameterDTO)) {
+      return false;
+    }
 
     ParameterDTO other = (ParameterDTO) obj;
 

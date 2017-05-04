@@ -1,6 +1,5 @@
 package ysaak.garde.business.service.parameter;
 
-import ysaak.garde.business.model.parameter.Parameter;
 import ysaak.garde.data.parameter.ParameterDTO;
 import ysaak.garde.exception.validation.ValidationException;
 
@@ -23,7 +22,19 @@ public interface ParameterService {
    */
   List<ParameterDTO> save(Iterable<ParameterDTO> parameters) throws ValidationException;
 
+  /**
+   * Find a parameter from its code
+   * @param code Parameter code
+   * @return Parameter
+   */
   ParameterDTO get(String code);
+
+  /**
+   * Find a list of parameter from their codes
+   * @param codes Parameter's codes
+   * @return Parameters
+   */
+  List<ParameterDTO> get(Iterable<String> codes);
 
   /**
    * List all the parameters
