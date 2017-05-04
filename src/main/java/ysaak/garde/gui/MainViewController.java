@@ -183,7 +183,7 @@ public class MainViewController {
       presenter.startLoadData(context);
     }
     catch (final Exception e) {
-      e.printStackTrace();
+      LOGGER.error("Error while loading view", e);
     }
   }
 

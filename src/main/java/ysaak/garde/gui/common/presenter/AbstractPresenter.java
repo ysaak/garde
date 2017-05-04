@@ -1,7 +1,10 @@
 package ysaak.garde.gui.common.presenter;
 
 import com.google.common.base.Preconditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import ysaak.garde.gui.MainViewController;
 import ysaak.garde.gui.common.ViewLoader;
 import ysaak.garde.gui.common.actions.ActionType;
 import ysaak.garde.gui.common.buttonbar.ButtonBar;
@@ -22,6 +25,8 @@ import ysaak.garde.service.task.TaskFacade;
 import java.lang.reflect.ParameterizedType;
 
 public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA>> implements Presenter {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPresenter.class);
 
   private class DataLoaderTask extends GuiTask<DATA> {
     private final Context context;
@@ -179,8 +184,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
   protected abstract void updateData(DATA data) throws Exception;
   
   protected void showError(Throwable error) {
-    //FIXME correctly trace and show error
-    error.printStackTrace();
+    LOGGER.error("An error append", error);
   }
   
   private void closeView() {

@@ -1,5 +1,7 @@
 package ysaak.garde.business;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ysaak.garde.business.service.attendance.AttendanceService;
@@ -26,6 +28,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class MockInitializer {
+  private static final Logger LOGGER = LoggerFactory.getLogger(MockInitializer.class);
   
   @Autowired
   private ChildService childService;
@@ -75,7 +78,7 @@ public class MockInitializer {
       initContract(base2Child, true);
     }
     catch (ValidationException v) {
-      v.printStackTrace();
+      LOGGER.error("Error while initializing mock data");
     }
   }
 
