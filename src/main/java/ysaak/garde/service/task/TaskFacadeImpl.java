@@ -52,6 +52,7 @@ public class TaskFacadeImpl implements TaskFacade {
     }
     catch (InterruptedException e) {
       LOGGER.debug("Tasks interrupted");
+      Thread.currentThread().interrupt();
     }
     finally {
       if (!executor.isTerminated()) {
@@ -74,8 +75,6 @@ public class TaskFacadeImpl implements TaskFacade {
 
     @Override
     public void run() {
-      //taskSubmitted();
-
       longTaskDetector = scheduledService.schedule(() -> {
         task.setLongTaskStarted();
         longTaskDetector = null;
@@ -87,7 +86,7 @@ public class TaskFacadeImpl implements TaskFacade {
         Platform.runLater(() -> task.onSucceeded(data));
         taskEnded2();
       }
-      catch (Throwable error) {
+      catch (Exception error) {
         Platform.runLater(() -> task.onFailed(error));
         taskEnded2();
       }

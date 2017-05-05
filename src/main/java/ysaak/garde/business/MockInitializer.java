@@ -157,7 +157,7 @@ public class MockInitializer {
     Random random = new Random();
     int minDay = (int) LocalDate.of(1900, 1, 1).toEpochDay();
     int maxDay = (int) LocalDate.of(2015, 1, 1).toEpochDay();
-    long randomDay = minDay + random.nextInt(maxDay - minDay);
+    long randomDay = ((long) minDay) + random.nextInt(maxDay - minDay);
     return LocalDate.ofEpochDay(randomDay);
   }
 }

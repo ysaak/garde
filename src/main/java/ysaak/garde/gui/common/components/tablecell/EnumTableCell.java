@@ -22,7 +22,7 @@ public class EnumTableCell<S, T extends Enum<T>> extends TableCell<S, T> {
   protected void updateItem(T item, boolean empty) {
     super.updateItem(item, empty);
 
-    if (item != null && !empty && (emptyValue == null || emptyValue != item)) {
+    if (item != null && !empty && (emptyValue == null || !item.equals(emptyValue))) {
       setText(I18n.get(item));
     }
     else {

@@ -1,10 +1,14 @@
 package ysaak.garde.business.utils;
 
+import org.hibernate.validator.constraints.Range;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class NameGenerator {
+  private final Random random = new Random();
   private List<String> vocals = new ArrayList<>();
   private List<String> startConsonants = new ArrayList<>();
   private List<String> endConsonants = new ArrayList<>();
@@ -29,10 +33,6 @@ public class NameGenerator {
 
   public String getName() {
     return firstCharUppercase(getNameByInstructions(getRandomElementFrom(nameInstructions)));
-  }
-
-  private int randomInt(int min, int max) {
-    return (int) (min + (Math.random() * (max + 1 - min)));
   }
 
   private String getNameByInstructions(String nameInstructions) {
@@ -62,6 +62,6 @@ public class NameGenerator {
   }
 
   private String getRandomElementFrom(List<String> v) {
-    return v.get(randomInt(0, v.size() - 1));
+    return v.get(random.nextInt(v.size()));
   }
 }

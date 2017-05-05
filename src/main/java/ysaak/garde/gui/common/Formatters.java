@@ -46,8 +46,8 @@ public final class Formatters {
   public static String formatDuration(Duration d, String separator) {
     long hours = d.toHours();
     long minutes = d.minusHours(hours).toMinutes();
-    
-    return String.format("%02d" + separator + "%02d", hours, minutes);
+    final String format = "%02d" + separator + "%02d";
+    return String.format(format, hours, minutes);
   }
 
   /**

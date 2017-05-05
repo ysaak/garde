@@ -23,7 +23,7 @@ public final class ContractUtils {
   public static double calculateMonthlyPayment(double hourPrice, double hoursPerWeek, int attendanceWeek) {
     double payment = hourPrice * hoursPerWeek * attendanceWeek / 12.;
 
-    final BigDecimal bd = new BigDecimal(payment).setScale(2, RoundingMode.HALF_UP);
+    final BigDecimal bd = BigDecimal.valueOf(payment).setScale(2, RoundingMode.HALF_UP);
     return bd.doubleValue();
   }
 
@@ -36,7 +36,7 @@ public final class ContractUtils {
   public static int calculateNormalMonthlyHours(double hoursPerWeek, int attendanceWeek) {
     double hours = hoursPerWeek * attendanceWeek / 12.;
 
-    final BigDecimal bd = new BigDecimal(hours).setScale(0, RoundingMode.HALF_UP);
+    final BigDecimal bd = BigDecimal.valueOf(hours).setScale(0, RoundingMode.HALF_UP);
     return bd.intValueExact();
   }
 }
