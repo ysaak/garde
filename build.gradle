@@ -2,6 +2,7 @@ plugins {
     id "java"
     id "application"
     id "org.sonarqube" version "2.3"
+    id "jacoco"
 }
 
 sonarqube {
@@ -9,13 +10,9 @@ sonarqube {
         property "sonar.host.url", "https://sonarqube.com"
         property "sonar.projectName", "Garde project"
         property "sonar.projectKey", "ysaak:garde"
-        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
     }
 }
-
-//apply plugin: 'java'
-//apply plugin: 'application'
-//apply plugin: 'org.sonarqube'
 
 group = 'ysaak.hera'
 version = '0.0.1-SNAPSHOT'
@@ -31,7 +28,7 @@ tasks.withType(JavaCompile) {
 }
 
 repositories {
-     jcenter()
+    jcenter()
     mavenCentral()
 }
 
