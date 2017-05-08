@@ -11,3 +11,5 @@ out/
 *.iml
 
 .DS_Store
+
+run-sonar.sh
