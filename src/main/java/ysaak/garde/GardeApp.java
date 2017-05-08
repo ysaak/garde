@@ -67,8 +67,10 @@ public class GardeApp extends Application {
     controller.init();
 
     primaryStage.setScene(scene);
+    primaryStage.setWidth(800.);
+    primaryStage.setHeight(550.);
     primaryStage.centerOnScreen();
-    primaryStage.setFullScreen(true);
+    //primaryStage.setFullScreen(true);
     //primaryStage.sizeToScene();
     primaryStage.show();
   }
