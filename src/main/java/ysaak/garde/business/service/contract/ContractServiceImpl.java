@@ -1,5 +1,6 @@
 package ysaak.garde.business.service.contract;
 
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ysaak.garde.business.model.Child;
@@ -66,19 +67,17 @@ public class ContractServiceImpl extends AbstractService<Contract> implements Co
    * @return Updated contract
    */
   private Contract computeStatus(Contract contract) {
-    if (contract != null) {
+    Preconditions.checkNotNull(contract, "Contract is null");
 
-      ContractStatus status = ContractStatus.ESTIMATE;
-      if (contract.getStartDate() != null && contract.getStartDate().isBefore(LocalDate.now())) {
-        status = ContractStatus.ACTIVE;
-      }
-      if (contract.getEndDate() != null && contract.getEndDate().isAfter(LocalDate.now())) {
-        status = ContractStatus.ENDED;
-      }
-
-      contract.setStatus(status);
+    ContractStatus status = ContractStatus.ESTIMATE;
+    if (contract.getStartDate() != null && contract.getStartDate().isBefore(LocalDate.now())) {
+      status = ContractStatus.ACTIVE;
+    }
+    if (contract.getEndDate() != null && contract.getEndDate().isAfter(LocalDate.now())) {
+      status = ContractStatus.ENDED;
     }
 
+    contract.setStatus(status);
     return contract;
   }
 
