@@ -42,4 +42,9 @@ public class RootPresenter extends AbstractPresenter<List<ChildDTO>, RootView> {
 
     super.fireOpenFormRequest(viewCode, context);
   }
+
+  @Override
+  public boolean reloadOnDisplay() {
+    return true;
+  }
 }
