@@ -10,7 +10,7 @@ public abstract class AbstractView<DATA> implements View<DATA> {
   
   private final BooleanProperty hasChanged = new SimpleBooleanProperty();
 
-  private final BooleanProperty isValid = new SimpleBooleanProperty(true);
+  protected final BooleanProperty isValid = new SimpleBooleanProperty(true);
 
   protected DATA originalData = null;
   

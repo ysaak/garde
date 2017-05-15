@@ -44,7 +44,7 @@ public class RootView extends AbstractFormView<List<ChildDTO>> {
 
 
     List<ToolbarItem> items = Arrays.asList(
-      new ToolbarItem("CHILD-EDIT", Material.ADD_CIRCLE_OUTLINE, "root.actions.createChild"),
+      new ToolbarItem("CONTRACT-CREATE", Material.ADD_CIRCLE_OUTLINE, "root.actions.createChild"),
       new ToolbarItem(null, Material.CAKE, "root.actions.birthdays"),
       new ToolbarItem("PARAMETERS", Material.SETTINGS, "root.actions.parameters")
     );

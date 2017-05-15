@@ -15,7 +15,7 @@ import java.util.List;
 @Fiche(value="ROOT", root=true)
 public class RootPresenter extends AbstractPresenter<List<ChildDTO>, RootView> {
 
-  private static final List<String> VIEW_CODE_EXCEPTIONS = Arrays.asList("PARAMETERS", "");
+  private static final List<String> VIEW_CODE_EXCEPTIONS = Arrays.asList("PARAMETERS", "CONTRACT-CREATE");
 
   @Autowired
   private ChildService childService;

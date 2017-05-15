@@ -2,10 +2,13 @@ package ysaak.garde.business.service.contract;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ysaak.garde.business.model.Child;
 import ysaak.garde.business.model.contract.Contract;
 import ysaak.garde.business.model.contract.ContractStatus;
 import ysaak.garde.business.repository.ContractRepository;
 import ysaak.garde.business.service.AbstractService;
+import ysaak.garde.business.service.child.ChildService;
+import ysaak.garde.data.ChildDTO;
 import ysaak.garde.data.contract.ContractDTO;
 import ysaak.garde.exception.validation.NotUniqueValueException;
 import ysaak.garde.exception.validation.ValidationException;
@@ -23,7 +26,11 @@ public class ContractServiceImpl extends AbstractService<Contract> implements Co
   @Autowired
   private ContractRepository contractRepository;
 
+  @Autowired
+  private ChildService childService;
+
   public ContractDTO create(ContractDTO contract) throws ValidationException {
+
     Contract model = toModel(contract, ContractDTO.class);
 
     // Compute status
@@ -31,6 +38,14 @@ public class ContractServiceImpl extends AbstractService<Contract> implements Co
 
     // Validate data
     validate(model);
+
+    // Contract is valid
+    if (contract.getChild().getId() == null) {
+      // Contract for a new child, create it
+      final ChildDTO childDTO = childService.save(contract.getChild());
+      final Child child = mappingEngine.lookup(Child.class, ChildDTO.class).convertDTO(childDTO);
+      model.setChild(child);
+    }
 
     // Save data
     model = contractRepository.save(model);

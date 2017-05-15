@@ -1,8 +1,13 @@
 package ysaak.garde.gui.common.components;
 
-import com.jfoenix.controls.JFXRadioButton;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
@@ -17,10 +22,13 @@ public class RadioButtonGroup<T> {
   private final ToggleGroup group;
   private Callback<T, String> textFactory = param -> (param != null) ? param.toString() : null;
 
+  private ObjectProperty<T> selectedItemProperty;
+
   public RadioButtonGroup() {
     this(Orientation.HORIZONTAL);
   }
-  
+
+  @SuppressWarnings("unchecked")
   public RadioButtonGroup(Orientation orientation) {
     if (orientation == Orientation.HORIZONTAL) {
       pane = new HBox(10.);
@@ -30,6 +38,9 @@ public class RadioButtonGroup<T> {
     }
     
     group = new ToggleGroup();
+    selectedItemProperty = new SimpleObjectProperty<T>(null);
+
+    group.selectedToggleProperty().addListener((observable, oldValue, newValue) -> selectedItemProperty.set((T) newValue.getUserData()));
   }
   
   @SuppressWarnings("unchecked")
@@ -39,8 +50,7 @@ public class RadioButtonGroup<T> {
     
     for (T item : items) {
       
-      //RadioButton btn = new RadioButton(textFactory.call(item));
-      JFXRadioButton btn = new JFXRadioButton(textFactory.call(item));
+      RadioButton btn = new RadioButton(textFactory.call(item));
       btn.setUserData(item);
       group.getToggles().add(btn);
 
@@ -74,6 +84,10 @@ public class RadioButtonGroup<T> {
         break;
       }
     }
+  }
+
+  public ReadOnlyObjectProperty<T> selectedItemProperty() {
+    return selectedItemProperty;
   }
   
   public Node getView() {

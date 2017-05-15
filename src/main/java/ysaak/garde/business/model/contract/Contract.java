@@ -69,7 +69,7 @@ public class Contract {
    */
   @NotNull
   @Range
-  private Double hoursPerWeek;
+  private Integer hoursPerWeek;
 
   /**
    * Base value of an hour
@@ -157,11 +157,11 @@ public class Contract {
   }
 
   @Column(nullable = false)
-  public Double getHoursPerWeek() {
+  public Integer getHoursPerWeek() {
     return hoursPerWeek;
   }
 
-  public void setHoursPerWeek(Double hoursPerWeek) {
+  public void setHoursPerWeek(Integer hoursPerWeek) {
     this.hoursPerWeek = hoursPerWeek;
   }
 

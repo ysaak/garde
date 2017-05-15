@@ -31,10 +31,12 @@ public class GridFormHelper {
     ColumnConstraints colConst = new ColumnConstraints();
     colConst.setMinWidth(200.);
     colConst.setFillWidth(true);
-    colConst.setPercentWidth(50.);
+    colConst.setPercentWidth(100. / nbColumns);
     colConst.setHalignment(HPos.LEFT);
 
-    pane.getColumnConstraints().setAll(colConst, colConst);
+    for (int i=0; i<nbColumns; i++) {
+      pane.getColumnConstraints().add(colConst);
+    }
   }
 
   public void buildColumnsSpacing(Node node) {
@@ -46,7 +48,10 @@ public class GridFormHelper {
   }
 
   public void addComponent(String text, Node comp, boolean required) {
+    addSpanningComponent(text, comp, required, 1, 1);
+  }
 
+  public void addSpanningComponent(String text, Node comp, boolean required, int colSpan, int rowSpan) {
     if (currentColumn == nbColumns) {
       nextLine();
     }
@@ -69,10 +74,10 @@ public class GridFormHelper {
     buildColumnsSpacing(labelPane);
     buildColumnsSpacing(comp);
 
-    this.pane.add(labelPane, currentColumn, currentLine);
-    this.pane.add(comp, currentColumn, currentLine + 1);
+    this.pane.add(labelPane, currentColumn, currentLine, colSpan, rowSpan);
+    this.pane.add(comp, currentColumn, currentLine + 1, colSpan, rowSpan);
 
-    currentColumn++;
+    currentColumn += colSpan;
   }
 
   public void nextLine() {

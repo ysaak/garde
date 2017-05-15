@@ -95,7 +95,7 @@ public class MockInitializer {
     contract.setType(ContractType.PARTIAL);
     contract.setWeekPerYear(37);
     contract.setAttendancePerWeek(4);
-    contract.setHoursPerWeek(30.);
+    contract.setHoursPerWeek(30);
     contract.setBaseHourPrice(3.5);
     contract.setIncreasedHourValue(5.);
 

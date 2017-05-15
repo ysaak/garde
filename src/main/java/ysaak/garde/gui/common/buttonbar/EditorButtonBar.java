@@ -1,11 +1,12 @@
 package ysaak.garde.gui.common.buttonbar;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.beans.binding.Bindings;
 import ysaak.garde.service.translation.I18n;
 
 class EditorButtonBar extends ButtonBar {
 
-  public EditorButtonBar() {
+  protected EditorButtonBar() {
     super();
 
     JFXButton saveButton = new JFXButton(I18n.get("button.save"));
@@ -20,5 +21,7 @@ class EditorButtonBar extends ButtonBar {
     
     setLeft(cancelButton);
     setRight(saveButton);
+
+    saveButton.disableProperty().bind(Bindings.not(isValidProperty()));
   }
 }

@@ -17,7 +17,7 @@ import java.util.Set;
 public abstract class AbstractService<MODEL> {
 
   @Autowired
-  private MappingEngine mappingEngine;
+  protected MappingEngine mappingEngine;
 
   private Class<MODEL> modelClass;
 

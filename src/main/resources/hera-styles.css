@@ -240,3 +240,14 @@
 .month-report-cell.other-hours {
     -fx-font-weight: bold;
 }
+
+
+
+/**************/
+.field-warning {
+    -fx-effect: dropshadow(three-pass-box, gold, 14, 0, 0, 0);
+}
+
+.field-error {
+    -fx-effect: dropshadow(three-pass-box, darkred, 7, 0, 0, 0);
+}
