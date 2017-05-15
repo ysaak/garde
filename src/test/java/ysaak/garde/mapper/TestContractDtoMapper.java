@@ -42,7 +42,7 @@ public class TestContractDtoMapper extends AbstractTestMapper {
     entity.setEndDate(LocalDate.of(2017, 2, 1));
     entity.setWeekPerYear(52);
     entity.setAttendancePerWeek(4);
-    entity.setHoursPerWeek(20.);
+    entity.setHoursPerWeek(20);
     entity.setBaseHourPrice(10.);
     entity.setIncreasedHourValue(30.);
 
@@ -59,7 +59,7 @@ public class TestContractDtoMapper extends AbstractTestMapper {
     dto.setEndDate(LocalDate.of(2017, 2, 1));
     dto.setWeekPerYear(52);
     dto.setAttendancePerWeek(4);
-    dto.setHoursPerWeek(20.);
+    dto.setHoursPerWeek(20);
     dto.setBaseHourPrice(10.);
     dto.setIncreasedHourValue(30.);
   }
