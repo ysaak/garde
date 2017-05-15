@@ -10,7 +10,7 @@ public class TestContractUtils {
   @Test
   public void testMonthlyPaymentCalculation() {
     final double hourPrice = 3.5;
-    final double hoursPerWeek = 40;
+    final int hoursPerWeek = 40;
     final int attendanceWeeks = 37;
 
     double monthlyPayment = ContractUtils.calculateMonthlyPayment(hourPrice, hoursPerWeek, attendanceWeeks);
@@ -19,7 +19,7 @@ public class TestContractUtils {
 
   @Test
   public void testNormalMonthlyHoursCalculation() {
-    final double hoursPerWeek = 42;
+    final int hoursPerWeek = 42;
     final int attendanceWeeks = 37;
 
     int hours = ContractUtils.calculateNormalMonthlyHours(hoursPerWeek, attendanceWeeks);
