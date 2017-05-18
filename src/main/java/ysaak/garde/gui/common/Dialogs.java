@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import ysaak.garde.service.translation.I18n;
 
 public final class Dialogs {
 
@@ -30,7 +31,11 @@ public final class Dialogs {
   public static void warning(String title, String header, String content) {
     showDialog(AlertType.WARNING, title, header, content, null);
   }
-  
+
+  public static void error(String content) {
+    error(I18n.get("common.error"), content);
+  }
+
   public static void error(String title, String content) {
     error(title, null, content);
   }

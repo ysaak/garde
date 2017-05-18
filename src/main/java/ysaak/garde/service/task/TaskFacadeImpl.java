@@ -3,9 +3,7 @@ package ysaak.garde.service.task;
 import javafx.application.Platform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ysaak.garde.service.event.EventFacade;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,8 +23,7 @@ public class TaskFacadeImpl implements TaskFacade {
 
   private final ScheduledExecutorService scheduledService = Executors.newScheduledThreadPool(10);
 
-  @Autowired
-  private EventFacade eventFacade;
+  private TaskMonitoringInterface monitoringInterface = null;
 
   @Override
   public <T> void submit(GuiTask<T> task) {
@@ -63,6 +60,11 @@ public class TaskFacadeImpl implements TaskFacade {
     }
   }
 
+  @Override
+  public void setTaskMonitoringInterface(TaskMonitoringInterface monitoringInterface) {
+    this.monitoringInterface = monitoringInterface;
+  }
+
   private class GuiTaskRunner<T> implements Runnable {
 
     private final GuiTask<T> task;
@@ -76,7 +78,7 @@ public class TaskFacadeImpl implements TaskFacade {
     @Override
     public void run() {
       longTaskDetector = scheduledService.schedule(() -> {
-        task.setLongTaskStarted();
+        setLongTaskStarted();
         longTaskDetector = null;
         return null;
       }, 200, TimeUnit.MILLISECONDS);
@@ -98,7 +100,22 @@ public class TaskFacadeImpl implements TaskFacade {
         longTaskDetector = null;
       }
 
-      task.setLongTaskEnded();
+      setLongTaskEnded();
+    }
+
+    public void setLongTaskStarted() {
+      if (monitoringInterface != null) {
+        Platform.runLater(() -> {
+          monitoringInterface.setTaskType(task.getType());
+          monitoringInterface.setLongTaskStarted();
+        });
+      }
+    }
+
+    public void setLongTaskEnded() {
+      if (monitoringInterface != null) {
+        Platform.runLater(monitoringInterface::setLongTaskEnded);
+      }
     }
   }
 }

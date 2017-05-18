@@ -16,4 +16,10 @@ public interface TaskFacade {
    * Shutdown tasks service
    */
   void shutdown();
+
+  /**
+   * Sets the task monitoring interface
+   * @param monitoringInterface Task monitoring interface
+   */
+  void setTaskMonitoringInterface(TaskMonitoringInterface monitoringInterface);
 }

@@ -4,80 +4,87 @@ import com.google.common.eventbus.Subscribe;
 import org.springframework.beans.factory.annotation.Autowired;
 import ysaak.garde.business.service.child.ChildService;
 import ysaak.garde.data.ChildDTO;
-import ysaak.garde.gui.common.Context;
-import ysaak.garde.gui.common.ContextBuilder;
-import ysaak.garde.gui.common.buttonbar.ButtonBarType;
-import ysaak.garde.gui.common.presenter.AbstractPresenter;
-import ysaak.garde.gui.events.ChildUpdateEvent;
-import ysaak.garde.gui.events.leftpanel.LeftPanelUpdateEvent;
+import ysaak.garde.gui.common.Dialogs;
+import ysaak.garde.gui.events.ChildSelectionEvent;
 import ysaak.garde.gui.events.view.CloseFormEvent;
+import ysaak.garde.service.EventFacade;
+import ysaak.garde.service.task.GuiTask;
+import ysaak.garde.service.task.TaskFacade;
+import ysaak.garde.service.translation.I18n;
 
 /**
  * Left panel presenter
  */
-public class LeftPanelPresenter extends AbstractPresenter<ChildDTO, LeftPanelView> {
+public class LeftPanelPresenter {
+
+  @Autowired
+  private TaskFacade taskFacade;
 
   @Autowired
   private ChildService childService;
 
-  public LeftPanelPresenter() {
-    super(ButtonBarType.NONE);
-  }
+  private final LeftPanelView view;
 
-  @Override
-  protected LeftPanelView initView() {
-    LeftPanelView view = super.initView();
+
+  public LeftPanelPresenter() {
+    view = new LeftPanelView();
 
     view.setOnTerminateAction(evt -> {
       CloseFormEvent closeEvt = new CloseFormEvent();
       closeEvt.setCloseWholeContext(true);
-      eventFacade.post(closeEvt);
+      EventFacade.post(closeEvt);
 
-      rootPane.getView().setVisible(false);
+      view.setVisible(false);
     });
 
-    rootPane.getView().visibleProperty().bindBidirectional(view.getView().visibleProperty());
-    view.getView().setVisible(false);
+    view.setVisible(false);
 
+    EventFacade.register(this);
+  }
+
+
+  @Subscribe
+  public void onChildUpdateEvent(ChildSelectionEvent event) {
+    if (event != null && event.getChildId() != null) {
+      taskFacade.submit(new ChildLoaderTask(event.getChildId()));
+    }
+  }
+
+  private void setData(ChildDTO child) {
+    if (child == null) {
+      view.setVisible(false);
+    }
+    else {
+      view.setChildData(child);
+      view.setVisible(true);
+    }
+  }
+
+  public LeftPanelView getView() {
     return view;
   }
 
-  @Subscribe
-  public void onLeftPanelUpdateEvent(LeftPanelUpdateEvent event) {
-    if (event != null && event.getChildId() != null) {
-      startLoadData(ContextBuilder.get().withId(event.getChildId()).build());
-    }
-  }
+  private class ChildLoaderTask extends GuiTask<ChildDTO> {
 
-  @Subscribe
-  public void onChildUpdateEvent(ChildUpdateEvent event) {
-    if (event != null && event.getChildId() != null) {
-      startLoadData(ContextBuilder.get().withId(event.getChildId()).build());
-    }
-  }
+    private final long childId;
 
-  @Override
-  protected ChildDTO loadData(Context context) throws Exception {
-    if (context != null && context.getLongId() != null) {
-      return childService.get(context.getLongId());
+    private ChildLoaderTask(long childId) {
+      this.childId = childId;
     }
 
-    return null;
-  }
-
-  @Override
-  protected void setData(ChildDTO child) {
-    if (child == null) {
-      rootPane.getView().setVisible(false);
+    @Override
+    public ChildDTO call() throws Exception {
+      return childService.get(childId);
     }
-    else {
-      super.setData(child);
-      rootPane.getView().setVisible(true);
-    }
-  }
 
-  @Override
-  protected void updateData(ChildDTO child) throws Exception {
-    // Nothing to save
+    @Override
+    public void onSucceeded(ChildDTO result) {
+      setData(result);
+    }
+
+    @Override
+    public void onFailed(Throwable error) {
+      Dialogs.error(I18n.get("left-panel.error.load"));
+    }
   }
 }

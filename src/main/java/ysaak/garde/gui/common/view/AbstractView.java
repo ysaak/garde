@@ -5,7 +5,7 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import ysaak.garde.gui.common.Context;
 
-public abstract class AbstractView<DATA> implements View<DATA> {
+public abstract class AbstractView<DATA> implements ModuleView<DATA> {
   private ViewListener listener;
   
   private final BooleanProperty hasChanged = new SimpleBooleanProperty();

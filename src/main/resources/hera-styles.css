@@ -184,8 +184,19 @@
   	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 0.0, 0.0;
 
   	-fx-effect: dropshadow(three-pass-box, rgba(0.0,0.0,0.0,0.8), 10.0, 0.0, 0.0, 0.0);
+  	-fx-padding: 5;
+
+  	/*-fx-border-color: #2B2B2B;
+    -fx-border-width: 0 1.0 0 0;*/
+
 }
 
+/*****************************************/
+
+.button-bar {
+    -fx-background-color: #393C3E;
+    -fx-padding: 10;
+}
 
 /*****************************************/
 .monthreport-grid {

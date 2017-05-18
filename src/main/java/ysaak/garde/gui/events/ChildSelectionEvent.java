@@ -1,9 +1,12 @@
 package ysaak.garde.gui.events;
 
-public class ChildUpdateEvent {
+/**
+ * Event indicating a child selection
+ */
+public class ChildSelectionEvent {
   private final Long childId;
 
-  public ChildUpdateEvent(Long childId) {
+  public ChildSelectionEvent(Long childId) {
     this.childId = childId;
   }
 

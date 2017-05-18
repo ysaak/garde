@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ysaak.garde.business.service.child.ChildService;
 import ysaak.garde.data.ChildDTO;
 import ysaak.garde.gui.common.Context;
-import ysaak.garde.gui.common.annotation.Fiche;
+import ysaak.garde.gui.common.annotation.Module;
 import ysaak.garde.gui.common.buttonbar.ButtonBarType;
 import ysaak.garde.gui.common.presenter.AbstractPresenter;
-import ysaak.garde.gui.events.ChildUpdateEvent;
+import ysaak.garde.gui.events.ChildSelectionEvent;
+import ysaak.garde.service.EventFacade;
 
-@Fiche("CHILD-EDIT")
+@Module("CHILD-EDIT")
 public class ChildEditPresenter extends AbstractPresenter<ChildDTO, ChildEditView> {
 
   @Autowired
@@ -36,7 +37,7 @@ public class ChildEditPresenter extends AbstractPresenter<ChildDTO, ChildEditVie
     final ChildDTO child = childService.save(data);
 
     if (child.getId() != null) {
-      eventFacade.post(new ChildUpdateEvent(child.getId()));
+      EventFacade.post(new ChildSelectionEvent(child.getId()));
     }
   }
 }

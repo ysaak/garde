@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ysaak.garde.business.service.monthreport.MonthReportService;
 import ysaak.garde.data.monthreport.MonthReport;
 import ysaak.garde.gui.common.ContextBuilder;
-import ysaak.garde.gui.common.annotation.Fiche;
+import ysaak.garde.gui.common.annotation.Module;
 import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.presenter.AbstractPresenter;
 
 import java.time.LocalDate;
 
-@Fiche("MONTHLY-VIEW")
+@Module("MONTHLY-VIEW")
 public class MonthlyReportPresenter extends AbstractPresenter<MonthReport, MonthlyReportView> {
 
   @Autowired

@@ -6,13 +6,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import ysaak.garde.service.task.TaskMonitoringInterface;
 import ysaak.garde.service.task.TaskType;
 import ysaak.garde.service.translation.I18n;
 
 /**
  * Progress indicator as overlay
  */
-public class OverlayIndicator {
+public class OverlayIndicator implements TaskMonitoringInterface {
 
   private final VBox overlay;
 
@@ -24,8 +25,6 @@ public class OverlayIndicator {
     overlay = new VBox(10.);
     overlay.setAlignment(Pos.CENTER);
     overlay.getStyleClass().add("load-indicator");
-    //overlay.visibleProperty().bind(loadIndicatorVisible);
-
 
     textLabel = new Label(I18n.get("common.loading"));
     textLabel.getStyleClass().add("text");
@@ -43,7 +42,8 @@ public class OverlayIndicator {
     return overlay;
   }
 
-  public void setType(TaskType type) {
+  @Override
+  public void setTaskType(TaskType type) {
     if (type == TaskType.LOAD) {
       textLabel.setText(I18n.get("common.loading"));
     }
@@ -52,32 +52,37 @@ public class OverlayIndicator {
     }
   }
 
-  public void setVisible(boolean visible) {
+  @Override
+  public void setLongTaskStarted() {
+    setVisible(true);
+  }
+
+  @Override
+  public void setLongTaskEnded() {
+    setVisible(false);
+  }
+
+  private void setVisible(boolean visible) {
     if (this.visible != visible) {
       if (visible) {
-        show();
+        // Display the overlay
+        FadeTransition ft = new FadeTransition(Duration.millis(300), overlay);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        overlay.setOpacity(0);
+        overlay.setVisible(true);
+        ft.play();
       }
       else {
-        hide();
+        // Hide the overlay
+        FadeTransition ft = new FadeTransition(Duration.millis(300), overlay);
+        ft.setFromValue(1);
+        ft.setToValue(0);
+        ft.setOnFinished(evt -> overlay.setVisible(false));
+        ft.play();
       }
 
       this.visible = visible;
     }
-  }
-
-  private void show() {
-    FadeTransition ft = new FadeTransition(Duration.millis(300), overlay);
-    ft.setFromValue(0);
-    ft.setToValue(1);
-    overlay.setOpacity(0);
-    overlay.setVisible(true);
-    ft.play();
-  }
-  private void hide() {
-    FadeTransition ft = new FadeTransition(Duration.millis(300), overlay);
-    ft.setFromValue(1);
-    ft.setToValue(0);
-    ft.play();
-    ft.setOnFinished(evt -> overlay.setVisible(false));
   }
 }

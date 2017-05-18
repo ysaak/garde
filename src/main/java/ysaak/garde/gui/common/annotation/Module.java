@@ -9,8 +9,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-public @interface Fiche {
+public @interface Module {
   String value();
   
   boolean root() default false;
+
+  boolean reloadOnRedisplay() default false;
 }

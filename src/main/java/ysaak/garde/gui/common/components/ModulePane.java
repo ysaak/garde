@@ -50,7 +50,7 @@ public class ModulePane implements TaskMonitoringInterface {
     centerPane = new BorderPane();
     centerPane.setTop(topPane);
 
-    BorderPane.setMargin(centerPane, new Insets(MARGIN));
+    //BorderPane.setMargin(centerPane, new Insets(MARGIN));
 
     // Overlay indicator
     overlayIndicator = new OverlayIndicator();
@@ -80,13 +80,14 @@ public class ModulePane implements TaskMonitoringInterface {
   }
 
   public void setCenter(Node center) {
+    BorderPane.setMargin(center, new Insets(10));
     centerPane.setCenter(center);
   }
 
   public void setButtonBar(ButtonBar buttonBar) {
-    if (buttonBar != null) {
+    /*if (buttonBar != null) {
       ButtonBar.setMargin(buttonBar, new Insets(SPACING, 0, 0, 0));
-    }
+    }*/
 
     centerPane.setBottom(buttonBar);
   }
@@ -101,16 +102,16 @@ public class ModulePane implements TaskMonitoringInterface {
 
   @Override
   public void setTaskType(TaskType type) {
-    overlayIndicator.setType(type);
+    overlayIndicator.setTaskType(type);
   }
 
   @Override
   public void setLongTaskStarted() {
-    overlayIndicator.setVisible(true);
+    overlayIndicator.setLongTaskStarted();
   }
 
   @Override
   public void setLongTaskEnded() {
-    overlayIndicator.setVisible(false);
+    overlayIndicator.setLongTaskEnded();
   }
 }

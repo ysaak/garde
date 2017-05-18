@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Lazy;
 import ysaak.garde.business.BusinessInitializer;
 import ysaak.garde.business.MockInitializer;
 import ysaak.garde.gui.MainView;
@@ -16,7 +15,6 @@ import ysaak.garde.gui.MainViewController;
 import ysaak.garde.gui.common.ViewLoader;
 import ysaak.garde.service.task.TaskFacade;
 
-@Lazy
 @SpringBootApplication
 public class GardeApp extends Application {
 
@@ -54,7 +52,9 @@ public class GardeApp extends Application {
   public void start(Stage primaryStage) throws Exception {
     primaryStage.setTitle("Garde!");
 
-    final MainView mainView = viewLoader.loadView("mainLayout");
+    final MainView mainView = new MainView();
+    taskFacade.setTaskMonitoringInterface(mainView.getOverlayIndicator());
+
     final MainViewController controller = new MainViewController(mainView);
     applicationContext.getAutowireCapableBeanFactory().autowireBean(controller);
 
@@ -67,11 +67,9 @@ public class GardeApp extends Application {
     controller.init();
 
     primaryStage.setScene(scene);
-    primaryStage.setWidth(800.);
-    primaryStage.setHeight(550.);
-    primaryStage.centerOnScreen();
     //primaryStage.setFullScreen(true);
-    //primaryStage.sizeToScene();
+    primaryStage.sizeToScene();
+    primaryStage.centerOnScreen();
     primaryStage.show();
   }
 

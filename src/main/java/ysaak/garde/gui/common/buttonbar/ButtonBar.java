@@ -2,7 +2,6 @@ package ysaak.garde.gui.common.buttonbar;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 
 public abstract class ButtonBar extends BorderPane {
@@ -14,7 +13,7 @@ public abstract class ButtonBar extends BorderPane {
 
   public ButtonBar() {
     super();
-    setPadding(new Insets(5, 5, 5, 5));
+    getStyleClass().add("button-bar");
     
     isValid.addListener((observable, oldValue, newValue) -> handleValidityForm(hasChanged.get(), newValue));
     hasChanged.addListener((observable, oldValue, newValue) -> handleValidityForm(newValue, isValid.get()));

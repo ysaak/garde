@@ -1,22 +1,17 @@
 package ysaak.garde.service.task;
 
-import javafx.application.Platform;
-
 /**
  * Listener for task execution
  */
 public abstract class GuiTask<T> {
   private final TaskType type;
 
-  private final TaskMonitoringInterface monitoringInterface;
-
   public GuiTask() {
-    this(null, null);
+    this(TaskType.LOAD);
   }
 
-  public GuiTask(TaskType type, TaskMonitoringInterface monitoringInterface) {
+  public GuiTask(TaskType type) {
     this.type = type;
-    this.monitoringInterface = monitoringInterface;
   }
 
   public abstract T call() throws Exception;
@@ -25,18 +20,8 @@ public abstract class GuiTask<T> {
 
   public abstract void onFailed(Throwable error);
 
-  public void setLongTaskStarted() {
-    if (monitoringInterface != null) {
-      Platform.runLater(() -> {
-        monitoringInterface.setTaskType(type);
-        monitoringInterface.setLongTaskStarted();
-      });
-    }
+  public TaskType getType() {
+    return type;
   }
 
-  public void setLongTaskEnded() {
-    if (monitoringInterface != null) {
-      Platform.runLater(monitoringInterface::setLongTaskEnded);
-    }
-  }
 }

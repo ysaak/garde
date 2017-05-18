@@ -6,13 +6,13 @@ import ysaak.garde.business.service.parameter.ParameterService;
 import ysaak.garde.data.contract.ContractDTO;
 import ysaak.garde.data.parameter.ParameterDTO;
 import ysaak.garde.gui.common.Context;
-import ysaak.garde.gui.common.annotation.Fiche;
+import ysaak.garde.gui.common.annotation.Module;
 import ysaak.garde.gui.common.buttonbar.ButtonBarType;
 import ysaak.garde.gui.common.presenter.AbstractPresenter;
 
 import java.util.List;
 
-@Fiche("CONTRACT-CREATE")
+@Module("CONTRACT-CREATE")
 public class ContractCreatePresenter extends AbstractPresenter<ContractDTO, ContractCreateView> {
 
   @Autowired

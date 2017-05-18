@@ -9,14 +9,15 @@ import org.springframework.context.ApplicationContext;
 import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.Contexts;
 import ysaak.garde.gui.common.ViewLoader;
-import ysaak.garde.gui.common.annotation.Fiche;
+import ysaak.garde.gui.common.annotation.Module;
 import ysaak.garde.gui.common.presenter.Presenter;
-import ysaak.garde.gui.common.view.ViewListener;
 import ysaak.garde.gui.events.view.CloseFormEvent;
 import ysaak.garde.gui.events.view.OpenFormEvent;
 import ysaak.garde.gui.leftpanel.LeftPanelPresenter;
-import ysaak.garde.service.event.EventFacade;
+import ysaak.garde.service.EventFacade;
+import ysaak.garde.service.task.TaskFacade;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,9 +28,6 @@ public class MainViewController {
   private static final Logger LOGGER = LoggerFactory.getLogger(MainViewController.class);
   
   private static final String FORMS_PACKAGE = MainViewController.class.getPackage().getName();
-
-  @Autowired
-  private EventFacade eventFacade;
 
   @Autowired
   private ViewLoader viewLoader;
@@ -56,26 +54,11 @@ public class MainViewController {
   }
 
   public void init() {
-    this.mainView.setListener(new ViewListener() {
-
-      @Override
-      public void openForm(String viewCode, Context context) {
-        onOpenFormEvent(new OpenFormEvent(viewCode, context));
-      }
-
-      @Override
-      public ViewLoader getViewLoader() {
-        return viewLoader;
-      }
-    });
-
-    eventFacade.register(this);
-    eventFacade.register(mainView);
+    EventFacade.register(this);
 
     // Load left panel
     LeftPanelPresenter leftPanelPresenter;
     try {
-
       leftPanelPresenter = loadPresenter(LeftPanelPresenter.class);
     }
     catch (Exception e) {
@@ -84,16 +67,10 @@ public class MainViewController {
     }
 
     if (leftPanelPresenter != null) {
-      mainView.setLeftPane(leftPanelPresenter.getView().getView());
+      mainView.setLeftPane(leftPanelPresenter.getView());
     }
 
     showAppRootView();
-  }
-
-  @PreDestroy
-  public void onDestroy() {
-    eventFacade.unregister(mainView);
-    eventFacade.unregister(this);
   }
 
   @SuppressWarnings("unchecked")
@@ -107,9 +84,9 @@ public class MainViewController {
       for (ClassPath.ClassInfo classInfo : classpath.getTopLevelClassesRecursive(FORMS_PACKAGE)) {
         Class<?> clazz = classInfo.load();
         
-        if (clazz.isAnnotationPresent(Fiche.class) && Presenter.class.isAssignableFrom(clazz)) {
+        if (clazz.isAnnotationPresent(Module.class) && Presenter.class.isAssignableFrom(clazz)) {
 
-          final Fiche an = clazz.getAnnotation(Fiche.class);
+          final Module an = clazz.getAnnotation(Module.class);
 
           if (an.root()) {
             if (rootForm != null) {
@@ -161,11 +138,13 @@ public class MainViewController {
     }
   }
 
-  private <T extends Presenter> T loadPresenter(Class<T> presenterClazz) throws Exception {
+  private <T> T loadPresenter(Class<T> presenterClazz) throws Exception {
     final T presenter = presenterClazz.newInstance();
     applicationContext.getAutowireCapableBeanFactory().autowireBean(presenter);
 
-    presenter.init();
+    if (presenter instanceof Presenter) {
+      ((Presenter) presenter).init();
+    }
 
     return presenter;
   }
@@ -177,7 +156,7 @@ public class MainViewController {
       final Presenter presenter = loadPresenter(presenterClazz);
       openedViews.add(presenter);
 
-      mainView.setCenterNode(presenter.getView());
+      mainView.setModulePane(presenter.getView());
 
       // Load data
       presenter.startLoadData(context);
@@ -201,7 +180,7 @@ public class MainViewController {
       if (index == lastIndex) {
         // Display top element if removed presenter was the last one
         Presenter last = openedViews.getLast();
-        mainView.setCenterNode(last.getView());
+        mainView.setModulePane(last.getView());
 
         if (last.reloadOnDisplay()) {
           last.startReloadData();

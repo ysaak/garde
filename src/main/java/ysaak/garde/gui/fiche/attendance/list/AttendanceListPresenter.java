@@ -1,20 +1,20 @@
 package ysaak.garde.gui.fiche.attendance.list;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ysaak.garde.gui.common.ContextBuilder;
-import ysaak.garde.gui.common.annotation.Fiche;
-import ysaak.garde.service.task.GuiTask;
 import ysaak.garde.business.service.attendance.AttendanceService;
 import ysaak.garde.data.attendance.AttendanceDTO;
 import ysaak.garde.gui.common.Context;
+import ysaak.garde.gui.common.ContextBuilder;
 import ysaak.garde.gui.common.actions.ActionType;
+import ysaak.garde.gui.common.annotation.Module;
 import ysaak.garde.gui.common.presenter.AbstractPresenter;
+import ysaak.garde.service.task.GuiTask;
 import ysaak.garde.service.task.TaskType;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Fiche("ATTENDANCE-LIST")
+@Module("ATTENDANCE-LIST")
 public class AttendanceListPresenter extends AbstractPresenter<List<AttendanceDTO>, AttendanceListView> {
 
   private class AttendanceDeleteTask extends GuiTask<List<AttendanceDTO>> {
@@ -22,7 +22,7 @@ public class AttendanceListPresenter extends AbstractPresenter<List<AttendanceDT
     private final List<AttendanceDTO> attendances;
 
     private AttendanceDeleteTask(List<AttendanceDTO> attendances) {
-      super(TaskType.UPDATE, rootPane);
+      super(TaskType.UPDATE);
       this.attendances = attendances;
     }
 

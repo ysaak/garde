@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import ysaak.garde.gui.MainViewController;
+import ysaak.garde.gui.common.Context;
 import ysaak.garde.gui.common.ViewLoader;
 import ysaak.garde.gui.common.actions.ActionType;
 import ysaak.garde.gui.common.buttonbar.ButtonBar;
@@ -16,11 +16,10 @@ import ysaak.garde.gui.common.view.AbstractFormView;
 import ysaak.garde.gui.common.view.ViewListener;
 import ysaak.garde.gui.events.view.CloseFormEvent;
 import ysaak.garde.gui.events.view.OpenFormEvent;
-import ysaak.garde.service.event.EventFacade;
+import ysaak.garde.service.EventFacade;
 import ysaak.garde.service.task.GuiTask;
-import ysaak.garde.service.task.TaskType;
-import ysaak.garde.gui.common.Context;
 import ysaak.garde.service.task.TaskFacade;
+import ysaak.garde.service.task.TaskType;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -32,7 +31,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
     private final Context context;
 
     private DataLoaderTask(final Context context) {
-      super(TaskType.LOAD, rootPane);
+      super(TaskType.LOAD);
       this.context = context;
     }
 
@@ -56,7 +55,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
   private class DataUpdaterTask extends GuiTask<DATA> {
 
     private DataUpdaterTask() {
-      super(TaskType.UPDATE, rootPane);
+      super(TaskType.UPDATE);
     }
 
     @Override
@@ -75,9 +74,6 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
       showError(error);
     }
   }
-
-  @Autowired
-  protected EventFacade eventFacade;
 
   @Autowired
   protected ViewLoader viewLoader;
@@ -110,7 +106,7 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
   
   @Override
   public void init() {
-    eventFacade.register(this);
+    EventFacade.register(this);
 
     rootPane = new ModulePane();
     this.view = initView();
@@ -188,12 +184,12 @@ public abstract class AbstractPresenter<DATA, VIEW extends AbstractFormView<DATA
   }
   
   private void closeView() {
-    eventFacade.unregister(this);
-    eventFacade.post(new CloseFormEvent(this));
+    EventFacade.unregister(this);
+    EventFacade.post(new CloseFormEvent(this));
   }
   
   protected void fireOpenFormRequest(String viewCode, Context context) {
-    eventFacade.post(new OpenFormEvent(viewCode, context));
+    EventFacade.post(new OpenFormEvent(viewCode, context));
   }
 
   protected void onActionEvent(ActionType action, DATA data) {
