@@ -57,6 +57,10 @@ public class MainView {
    * @param module Module to display
    */
   private void displayModuleNode(final ModulePane module) {
+    if (modulePane != null) {
+      mainPane.getChildren().remove(modulePane);
+    }
+
     // Set anchors
     this.modulePane = module.getView();
 
@@ -64,7 +68,7 @@ public class MainView {
     computeModuleNodeAnchors();
 
     module.getView().setOpacity(0);
-    mainPane.getChildren().add(module.getView());
+    mainPane.getChildren().add(modulePane);
 
     FadeTransition transition = new FadeTransition(MODULE_FADE_DURATION, this.modulePane);
     transition.setFromValue(0);
