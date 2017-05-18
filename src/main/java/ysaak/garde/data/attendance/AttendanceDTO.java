@@ -2,11 +2,10 @@ package ysaak.garde.data.attendance;
 
 import ysaak.garde.data.contract.ContractDTO;
 
-import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.util.List;
 
-public class AttendanceDTO implements Comparable<AttendanceDTO> {
+public class AttendanceDTO {
 
   private Long id;
 
@@ -68,8 +67,4 @@ public class AttendanceDTO implements Comparable<AttendanceDTO> {
     this.periods = periods;
   }
 
-  @Override
-  public int compareTo(AttendanceDTO o) {
-    return date.compareTo(o.getDate());
-  }
 }
