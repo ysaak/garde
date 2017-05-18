@@ -26,7 +26,7 @@ public class TestDataClasses {
             .with(new GetterTester())
             .build();
 
-    validator.validate(MODEL_PACKAGE, new FilterPackageInfo());
+    validator.validateRecursively(MODEL_PACKAGE, new FilterPackageInfo());
   }
 
   @Test
@@ -38,6 +38,6 @@ public class TestDataClasses {
             .with(new GetterTester())
             .build();
 
-    validator.validate(DTO_PACKAGE, new FilterPackageInfo());
+    validator.validateRecursively(DTO_PACKAGE, new FilterPackageInfo());
   }
 }
