@@ -52,6 +52,7 @@ exclude(module: 'commons-logging')
     compile group: 'org.hibernate', name: 'hibernate-validator', version:'5.2.4.Final'
     compile group: 'org.glassfish', name: 'javax.el', version:'3.0.0'
 
+    testCompile group: 'com.openpojo', name: 'openpojo', version: '0.8.4'
     testCompile group: 'com.h2database', name: 'h2', version:'1.4.193'
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.4.2.RELEASE') {
 exclude(module: 'commons-logging')
