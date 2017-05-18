@@ -40,7 +40,7 @@ public class MonthReportServiceImpl implements MonthReportService {
 
     // Fetch attendances
     List<AttendanceDTO> attendances = attendanceService.getBetween(childId, period.getStart(), period.getEnd());
-    Collections.sort(attendances);
+    attendances.sort(Comparator.comparing(AttendanceDTO::getDate));
     report.setAttendances(attendances);
 
     // Calculate week summaries
